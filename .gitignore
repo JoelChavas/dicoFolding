@@ -1,0 +1,21 @@
+# Compiled sources #
+####################
+*.pyc
+
+# Folders #
+################
+build
+dist
+*.egg-info
+notebooks/.ipynb_checkpoints
+
+# Files #
+################
+contest.py
+*.swp
+README.rst.*
+
+# pycharm and virtualenv folders #
+##################################
+.idea
+venv
