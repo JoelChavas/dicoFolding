@@ -9,6 +9,6 @@ setup(
     long_description=open('README.rst').read(),
     install_requires=['deep_folding'],
     url='https://github.com/JoelChavas/dicoFolding',
-    author='',
-    author_email=''
+    author='Joël Chavas',
+    author_email='joel.chavas@cea.fr'
 )
