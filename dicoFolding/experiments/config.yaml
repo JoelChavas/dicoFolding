@@ -1,0 +1,4 @@
+# @package _group_
+defaults:
+- path: local
+- torch: SimCLR

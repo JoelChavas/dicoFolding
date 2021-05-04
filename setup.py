@@ -7,7 +7,12 @@ setup(
     license='CeCILL license version 2',
     description='Deep learning models to look for sulcus dictionary',
     long_description=open('README.rst').read(),
-    install_requires=['deep_folding'],
+    install_requires=['deep_folding', 'pandas', 
+                    'scipy', 'matplotlib',
+                    'torch', 'tqdm',
+                    'torchvision', 'torchsummary',
+                    'dataclasses', 'hydra', 'OmegaConf',
+                    'sklearn'],
     url='https://github.com/JoelChavas/dicoFolding',
     author='Joël Chavas',
     author_email='joel.chavas@cea.fr'
