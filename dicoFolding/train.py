@@ -83,9 +83,17 @@ def train(config):
                                             sigma=config.sigma,
                                             return_logits=True)
 
-    loader_train, loader_val = create_sets(config)
+    dataset_train, dataset_val = create_sets(config)
+
+    loader_train = torch.utils.data.DataLoader(dataset_train, batch_size=5,
+                                                shuffle=True, num_workers=0)
+
+    loader_val = torch.utils.data.DataLoader(dataset_val, shuffle=True,
+                                                          num_workers=0)
 
     model = ContrastiveLearningModel(net, loss, loader_train, loader_val, config)
+
+    model.training()
     
 
 

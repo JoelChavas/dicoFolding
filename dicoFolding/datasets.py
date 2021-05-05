@@ -41,9 +41,42 @@ import pandas as pd
 import torch
 import torchvision.transforms as transforms
 from scipy.ndimage import rotate
+import numpy as np
 
-from deep_folding.preprocessing.pynet_transforms import *
+from deep_folding.preprocessing.pynet_transforms import PaddingTensor
 
+class TensorDataset():
+    """Custom dataset that includes image file paths.
+    Applies different transformations to data depending on the type of input.
+    IN: data_tensor: tensor containing MRIs as numpy arrays
+        filenames: list of subjects' IDs
+    OUT: tensor of [batch, sample, subject ID]
+    """
+    def __init__(self, data_tensor, filenames):
+        self.data_tensor = data_tensor
+        self.transform = True
+        self.nb_train = len(filenames)
+        print(self.nb_train)
+        self.filenames = filenames
+
+    def __len__(self):
+        return(self.nb_train)
+
+    def __getitem__(self, idx):
+        if torch.is_tensor(idx):
+            idx = idx.tolist()
+        sample = self.data_tensor[idx]
+        file = self.filenames[idx]
+
+        fill_value = 11
+        self.transform = transforms.Compose([
+                    PaddingTensor([1, 80, 80, 80], fill_value=fill_value)
+        ])
+
+        sample = self.transform(sample)
+
+        tuple_with_path = (sample, file)
+        return tuple_with_path
 
 class SkeletonDataset():
     """Custom dataset for skeleton images that includes image file paths.
@@ -51,13 +84,8 @@ class SkeletonDataset():
     filenames: optional, list of corresponding filenames
     Works on CPUs
     """
-    def __init__(self, dataframe, filenames=None):
+    def __init__(self, dataframe):
         self.df = dataframe
-        if filenames:
-            self.filenames = filenames
-            #self.df = self.df.T
-        else:
-            self.filenames = None
 
     def __len__(self):
         return len(self.df)
@@ -66,26 +94,36 @@ class SkeletonDataset():
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
-        if self.filenames:
-            filename = self.filenames[idx]
-            sample = self.df.iloc[idx][0]
-        else:
-            filename = self.df.iloc[idx]['ID']
-            sample = self.df.iloc[idx][0]
+        sample = self.df.iloc[idx][0]
+        print("keys", self.df.iloc[idx].keys())
 
-        fill_value = 1
-        sample = NormalizeSkeleton(sample)()
-        self.transform = transforms.Compose([Downsample(scale=2),
-                         Padding([1, 40, 40, 40], fill_value=fill_value)
+        fill_value = 11  # value for the part outside the brain
+        self.transform = transforms.Compose([Padding([1, 80, 80, 80], fill_value=fill_value)
                          ])
         sample = self.transform(sample)
-        tuple_with_path = (sample, filename)
+        tuple_with_path = (sample, 'ID'+str(idx))
         return tuple_with_path
 
 def create_sets(config):
-    tmp = pd.read_pickle('/home/jc225751/Program/deep_folding/data/reference/data/nearest/Lskeleton.pkl')
+    tmp = pd.read_pickle('/home/jc225751/Runs/05_2021-05-03_premiers_essais_simclr/Input/crops/Lskeleton.pkl')
 
-    hcp_dataset_train = SkeletonDataset(dataframe=tmp)
+    len_tmp = len(tmp.columns)
+    filenames = list(tmp.columns)
+    print("length of dataframe", len_tmp)
+    print("column names : ", filenames)
+
+    """
+    Creates a tensor object from the DataFrame (through a conversion into a numpy array)
+    """
+    tmp = torch.from_numpy(np.array([tmp.loc[0].values[k] for k in range(len_tmp)]))
+
+    """
+    Creates the dataset from this tensor by doing some preprocessing:
+	- padding to 80x80x80
+    """
+    hcp_dataset = TensorDataset(filenames=filenames, data_tensor=tmp)
+
+    print(len(hcp_dataset))
 
     # Split training set into train and val
     partition = [0.8, 0.2]
@@ -93,8 +131,8 @@ def create_sets(config):
     random_seed = 42
     torch.manual_seed(random_seed)
 
-    print([round(i*(len(hcp_dataset_train))) for i in partition])
-    train_set, val_set = torch.utils.data.random_split(hcp_dataset_train,
-                         [round(i*(len(hcp_dataset_train))) for i in partition])
+    print([round(i*(len(hcp_dataset))) for i in partition])
+    train_set, val_set = torch.utils.data.random_split(hcp_dataset,
+                         [round(i*(len(hcp_dataset))) for i in partition])
 
     return train_set, val_set
