@@ -43,7 +43,78 @@ import torchvision.transforms as transforms
 from scipy.ndimage import rotate
 import numpy as np
 
-from deep_folding.preprocessing.pynet_transforms import PaddingTensor
+from torch.utils.data import Dataset
+from augmentations import Transformer, Crop, Cutout, Noise, Normalize, Blur, Flip
+
+from deep_folding.preprocessing.pynet_transforms import PaddingTensor, Padding
+
+class MRIDataset(Dataset):
+
+    def __init__(self, config, training=False, validation=False, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        assert training != validation
+
+        self.transforms = Transformer()
+        self.config = config
+        self.transforms.register(Normalize(), probability=1.0)
+
+        if config.tf == "all_tf":
+            self.transforms.register(Flip(), probability=0.5)
+            self.transforms.register(Blur(sigma=(0.1, 1)), probability=0.5)
+            self.transforms.register(Noise(sigma=(0.1, 1)), probability=0.5)
+            self.transforms.register(Cutout(patch_size=np.ceil(np.array(config.input_size)/4)), probability=0.5)
+            self.transforms.register(Crop(np.ceil(0.75*np.array(config.input_size)), "random", resize=True),
+                                     probability=0.5)
+
+        elif config.tf == "cutout":
+            self.transforms.register(Cutout(patch_size=np.ceil(np.array(config.input_size)/4)), probability=1)
+
+        elif config.tf == "crop":
+            self.transforms.register(Crop(np.ceil(0.75*np.array(config.input_size)), "random", resize=True),
+                                     probability=1)
+
+        if training:
+            #self.data = np.load(config.data_train)
+            #self.labels = pd.read_csv(config.label_train)
+            tmp = pd.read_pickle('/home/jc225751/Runs/05_2021-05-03_premiers_essais_simclr/Input/crops/Lskeleton.pkl')
+            len_tmp = len(tmp.columns)
+            data = np.array([tmp.loc[0].values[k] for k in range(len_tmp-2)])
+            s = data.shape
+            self.data = np.zeros((len_tmp-2, 1, 80, 80, 80))
+            self.data[:s[0], :s[1], :s[2], :s[3], :s[4]] = data
+        elif validation:
+            #self.data = np.load(config.data_val)
+            #self.labels = pd.read_csv(config.label_val)
+            tmp = pd.read_pickle('/home/jc225751/Runs/05_2021-05-03_premiers_essais_simclr/Input/crops/Lskeleton.pkl')
+            len_tmp = len(tmp.columns)
+            data = np.array([tmp.loc[0].values[k] for k in range(len_tmp-2,len_tmp)])
+            s = data.shape
+            self.data = np.zeros((2, 1, 80, 80, 80))
+            self.data[:s[0], :s[1], :s[2], :s[3], :s[4]] = data
+
+        assert self.data.shape[1:] == tuple(config.input_size), "3D images must have shape {}".\
+            format(config.input_size)
+
+    def collate_fn(self, list_samples):
+        list_x = torch.stack([torch.as_tensor(x, dtype=torch.float) for (x, y) in list_samples], dim=0)
+        list_y = torch.stack([torch.as_tensor(y, dtype=torch.float) for (x, y) in list_samples], dim=0)
+
+        return (list_x, list_y)
+
+    def __getitem__(self, idx):
+
+        # For a single input x, samples (t, t') ~ T to generate (t(x), t'(x))
+        np.random.seed()
+        x1 = self.transforms(self.data[idx])
+        x2 = self.transforms(self.data[idx])
+#        labels = self.labels[self.config.label_name].values[idx]
+        labels = 1
+        x = np.stack((x1, x2), axis=0)
+
+        return (x, labels)
+
+    def __len__(self):
+        return len(self.data)
 
 class TensorDataset():
     """Custom dataset that includes image file paths.

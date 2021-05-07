@@ -12,7 +12,7 @@ setup(
                     'torch', 'tqdm',
                     'torchvision', 'torchsummary',
                     'dataclasses', 'hydra', 'OmegaConf',
-                    'sklearn'],
+                    'sklearn', 'scikit-image'],
     url='https://github.com/JoelChavas/dicoFolding',
     author='Joël Chavas',
     author_email='joel.chavas@cea.fr'

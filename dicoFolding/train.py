@@ -56,11 +56,12 @@ import torchvision.transforms as transforms
 from torch.autograd import Variable
 from torchvision import models
 from torchsummary import summary
+from torch.utils.data import DataLoader, Dataset, RandomSampler
 
 from models.densenet import densenet121
 from losses import GeneralizedSupervisedNTXenLoss
 from contrastiveLearning import ContrastiveLearningModel
-from datasets import create_sets
+from datasets import MRIDataset
 
 from dataclasses import dataclass
 import hydra
@@ -69,27 +70,39 @@ from omegaconf import DictConfig, OmegaConf
 
 @hydra.main(config_name='config', config_path="experiments")
 def train(config):
+
     print(OmegaConf.to_yaml(config))
     print("Working directory : {}".format(os.getcwd()))
+    config.input_size = eval(config.input_size)
 
     net = densenet121(mode="encoder", drop_rate=0.0)
     model_parameters = filter(lambda p: p.requires_grad, net.parameters())
     params = sum([np.prod(p.size()) for p in model_parameters])
     print("Number of parameters to estimate: ", params)
-    summary(net, (1, 80, 80, 80), device="cpu")
+    #summary(net, (1, 80, 80, 80), device="cpu")
 
     loss = GeneralizedSupervisedNTXenLoss(temperature=config.temperature,
                                             kernel='rbf',
                                             sigma=config.sigma,
                                             return_logits=True)
 
-    dataset_train, dataset_val = create_sets(config)
+    dataset_train = MRIDataset(config, training=True)
+    dataset_val = MRIDataset(config, validation=True)
 
-    loader_train = torch.utils.data.DataLoader(dataset_train, batch_size=5,
-                                                shuffle=True, num_workers=0)
-
-    loader_val = torch.utils.data.DataLoader(dataset_val, shuffle=True,
-                                                          num_workers=0)
+    loader_train = DataLoader(dataset_train,
+                              batch_size=config.batch_size,
+                              sampler=RandomSampler(dataset_train),
+                              collate_fn=dataset_train.collate_fn,
+                              pin_memory=config.pin_mem,
+                              num_workers=config.num_cpu_workers
+                              )
+    loader_val = DataLoader(dataset_val,
+                            batch_size=config.batch_size,
+                            sampler=RandomSampler(dataset_val),
+                            collate_fn=dataset_val.collate_fn,
+                            pin_memory=config.pin_mem,
+                            num_workers=config.num_cpu_workers
+                            )
 
     model = ContrastiveLearningModel(net, loss, loader_train, loader_val, config)
 
