@@ -1,8 +1,9 @@
 
-dicoFolding
+Introduction
 ------------
 
 The project aims to study cortical folding patterns thanks to deep learning tools.
+Project and API documentation can be found at: `https://joelchavas.github.io/dicoFolding <https://joelchavas.github.io/dicoFolding>`_.
 
 Development
 -----------
