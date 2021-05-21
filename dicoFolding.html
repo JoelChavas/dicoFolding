@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>dicoFolding package &mdash; dicoFolding 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dicoFolding.models package" href="dicoFolding.models.html" />
+    <link rel="prev" title="Welcome to deep_folding’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> dicoFolding
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dicoFolding package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dicoFolding.models.html">dicoFolding.models package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.augmentations">dicoFolding.augmentations module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.contrastiveLearning">dicoFolding.contrastiveLearning module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dicofolding-datasets-module">dicoFolding.datasets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.evaluate">dicoFolding.evaluate module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.losses">dicoFolding.losses module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.search_hyperparameters">dicoFolding.search_hyperparameters module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.synthesize_results">dicoFolding.synthesize_results module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dicofolding-train-module">dicoFolding.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.utils">dicoFolding.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dicoFolding</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>dicoFolding package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/dicoFolding.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dicofolding-package">
+<h1>dicoFolding package<a class="headerlink" href="#dicofolding-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dicoFolding.models.html">dicoFolding.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models.densenet">dicoFolding.models.densenet module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models.simclr">dicoFolding.models.simclr module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#dicofolding-models-vae-unit-module">dicoFolding.models.vae_unit module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dicoFolding.augmentations">
+<span id="dicofolding-augmentations-module"></span><h2>dicoFolding.augmentations module<a class="headerlink" href="#module-dicoFolding.augmentations" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="dicoFolding.augmentations.Blur">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.augmentations.</code><code class="sig-name descname">Blur</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snr</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sigma</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.augmentations.Blur" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.augmentations.Crop">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.augmentations.</code><code class="sig-name descname">Crop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shape</span></em>, <em class="sig-param"><span class="n">type</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">resize</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">keep_dim</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.augmentations.Crop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Crop the given n-dimensional array either at a random location or centered</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.augmentations.Cutout">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.augmentations.</code><code class="sig-name descname">Cutout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">patch_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">value</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">random_size</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">localization</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.augmentations.Cutout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Apply a cutout on the images
+cf. Improved Regularization of Convolutional Neural Networks with Cutout, arXiv, 2017
+We assume that the square to be cut is inside the image.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.augmentations.Flip">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.augmentations.</code><code class="sig-name descname">Flip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">axis</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.augmentations.Flip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Apply a random mirror flip.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.augmentations.Noise">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.augmentations.</code><code class="sig-name descname">Noise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snr</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sigma</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">noise_type</span><span class="o">=</span><span class="default_value">'gaussian'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.augmentations.Noise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.augmentations.Normalize">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.augmentations.</code><code class="sig-name descname">Normalize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">std</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.augmentations.Normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.augmentations.Transformer">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.augmentations.</code><code class="sig-name descname">Transformer</code><a class="headerlink" href="#dicoFolding.augmentations.Transformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that can be used to register a sequence of transformations.</p>
+<dl class="py class">
+<dt id="dicoFolding.augmentations.Transformer.Transform">
+<em class="property">class </em><code class="sig-name descname">Transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">transform</span></em>, <em class="sig-param"><span class="n">probability</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.augmentations.Transformer.Transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt id="dicoFolding.augmentations.Transformer.Transform.probability">
+<code class="sig-name descname">probability</code><a class="headerlink" href="#dicoFolding.augmentations.Transformer.Transform.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dicoFolding.augmentations.Transformer.Transform.transform">
+<code class="sig-name descname">transform</code><a class="headerlink" href="#dicoFolding.augmentations.Transformer.Transform.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="dicoFolding.augmentations.Transformer.register">
+<code class="sig-name descname">register</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">transform</span></em>, <em class="sig-param"><span class="n">probability</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.augmentations.Transformer.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a new transformation.
+:param transform: the transformation object.
+:type transform: callable
+:param probability: the transform is applied with the specified probability.
+:type probability: float, default 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="dicoFolding.augmentations.interval">
+<code class="sig-prename descclassname">dicoFolding.augmentations.</code><code class="sig-name descname">interval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">lower</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.augmentations.interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Listify an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>2-uplet</em><em> or </em><em>number</em>) – the object used to build the interval.</p></li>
+<li><p><strong>lower</strong> (<em>number</em><em>, </em><em>default None</em>) – the lower bound of the interval. If not specified, a symetric
+interval is generated.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>interval</strong> – an interval.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>2-uplet</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dicoFolding.contrastiveLearning">
+<span id="dicofolding-contrastivelearning-module"></span><h2>dicoFolding.contrastiveLearning module<a class="headerlink" href="#module-dicoFolding.contrastiveLearning" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="dicoFolding.contrastiveLearning.ContrastiveLearningModel">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.contrastiveLearning.</code><code class="sig-name descname">ContrastiveLearningModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">net</span></em>, <em class="sig-param"><span class="n">loss</span></em>, <em class="sig-param"><span class="n">loader_train</span></em>, <em class="sig-param"><span class="n">loader_val</span></em>, <em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">scheduler</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.contrastiveLearning.ContrastiveLearningModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="dicoFolding.contrastiveLearning.ContrastiveLearningModel.load_model">
+<code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.contrastiveLearning.ContrastiveLearningModel.load_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dicoFolding.contrastiveLearning.ContrastiveLearningModel.training">
+<code class="sig-name descname">training</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.contrastiveLearning.ContrastiveLearningModel.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dicofolding-datasets-module">
+<h2>dicoFolding.datasets module<a class="headerlink" href="#dicofolding-datasets-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dicoFolding.evaluate">
+<span id="dicofolding-evaluate-module"></span><h2>dicoFolding.evaluate module<a class="headerlink" href="#module-dicoFolding.evaluate" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dicoFolding.losses">
+<span id="dicofolding-losses-module"></span><h2>dicoFolding.losses module<a class="headerlink" href="#module-dicoFolding.losses" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="dicoFolding.losses.GeneralizedSupervisedNTXenLoss">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.losses.</code><code class="sig-name descname">GeneralizedSupervisedNTXenLoss</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">kernel</span><span class="o">=</span><span class="default_value">'rbf'</span></em>, <em class="sig-param"><span class="n">temperature</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">return_logits</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">sigma</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.losses.GeneralizedSupervisedNTXenLoss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="dicoFolding.losses.GeneralizedSupervisedNTXenLoss.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z_i</span></em>, <em class="sig-param"><span class="n">z_j</span></em>, <em class="sig-param"><span class="n">labels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.losses.GeneralizedSupervisedNTXenLoss.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dicoFolding.losses.GeneralizedSupervisedNTXenLoss.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#dicoFolding.losses.GeneralizedSupervisedNTXenLoss.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.losses.NTXenLoss">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.losses.</code><code class="sig-name descname">NTXenLoss</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">temperature</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">return_logits</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.losses.NTXenLoss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Normalized Temperature Cross-Entropy Loss for Constrastive Learning
+Refer for instance to:
+Ting Chen, Simon Kornblith, Mohammad Norouzi, Geoffrey Hinton
+A Simple Framework for Contrastive Learning of Visual Representations, arXiv 2020</p>
+<dl class="py method">
+<dt id="dicoFolding.losses.NTXenLoss.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z_i</span></em>, <em class="sig-param"><span class="n">z_j</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.losses.NTXenLoss.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dicoFolding.losses.NTXenLoss.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#dicoFolding.losses.NTXenLoss.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dicoFolding.search_hyperparameters">
+<span id="dicofolding-search-hyperparameters-module"></span><h2>dicoFolding.search_hyperparameters module<a class="headerlink" href="#module-dicoFolding.search_hyperparameters" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dicoFolding.synthesize_results">
+<span id="dicofolding-synthesize-results-module"></span><h2>dicoFolding.synthesize_results module<a class="headerlink" href="#module-dicoFolding.synthesize_results" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="dicofolding-train-module">
+<h2>dicoFolding.train module<a class="headerlink" href="#dicofolding-train-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dicoFolding.utils">
+<span id="dicofolding-utils-module"></span><h2>dicoFolding.utils module<a class="headerlink" href="#module-dicoFolding.utils" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dicoFolding">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dicoFolding" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="dicoFolding.models.html" class="btn btn-neutral float-right" title="dicoFolding.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to deep_folding’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Joel Chavas.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
