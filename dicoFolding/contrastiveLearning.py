@@ -50,7 +50,6 @@ class ContrastiveLearningModel:
             for (inputs, labels) in self.loader:
                 pbar.update()
                 inputs = inputs.to(self.device)
-                labels = labels.to(self.device)
                 self.optimizer.zero_grad()
                 z_i = self.model(inputs[:, 0, :])
                 z_j = self.model(inputs[:, 1, :])
@@ -97,48 +96,6 @@ class ContrastiveLearningModel:
                                  format(name="Contrastive_MRI", epoch=epoch)))
 
 
-    def fine_tuning(self):
-        print(self.loss)
-        print(self.optimizer)
-
-        for epoch in range(self.config.nb_epochs):
-            ## Training step
-            self.model.train()
-            nb_batch = len(self.loader)
-            training_loss = []
-            pbar = tqdm(total=nb_batch, desc="Training")
-            for (inputs, labels) in self.loader:
-                pbar.update()
-                inputs = inputs.to(self.device)
-                labels = labels.to(self.device)
-                self.optimizer.zero_grad()
-                y = self.model(inputs)
-                batch_loss = self.loss(y,labels)
-                batch_loss.backward()
-                self.optimizer.step()
-                training_loss += float(batch_loss) / nb_batch
-            pbar.close()
-
-            ## Validation step
-            nb_batch = len(self.loader_val)
-            pbar = tqdm(total=nb_batch, desc="Validation")
-            val_loss = 0
-            with torch.no_grad():
-                self.model.eval()
-                for (inputs, labels) in self.loader_val:
-                    pbar.update()
-                    inputs = inputs.to(self.device)
-                    labels = labels.to(self.device)
-                    y = self.model(inputs)
-                    batch_loss = self.loss(y, labels)
-                    val_loss += float(batch_loss) / nb_batch
-            pbar.close()
-
-            print("Epoch [{}/{}] Training loss = {:.4f}\t Validation loss = {:.4f}\t".format(
-                epoch+1, self.config.nb_epochs, training_loss, val_loss), flush=True)
-
-            if self.scheduler is not None:
-                self.scheduler.step()
 
 
     def load_model(self, path):

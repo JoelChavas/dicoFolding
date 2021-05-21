@@ -73,6 +73,7 @@ class NTXenLoss(nn.Module):
     Refer for instance to:
     Ting Chen, Simon Kornblith, Mohammad Norouzi, Geoffrey Hinton
     A Simple Framework for Contrastive Learning of Visual Representations, arXiv 2020
+    
     """
 
     def __init__(self, temperature=0.1, return_logits=False):
