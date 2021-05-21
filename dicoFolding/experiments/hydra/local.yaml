@@ -1,4 +1,0 @@
-# @package _global_
-hydra:
-  run:
-    dir: /home/jc225751/Misc
