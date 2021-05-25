@@ -55,13 +55,13 @@ import torch
 import torchvision.transforms as transforms
 from torch.autograd import Variable
 from torchvision import models
-from torchsummary import summary
+#from torchsummary import summary
 from torch.utils.data import DataLoader, Dataset, RandomSampler
 
-from models.densenet import densenet121
-from losses import GeneralizedSupervisedNTXenLoss
-from contrastiveLearning import ContrastiveLearningModel
-from datasets import MRIDataset
+from dicoFolding.models.densenet import densenet121
+from dicoFolding.losses import GeneralizedSupervisedNTXenLoss
+from dicoFolding.contrastiveLearning import ContrastiveLearningModel
+from dicoFolding.datasets import MRIDataset
 
 from dataclasses import dataclass
 import hydra

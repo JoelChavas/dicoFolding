@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # /usr/bin/env python3
 #
-#  This software and supporting documentation are distributed by
+# This software and supporting documentation are distributed by
 #      Institut Federatif de Recherche 49
 #      CEA/NeuroSpin, Batiment 145,
 #      91191 Gif-sur-Yvette cedex
@@ -46,7 +46,7 @@ import numpy as np
 from os.path import join
 
 from torch.utils.data import Dataset
-from augmentations import Transformer, Crop, Cutout, Noise, Normalize, Blur, Flip
+from dicoFolding.augmentations import Transformer, Crop, Cutout, Noise, Normalize, Blur, Flip
 
 from deep_folding.preprocessing.pynet_transforms import PaddingTensor, Padding
 
@@ -126,6 +126,7 @@ class TensorDataset():
     IN: data_tensor: tensor containing MRIs as numpy arrays
         filenames: list of subjects' IDs
     OUT: tensor of [batch, sample, subject ID]
+
     """
     def __init__(self, data_tensor, filenames):
         self.data_tensor = data_tensor
