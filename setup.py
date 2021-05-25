@@ -10,7 +10,7 @@ setup(
     install_requires=['deep_folding', 'pandas', 
                     'scipy', 'matplotlib',
                     'torch', 'tqdm',
-                    'torchvision', 'torchsummary',
+                    'torchvision', 'torch-summary', 'hydra', 'hydra.core',
                     'dataclasses', 'hydra', 'OmegaConf',
                     'sklearn', 'scikit-image'],
     url='https://github.com/JoelChavas/dicoFolding',

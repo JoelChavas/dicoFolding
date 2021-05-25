@@ -55,7 +55,7 @@ import torch
 import torchvision.transforms as transforms
 from torch.autograd import Variable
 from torchvision import models
-from torchsummary import summary
+#from torchsummary import summary
 from torch.utils.data import DataLoader, Dataset, RandomSampler
 
 from dicoFolding.models.densenet import densenet121
