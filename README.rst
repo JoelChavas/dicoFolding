@@ -15,7 +15,7 @@ Development
     # Install for development
     bv bash
     cd dicoFolding
-    virtualenv -p /casa/install/bin/python --system-site-packages venv
+    virtualenv --system-site-packages venv
     . bin/activate/venv
     pip install -e .
 
