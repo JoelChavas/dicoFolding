@@ -98,7 +98,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models.densenet">dicoFolding.models.densenet module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models.simclr">dicoFolding.models.simclr module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dicofolding-models-vae-unit-module">dicoFolding.models.vae_unit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models.vae_unit">dicoFolding.models.vae_unit module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models">Module contents</a></li>
 </ul>
 </li>
@@ -107,7 +107,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.augmentations">dicoFolding.augmentations module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.contrastiveLearning">dicoFolding.contrastiveLearning module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#dicofolding-datasets-module">dicoFolding.datasets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.datasets">dicoFolding.datasets module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.evaluate">dicoFolding.evaluate module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.losses">dicoFolding.losses module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.search_hyperparameters">dicoFolding.search_hyperparameters module</a></li>
@@ -261,8 +261,82 @@ registered hooks while the latter silently ignores them.</p>
 <div class="section" id="module-dicoFolding.models.simclr">
 <span id="dicofolding-models-simclr-module"></span><h2>dicoFolding.models.simclr module<a class="headerlink" href="#module-dicoFolding.models.simclr" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="dicofolding-models-vae-unit-module">
-<h2>dicoFolding.models.vae_unit module<a class="headerlink" href="#dicofolding-models-vae-unit-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-dicoFolding.models.vae_unit">
+<span id="dicofolding-models-vae-unit-module"></span><h2>dicoFolding.models.vae_unit module<a class="headerlink" href="#module-dicoFolding.models.vae_unit" title="Permalink to this headline">¶</a></h2>
+<p>beta-VAE</p>
+<dl class="py class">
+<dt id="dicoFolding.models.vae_unit.ModelTester">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.models.vae_unit.</code><code class="sig-name descname">ModelTester</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">dico_set_loaders</span></em>, <em class="sig-param"><span class="n">loss_func</span></em>, <em class="sig-param"><span class="n">kl_weight</span></em>, <em class="sig-param"><span class="n">n_latent</span></em>, <em class="sig-param"><span class="n">depth</span></em>, <em class="sig-param"><span class="n">norm</span></em>, <em class="sig-param"><span class="n">skeleton</span></em>, <em class="sig-param"><span class="n">root_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="dicoFolding.models.vae_unit.ModelTester.test">
+<code class="sig-name descname">test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTester.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.models.vae_unit.ModelTrainer">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.models.vae_unit.</code><code class="sig-name descname">ModelTrainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">train_loader</span></em>, <em class="sig-param"><span class="n">val_loader</span></em>, <em class="sig-param"><span class="n">loss_func</span></em>, <em class="sig-param"><span class="n">nb_epoch</span></em>, <em class="sig-param"><span class="n">optimizer</span></em>, <em class="sig-param"><span class="n">kl_weight</span></em>, <em class="sig-param"><span class="n">n_latent</span></em>, <em class="sig-param"><span class="n">depth</span></em>, <em class="sig-param"><span class="n">norm</span></em>, <em class="sig-param"><span class="n">skeleton</span></em>, <em class="sig-param"><span class="n">root_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTrainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="dicoFolding.models.vae_unit.ModelTrainer.train">
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTrainer.train" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.models.vae_unit.VAE">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.models.vae_unit.</code><code class="sig-name descname">VAE</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_shape</span></em>, <em class="sig-param"><span class="n">n_latent</span></em>, <em class="sig-param"><span class="n">depth</span></em>, <em class="sig-param"><span class="n">norm</span></em>, <em class="sig-param"><span class="n">skeleton</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="dicoFolding.models.vae_unit.VAE.decode">
+<code class="sig-name descname">decode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.decode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dicoFolding.models.vae_unit.VAE.encode">
+<code class="sig-name descname">encode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.encode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dicoFolding.models.vae_unit.VAE.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dicoFolding.models.vae_unit.VAE.sample_z">
+<code class="sig-name descname">sample_z</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">logvar</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.sample_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dicoFolding.models.vae_unit.VAE.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dicoFolding.models.vae_unit.VAE.weight_initialization">
+<code class="sig-name descname">weight_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.weight_initialization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes model parameters according to Gaussian Glorot initialization</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="dicoFolding.models.vae_unit.vae_loss">
+<code class="sig-prename descclassname">dicoFolding.models.vae_unit.</code><code class="sig-name descname">vae_loss</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">logvar</span></em>, <em class="sig-param"><span class="n">loss_func</span></em>, <em class="sig-param"><span class="n">kl_weight</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.vae_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-dicoFolding.models">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dicoFolding.models" title="Permalink to this headline">¶</a></h2>

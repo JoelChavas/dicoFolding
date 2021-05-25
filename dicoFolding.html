@@ -101,12 +101,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.augmentations">dicoFolding.augmentations module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.contrastiveLearning">dicoFolding.contrastiveLearning module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dicofolding-datasets-module">dicoFolding.datasets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.datasets">dicoFolding.datasets module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.evaluate">dicoFolding.evaluate module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.losses">dicoFolding.losses module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.search_hyperparameters">dicoFolding.search_hyperparameters module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.synthesize_results">dicoFolding.synthesize_results module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dicofolding-train-module">dicoFolding.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.train">dicoFolding.train module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.utils">dicoFolding.utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding">Module contents</a></li>
 </ul>
@@ -188,7 +188,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models.densenet">dicoFolding.models.densenet module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models.simclr">dicoFolding.models.simclr module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#dicofolding-models-vae-unit-module">dicoFolding.models.vae_unit module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models.vae_unit">dicoFolding.models.vae_unit module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models">Module contents</a></li>
 </ul>
 </li>
@@ -317,8 +317,48 @@ interval is generated.</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="dicofolding-datasets-module">
-<h2>dicoFolding.datasets module<a class="headerlink" href="#dicofolding-datasets-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-dicoFolding.datasets">
+<span id="dicofolding-datasets-module"></span><h2>dicoFolding.datasets module<a class="headerlink" href="#module-dicoFolding.datasets" title="Permalink to this headline">¶</a></h2>
+<p>Tools in order to create pytorch dataloaders</p>
+<dl class="py class">
+<dt id="dicoFolding.datasets.MRIDataset">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.datasets.</code><code class="sig-name descname">MRIDataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datasets.MRIDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<dl class="py method">
+<dt id="dicoFolding.datasets.MRIDataset.collate_fn">
+<code class="sig-name descname">collate_fn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">list_samples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datasets.MRIDataset.collate_fn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.datasets.SkeletonDataset">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.datasets.</code><code class="sig-name descname">SkeletonDataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datasets.SkeletonDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Custom dataset for skeleton images that includes image file paths.
+dataframe: dataframe containing training and testing arrays
+filenames: optional, list of corresponding filenames
+Works on CPUs</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="dicoFolding.datasets.TensorDataset">
+<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.datasets.</code><code class="sig-name descname">TensorDataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_tensor</span></em>, <em class="sig-param"><span class="n">filenames</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datasets.TensorDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Custom dataset that includes image file paths.
+Applies different transformations to data depending on the type of input.
+IN: data_tensor: tensor containing MRIs as numpy arrays</p>
+<blockquote>
+<div><p>filenames: list of subjects’ IDs</p>
+</div></blockquote>
+<p>OUT: tensor of [batch, sample, subject ID]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="dicoFolding.datasets.create_sets">
+<code class="sig-prename descclassname">dicoFolding.datasets.</code><code class="sig-name descname">create_sets</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datasets.create_sets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-dicoFolding.evaluate">
 <span id="dicofolding-evaluate-module"></span><h2>dicoFolding.evaluate module<a class="headerlink" href="#module-dicoFolding.evaluate" title="Permalink to this headline">¶</a></h2>
@@ -386,8 +426,14 @@ registered hooks while the latter silently ignores them.</p>
 <div class="section" id="module-dicoFolding.synthesize_results">
 <span id="dicofolding-synthesize-results-module"></span><h2>dicoFolding.synthesize_results module<a class="headerlink" href="#module-dicoFolding.synthesize_results" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="dicofolding-train-module">
-<h2>dicoFolding.train module<a class="headerlink" href="#dicofolding-train-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-dicoFolding.train">
+<span id="dicofolding-train-module"></span><h2>dicoFolding.train module<a class="headerlink" href="#module-dicoFolding.train" title="Permalink to this headline">¶</a></h2>
+<p>Training SimCLR on skeleton images</p>
+<dl class="py function">
+<dt id="dicoFolding.train.train">
+<code class="sig-prename descclassname">dicoFolding.train.</code><code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.train.train" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-dicoFolding.utils">
 <span id="dicofolding-utils-module"></span><h2>dicoFolding.utils module<a class="headerlink" href="#module-dicoFolding.utils" title="Permalink to this headline">¶</a></h2>
