@@ -43,6 +43,8 @@ import torchvision.transforms as transforms
 from scipy.ndimage import rotate
 import numpy as np
 
+from os.path import join
+
 from torch.utils.data import Dataset
 from augmentations import Transformer, Crop, Cutout, Noise, Normalize, Blur, Flip
 
@@ -73,10 +75,12 @@ class MRIDataset(Dataset):
             self.transforms.register(Crop(np.ceil(0.75*np.array(config.input_size)), "random", resize=True),
                                      probability=1)
 
+	pickle_file_path = '/home/jc225751/Runs/05_2021-05-03_premiers_essais_simclr/Input/crops/Lskeleton.py'
+
         if training:
             #self.data = np.load(config.data_train)
             #self.labels = pd.read_csv(config.label_train)
-            tmp = pd.read_pickle('/home/jc225751/Runs/05_2021-05-03_premiers_essais_simclr/Input/crops/Lskeleton.pkl')
+            tmp = pd.read_pickle(pickle_file_path)
             len_tmp = len(tmp.columns)
             data = np.array([tmp.loc[0].values[k] for k in range(len_tmp-2)])
             s = data.shape
@@ -85,7 +89,7 @@ class MRIDataset(Dataset):
         elif validation:
             #self.data = np.load(config.data_val)
             #self.labels = pd.read_csv(config.label_val)
-            tmp = pd.read_pickle('/home/jc225751/Runs/05_2021-05-03_premiers_essais_simclr/Input/crops/Lskeleton.pkl')
+            tmp = pd.read_pickle(pickle_file_path)
             len_tmp = len(tmp.columns)
             data = np.array([tmp.loc[0].values[k] for k in range(len_tmp-2,len_tmp)])
             s = data.shape
