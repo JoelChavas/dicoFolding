@@ -74,8 +74,8 @@ class MRIDataset(Dataset):
         elif config.tf == "crop":
             self.transforms.register(Crop(np.ceil(0.75*np.array(config.input_size)), "random", resize=True),
                                      probability=1)
-
-	pickle_file_path = '/home/jc225751/Runs/05_2021-05-03_premiers_essais_simclr/Input/crops/Lskeleton.py'
+                                     
+        pickle_file_path = config.pickle_file
 
         if training:
             #self.data = np.load(config.data_train)
