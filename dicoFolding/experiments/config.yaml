@@ -2,5 +2,6 @@
 defaults:
 - path: local
 - torch: SimCLR
+- skeleton: skeleton
 crop_dir: /home/jc225751/Runs/05_2021-05-03_premiers_essais_simclr/Input/crops
 pickle_file: /home/jc225751/Runs/05_2021-05-03_premiers_essais_simclr/Input/crops/Lskeleton.pkl

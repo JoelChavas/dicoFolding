@@ -13,3 +13,4 @@ cuda: False
 nb_epochs: 5
 nb_epochs_per_saving: 1
 checkpoint_dir: /home/jc225751/Misc
+seed: 42

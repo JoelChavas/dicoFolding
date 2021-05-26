@@ -48,6 +48,7 @@ import matplotlib.pyplot as plt
 import random
 
 import numpy as np
+from torch.utils import data
 
 import tqdm
 from tqdm import tqdm
@@ -59,9 +60,10 @@ from torchvision import models
 from torch.utils.data import DataLoader, Dataset, RandomSampler
 
 from dicoFolding.models.densenet import densenet121
-from dicoFolding.losses import GeneralizedSupervisedNTXenLoss
+from dicoFolding.losses import NTXenLoss
 from dicoFolding.contrastiveLearning import ContrastiveLearningModel
 from dicoFolding.datasets import MRIDataset
+from dicoFolding.datasets import create_sets
 
 from dataclasses import dataclass
 import hydra
@@ -81,25 +83,24 @@ def train(config):
     print("Number of parameters to estimate: ", params)
     #summary(net, (1, 80, 80, 80), device="cpu")
 
-    loss = GeneralizedSupervisedNTXenLoss(temperature=config.temperature,
-                                            kernel='rbf',
-                                            sigma=config.sigma,
-                                            return_logits=True)
-
-    dataset_train = MRIDataset(config, training=True)
-    dataset_val = MRIDataset(config, validation=True)
+    loss = NTXenLoss(temperature=config.temperature,
+                     return_logits=True)
+    
+    #dataset_train = MRIDataset(config, training=True)
+    #dataset_val = MRIDataset(config, validation=True)
+    dataset_train, dataset_val = create_sets(config)
 
     loader_train = DataLoader(dataset_train,
                               batch_size=config.batch_size,
                               sampler=RandomSampler(dataset_train),
-                              collate_fn=dataset_train.collate_fn,
+                              #collate_fn=dataset_train.collate_fn,
                               pin_memory=config.pin_mem,
                               num_workers=config.num_cpu_workers
                               )
     loader_val = DataLoader(dataset_val,
                             batch_size=config.batch_size,
                             sampler=RandomSampler(dataset_val),
-                            collate_fn=dataset_val.collate_fn,
+                            #collate_fn=dataset_val.collate_fn,
                             pin_memory=config.pin_mem,
                             num_workers=config.num_cpu_workers
                             )
