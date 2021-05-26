@@ -104,7 +104,9 @@ def train(config):
                             num_workers=config.num_cpu_workers
                             )
 
-    model = ContrastiveLearningModel(net, loss, loader_train, loader_val, config)
+    model = ContrastiveLearningModel(net, loss, 
+                                     loader_train, loader_val, 
+                                     config)
 
     model.training()
     
