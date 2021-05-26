@@ -47,13 +47,13 @@ class ContrastiveLearningModel:
             nb_batch = len(self.loader)
             training_loss = 0
             pbar = tqdm(total=nb_batch, desc="Training")
-            for (inputs, labels) in self.loader:
+            for (inputs, filename) in self.loader:
                 pbar.update()
                 inputs = inputs.to(self.device)
                 self.optimizer.zero_grad()
                 z_i = self.model(inputs[:, 0, :])
                 z_j = self.model(inputs[:, 1, :])
-                batch_loss, logits, target = self.loss(z_i, z_j, labels)
+                batch_loss, logits, target = self.loss(z_i, z_j)
                 batch_loss.backward()
                 self.optimizer.step()
                 training_loss += float(batch_loss) / nb_batch
@@ -66,13 +66,12 @@ class ContrastiveLearningModel:
             val_values = {}
             with torch.no_grad():
                 self.model.eval()
-                for (inputs, labels) in self.loader_val:
+                for (inputs, filename) in self.loader_val:
                     pbar.update()
                     inputs = inputs.to(self.device)
-                    labels = labels.to(self.device)
                     z_i = self.model(inputs[:, 0, :])
                     z_j = self.model(inputs[:, 1, :])
-                    batch_loss, logits, target = self.loss(z_i, z_j, labels)
+                    batch_loss, logits, target = self.loss(z_i, z_j)
                     val_loss += float(batch_loss) / nb_batch
                     for name, metric in self.metrics.items():
                         if name not in val_values:
