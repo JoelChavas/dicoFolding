@@ -56,7 +56,7 @@ import torch
 import torchvision.transforms as transforms
 from torch.autograd import Variable
 from torchvision import models
-#from torchsummary import summary
+# from torchsummary import summary
 from torch.utils.data import DataLoader, Dataset, RandomSampler
 
 from dicoFolding.models.densenet import densenet121
@@ -70,6 +70,7 @@ import hydra
 from hydra.core.config_store import ConfigStore
 from omegaconf import DictConfig, OmegaConf
 
+
 @hydra.main(config_name='config', config_path="experiments")
 def train(config):
 
@@ -81,36 +82,31 @@ def train(config):
     model_parameters = filter(lambda p: p.requires_grad, net.parameters())
     params = sum([np.prod(p.size()) for p in model_parameters])
     print("Number of parameters to estimate: ", params)
-    #summary(net, (1, 80, 80, 80), device="cpu")
+    # summary(net, (1, 80, 80, 80), device="cpu")
 
     loss = NTXenLoss(temperature=config.temperature,
                      return_logits=True)
-    
-    #dataset_train = MRIDataset(config, training=True)
-    #dataset_val = MRIDataset(config, validation=True)
+
     dataset_train, dataset_val = create_sets(config)
 
     loader_train = DataLoader(dataset_train,
                               batch_size=config.batch_size,
                               sampler=RandomSampler(dataset_train),
-                              #collate_fn=dataset_train.collate_fn,
                               pin_memory=config.pin_mem,
                               num_workers=config.num_cpu_workers
                               )
     loader_val = DataLoader(dataset_val,
                             batch_size=config.batch_size,
                             sampler=RandomSampler(dataset_val),
-                            #collate_fn=dataset_val.collate_fn,
                             pin_memory=config.pin_mem,
                             num_workers=config.num_cpu_workers
                             )
 
-    model = ContrastiveLearningModel(net, loss, 
-                                     loader_train, loader_val, 
+    model = ContrastiveLearningModel(net, loss,
+                                     loader_train, loader_val,
                                      config)
 
     model.training()
-    
 
 
 if __name__ == "__main__":

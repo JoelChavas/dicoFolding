@@ -46,13 +46,16 @@ import numpy as np
 from os.path import join
 
 from torch.utils.data import Dataset
-from dicoFolding.augmentations import Transformer, Crop, Cutout, Noise, Normalize, Blur, Flip
+from dicoFolding.augmentations import Transformer, Crop, CutoutTensor, Cutout
+from dicoFolding.augmentations import Noise, Normalize, Blur, Flip
 
 from deep_folding.preprocessing.pynet_transforms import PaddingTensor, Padding
 
+
 class MRIDataset(Dataset):
 
-    def __init__(self, config, training=False, validation=False, *args, **kwargs):
+    def __init__(self, config, training=False,
+                 validation=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         assert training != validation
 
@@ -64,22 +67,28 @@ class MRIDataset(Dataset):
             self.transforms.register(Flip(), probability=0.5)
             self.transforms.register(Blur(sigma=(0.1, 1)), probability=0.5)
             self.transforms.register(Noise(sigma=(0.1, 1)), probability=0.5)
-            self.transforms.register(Cutout(patch_size=np.ceil(np.array(config.input_size)/4)), probability=0.5)
-            self.transforms.register(Crop(np.ceil(0.75*np.array(config.input_size)), "random", resize=True),
+            patch_size = np.ceil(np.array(config.input_size)/4)
+            self.transforms.register(Cutout(patch_size=patch_size),
+                                     probability=0.5)
+            crop_shape = np.ceil(0.75*np.array(config.input_size))
+            self.transforms.register(Crop(crop_shape, "random", resize=True),
                                      probability=0.5)
 
         elif config.tf == "cutout":
-            self.transforms.register(Cutout(patch_size=np.ceil(np.array(config.input_size)/4)), probability=1)
+            patch_size = np.ceil(np.array(config.input_size)/4)
+            self.transforms.register(Cutout(patch_size=patch_size),
+                                     probability=1)
 
         elif config.tf == "crop":
-            self.transforms.register(Crop(np.ceil(0.75*np.array(config.input_size)), "random", resize=True),
+            crop_shape = np.ceil(0.75*np.array(config.input_size))
+            self.transforms.register(Crop(crop_shape, "random", resize=True),
                                      probability=1)
-                                     
+
         pickle_file_path = config.pickle_file
 
         if training:
-            #self.data = np.load(config.data_train)
-            #self.labels = pd.read_csv(config.label_train)
+            # self.data = np.load(config.data_train)
+            # self.labels = pd.read_csv(config.label_train)
             tmp = pd.read_pickle(pickle_file_path)
             len_tmp = len(tmp.columns)
             data = np.array([tmp.loc[0].values[k] for k in range(len_tmp-2)])
@@ -88,22 +97,27 @@ class MRIDataset(Dataset):
             self.data = np.zeros((len_tmp-2, 1, 80, 80, 80))
             self.data[:s[0], :s[1], :s[2], :s[3], :s[4]] = data
         elif validation:
-            #self.data = np.load(config.data_val)
-            #self.labels = pd.read_csv(config.label_val)
+            # self.data = np.load(config.data_val)
+            # self.labels = pd.read_csv(config.label_val)
             tmp = pd.read_pickle(pickle_file_path)
             len_tmp = len(tmp.columns)
-            data = np.array([tmp.loc[0].values[k] for k in range(len_tmp-2,len_tmp)])
+            data = np.array([tmp.loc[0].values[k]
+                             for k in range(len_tmp-2, len_tmp)])
             s = data.shape
             self.data = np.zeros((2, 1, 80, 80, 80))
             self.data[:s[0], :s[1], :s[2], :s[3], :s[4]] = data
 
-        assert self.data.shape[1:] == tuple(config.input_size), "3D images must have shape {}".\
-            format(config.input_size)
+        assert self.data.shape[1:] == tuple(config.input_size),\
+            "3D images must have shape {}".format(config.input_size)
 
     def collate_fn(self, list_samples):
-        list_x = torch.stack([torch.as_tensor(x, dtype=torch.float) for (x, y) in list_samples], dim=0)
-        list_y = torch.stack([torch.as_tensor(y, dtype=torch.float) for (x, y) in list_samples], dim=0)
- 
+        list_x = torch.stack([torch.as_tensor(x, dtype=torch.float)
+                              for (x, y) in list_samples],
+                             dim=0)
+        list_y = torch.stack([torch.as_tensor(y, dtype=torch.float)
+                              for (x, y) in list_samples],
+                             dim=0)
+
         return (list_x, list_y)
 
     def __getitem__(self, idx):
@@ -115,50 +129,59 @@ class MRIDataset(Dataset):
         x = np.stack((x1, x2), axis=0)
 
         labels = 1
-        return (x,labels)
+        return (x, labels)
 
     def __len__(self):
         return len(self.data)
 
+
 class TensorDataset():
     """Custom dataset that includes image file paths.
-    
+
     Applies different transformations to data depending on the type of input.
-    Args: 
+    Args:
         data_tensor: tensor containing MRIs as numpy arrays
         filenames: list of subjects' IDs
-    Returns: 
+    Returns:
         tensor of [batch, sample, subject ID]
     """
-    def __init__(self, data_tensor, filenames, fill_value):
+    def __init__(self, data_tensor, filenames, config):
         self.data_tensor = data_tensor.type(torch.float32)
         self.transform = True
         self.nb_train = len(filenames)
         print(self.nb_train)
         self.filenames = filenames
-        self.fill_value = fill_value
+        self.config = config
 
     def __len__(self):
         return (self.nb_train)
-    
+
     def __getitem__(self, idx):
         if torch.is_tensor(idx):
             idx = idx.tolist()
         sample = self.data_tensor[idx]
         filename = self.filenames[idx]
 
-        self.transform = transforms.Compose([
-                    PaddingTensor([1, 80, 80, 80], 
-                                  fill_value=self.fill_value)
+        self.transform1 = transforms.Compose([
+                    PaddingTensor(self.config.input_size,
+                                  fill_value=self.config.fill_value)
         ])
 
-        view1 = self.transform(sample)
-        view2 = self.transform(sample)
-        
+        patch_size = np.ceil(np.array(self.config.input_size)/4)
+        self.transform2 = transforms.Compose([
+            PaddingTensor(self.config.input_size,
+                          fill_value=self.config.fill_value),
+            CutoutTensor(patch_size=patch_size)
+        ])
+
+        view1 = self.transform1(sample)
+        view2 = self.transform2(sample)
+
         views = torch.stack((view1, view2), dim=0)
 
         tuple_with_path = (views, filename)
         return tuple_with_path
+
 
 class SkeletonDataset():
     """Custom dataset for skeleton images that includes image file paths.
@@ -180,14 +203,16 @@ class SkeletonDataset():
         print("keys", self.df.iloc[idx].keys())
 
         fill_value = 11  # value for the part outside the brain
-        self.transform = transforms.Compose([Padding([1, 80, 80, 80], fill_value=fill_value)
-                         ])
+        self.transform = transforms.Compose([Padding([1, 80, 80, 80],
+                                                     fill_value=fill_value)
+                                             ])
         sample = self.transform(sample)
         tuple_with_path = (sample, 'ID'+str(idx))
         return tuple_with_path
 
+
 def create_sets(config):
-    
+
     pickle_file_path = config.pickle_file
     tmp = pd.read_pickle(pickle_file_path)
 
@@ -196,19 +221,17 @@ def create_sets(config):
     print("length of dataframe", len_tmp)
     print("column names : ", filenames)
 
-    """
-    Creates a tensor object from the DataFrame (through a conversion into a numpy array)
-    """
-    tmp = torch.from_numpy(np.array([tmp.loc[0].values[k] for k in range(len_tmp)]))
+    # Creates a tensor object from the DataFrame
+    # (through a conversion into a numpy array)
+    tmp = torch.from_numpy(np.array([tmp.loc[0].values[k]
+                                     for k in range(len_tmp)]))
     print(tmp.shape)
-    """
-    Creates the dataset from this tensor by doing some preprocessing:
-	- padding to 80x80x80
-    """
-    hcp_dataset = TensorDataset(filenames=filenames, 
-                                data_tensor=tmp, 
-                                fill_value=config.fill_value)
 
+    # Creates the dataset from this tensor by doing some preprocessing:
+    # - padding to 80x80x80 by default, see config file
+    hcp_dataset = TensorDataset(filenames=filenames,
+                                data_tensor=tmp,
+                                config=config)
     print(len(hcp_dataset))
 
     # Split training set into train and val
@@ -218,7 +241,8 @@ def create_sets(config):
     torch.manual_seed(random_seed)
 
     print([round(i*(len(hcp_dataset))) for i in partition])
-    train_set, val_set = torch.utils.data.random_split(hcp_dataset,
-                         [round(i*(len(hcp_dataset))) for i in partition])
+    train_set, val_set = torch.utils.data.random_split(
+        hcp_dataset,
+        [round(i*(len(hcp_dataset))) for i in partition])
 
     return train_set, val_set
