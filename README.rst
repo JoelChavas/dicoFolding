@@ -16,7 +16,7 @@ Development
     bv bash
     cd dicoFolding
     virtualenv --system-site-packages venv
-    . bin/activate/venv
+    . venv/bin/activate
     pip install -e .
 
     # Tests
