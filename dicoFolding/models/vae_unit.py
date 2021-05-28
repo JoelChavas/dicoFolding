@@ -59,7 +59,7 @@ from torchvision import models
 from deep_folding.preprocessing import *
 from deep_folding.utils.pytorchtools import EarlyStopping
 
-from dicoFolding.postprocessing.test_tools import compute_loss, plot_loss
+from dicoFolding.postprocessing.eval_tools import compute_loss, plot_loss
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import StratifiedKFold

@@ -69,6 +69,31 @@ import hydra
 from hydra.core.config_store import ConfigStore
 from omegaconf import DictConfig, OmegaConf
 
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+
+
+def compute_tsne(loader, model):
+    all_inputs = torch.zeros([0, 1, 80, 80, 80])
+    for (inputs, filenames) in loader:
+        all_inputs = torch.cat((all_inputs, inputs[:, 0, :]), dim=0)
+    for (inputs, filenames) in loader:
+        all_inputs = torch.cat((all_inputs, inputs[:, 1, :]), dim=0)
+    X = model.model(all_inputs)
+    tsne = TSNE(n_components=2, perplexity=5, init='pca', random_state=50)
+    X_tsne = tsne.fit_transform(X.detach().numpy())
+
+    return X_tsne
+
+
+def plot_tsne(X_tsne_before, X_tsne_after):
+    fig, ax = plt.subplots(2)
+    ax[0].scatter(X_tsne_before[:8, 0], X_tsne_before[:8, 1], c='b')
+    ax[0].scatter(X_tsne_before[8:, 0], X_tsne_before[8:, 1], c='r')
+    ax[1].scatter(X_tsne_after[:8, 0], X_tsne_after[:8, 1], c='b')
+    ax[1].scatter(X_tsne_after[8:, 0], X_tsne_after[8:, 1], c='r')
+    plt.show()
+
 
 @hydra.main(config_name='config', config_path="experiments")
 def train(config):
@@ -104,8 +129,12 @@ def train(config):
     model = ContrastiveLearningModel(net, loss,
                                      loader_train, loader_val,
                                      config)
-
+        
+    X_tsne_before = compute_tsne(loader=loader_train, model=model)
     model.training()
+    X_tsne_after = compute_tsne(loader=loader_train, model=model)
+        
+    plot_tsne(X_tsne_before, X_tsne_after)
 
 
 if __name__ == "__main__":
