@@ -72,6 +72,22 @@ from omegaconf import DictConfig, OmegaConf
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 
+def mscatter(x,y,ax=None, m=None, **kw):
+    import matplotlib.markers as mmarkers
+    if not ax: ax=plt.gca()
+    sc = ax.scatter(x,y,**kw)
+    if (m is not None) and (len(m)==len(x)):
+        paths = []
+        for marker in m:
+            if isinstance(marker, mmarkers.MarkerStyle):
+                marker_obj = marker
+            else:
+                marker_obj = mmarkers.MarkerStyle(marker)
+            path = marker_obj.get_path().transformed(
+                        marker_obj.get_transform())
+            paths.append(path)
+        sc.set_paths(paths)
+    return sc
 
 def compute_tsne(loader, model):
     all_inputs = torch.zeros([0, 1, 80, 80, 80])
@@ -88,10 +104,11 @@ def compute_tsne(loader, model):
 
 def plot_tsne(X_tsne_before, X_tsne_after):
     fig, ax = plt.subplots(2)
-    ax[0].scatter(X_tsne_before[:8, 0], X_tsne_before[:8, 1], c='b')
-    ax[0].scatter(X_tsne_before[8:, 0], X_tsne_before[8:, 1], c='r')
-    ax[1].scatter(X_tsne_after[:8, 0], X_tsne_after[:8, 1], c='b')
-    ax[1].scatter(X_tsne_after[8:, 0], X_tsne_after[8:, 1], c='r')
+    m = np.repeat(["o", "s", "D", "*", "<", "P", "h", "v"], 1)
+    mscatter(X_tsne_before[:8, 0], X_tsne_before[:8, 1], c='b', m=m, ax=ax[0])
+    mscatter(X_tsne_before[8:, 0], X_tsne_before[8:, 1], c='r', m=m, ax=ax[0])
+    mscatter(X_tsne_after[:8, 0], X_tsne_after[:8, 1], c='b', m=m, ax=ax[1])
+    mscatter(X_tsne_after[8:, 0], X_tsne_after[8:, 1], c='r', m=m, ax=ax[1])
     plt.show()
 
 
@@ -115,13 +132,13 @@ def train(config):
 
     loader_train = DataLoader(dataset_train,
                               batch_size=config.batch_size,
-                              sampler=RandomSampler(dataset_train),
+                              #sampler=RandomSampler(dataset_train),
                               pin_memory=config.pin_mem,
                               num_workers=config.num_cpu_workers
                               )
     loader_val = DataLoader(dataset_val,
                             batch_size=config.batch_size,
-                            sampler=RandomSampler(dataset_val),
+                            #sampler=RandomSampler(dataset_val),
                             pin_memory=config.pin_mem,
                             num_workers=config.num_cpu_workers
                             )
