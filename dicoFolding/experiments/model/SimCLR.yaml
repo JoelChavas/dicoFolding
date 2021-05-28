@@ -10,7 +10,7 @@ sigma: 5
 lr: 1e-4
 weight_decay: 5e-5
 cuda: False
-nb_epochs: 5
+nb_epochs: 2
 nb_epochs_per_saving: 1
 checkpoint_dir: /home/jc225751/Misc
 seed: 42

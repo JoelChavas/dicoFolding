@@ -56,13 +56,12 @@ import torch
 import torchvision.transforms as transforms
 from torch.autograd import Variable
 from torchvision import models
-# from torchsummary import summary
+from torchsummary import summary
 from torch.utils.data import DataLoader, Dataset, RandomSampler
 
 from dicoFolding.models.densenet import densenet121
 from dicoFolding.losses import NTXenLoss
 from dicoFolding.contrastiveLearning import ContrastiveLearningModel
-from dicoFolding.datasets import MRIDataset
 from dicoFolding.datasets import create_sets
 
 from dataclasses import dataclass
@@ -82,7 +81,7 @@ def train(config):
     model_parameters = filter(lambda p: p.requires_grad, net.parameters())
     params = sum([np.prod(p.size()) for p in model_parameters])
     print("Number of parameters to estimate: ", params)
-    # summary(net, (1, 80, 80, 80), device="cpu")
+    summary(net, tuple(config.input_size), device="cpu")
 
     loss = NTXenLoss(temperature=config.temperature,
                      return_logits=True)

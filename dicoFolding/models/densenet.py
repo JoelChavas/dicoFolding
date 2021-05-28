@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torch.utils.checkpoint as cp
 from collections import OrderedDict
 
+
 def _bn_function_factory(norm, relu, conv):
     def bn_function(*inputs):
         concated_features = torch.cat(inputs, 1)
@@ -13,13 +14,14 @@ def _bn_function_factory(norm, relu, conv):
 
 
 class _DenseLayer(nn.Sequential):
-    def __init__(self, num_input_features, growth_rate, bn_size, drop_rate, memory_efficient=False):
+    def __init__(self, num_input_features, growth_rate, bn_size,
+                 drop_rate, memory_efficient=False):
         super(_DenseLayer, self).__init__()
         self.add_module('norm1', nn.BatchNorm3d(num_input_features)),
         self.add_module('relu1', nn.ReLU(inplace=True)),
         self.add_module('conv1', nn.Conv3d(num_input_features, bn_size *
-                                           growth_rate, kernel_size=1, stride=1,
-                                           bias=False)),
+                                           growth_rate, kernel_size=1,
+                                           stride=1, bias=False)),
         self.add_module('norm2', nn.BatchNorm3d(bn_size * growth_rate)),
         self.add_module('relu2', nn.ReLU(inplace=True)),
         self.add_module('conv2', nn.Conv3d(bn_size * growth_rate, growth_rate,
@@ -30,7 +32,8 @@ class _DenseLayer(nn.Sequential):
 
     def forward(self, *prev_features):
         bn_function = _bn_function_factory(self.norm1, self.relu1, self.conv1)
-        if self.memory_efficient and any(prev_feature.requires_grad for prev_feature in prev_features):
+        if self.memory_efficient and any(prev_feature.requires_grad
+                                         for prev_feature in prev_features):
             bottleneck_output = cp.checkpoint(bn_function, *prev_features)
         else:
             bottleneck_output = bn_function(*prev_features)
@@ -38,13 +41,15 @@ class _DenseLayer(nn.Sequential):
         new_features = self.conv2(self.relu2(self.norm2(bottleneck_output)))
 
         if self.drop_rate > 0:
-            new_features = F.dropout(new_features, p=self.drop_rate, training=self.training)
+            new_features = F.dropout(new_features, p=self.drop_rate,
+                                     training=self.training)
 
         return new_features
 
 
 class _DenseBlock(nn.Module):
-    def __init__(self, num_layers, num_input_features, bn_size, growth_rate, drop_rate, memory_efficient=False):
+    def __init__(self, num_layers, num_input_features, bn_size, growth_rate,
+                 drop_rate, memory_efficient=False):
         super(_DenseBlock, self).__init__()
         for i in range(num_layers):
             layer = _DenseLayer(
@@ -69,41 +74,49 @@ class _Transition(nn.Sequential):
         super(_Transition, self).__init__()
         self.add_module('norm', nn.BatchNorm3d(num_input_features))
         self.add_module('relu', nn.ReLU(inplace=True))
-        self.add_module('conv', nn.Conv3d(num_input_features, num_output_features,
+        self.add_module('conv', nn.Conv3d(num_input_features,
+                                          num_output_features,
                                           kernel_size=1, stride=1, bias=False))
         self.add_module('pool', nn.AvgPool3d(kernel_size=2, stride=2))
 
 
 class DenseNet(nn.Module):
     r"""3D-DenseNet model class, based on
-    `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
+    `"Densely Connected Convolutional Networks"
+    <https://arxiv.org/pdf/1608.06993.pdf>`_
 
     Args:
         growth_rate (int) - how many filters to add each layer (`k` in paper)
         block_config (list of 4 ints) - how many layers in each pooling block
-        num_init_features (int) - the number of filters to learn in the first convolution layer
+        num_init_features (int) - the number of filters to learn in the first
+            convolution layer
         bn_size (int) - multiplicative factor for number of bottle neck layers
-          (i.e. bn_size * k features in the bottleneck layer)
+            (i.e. bn_size * k features in the bottleneck layer)
         drop_rate (float) - dropout rate after each dense layer
-        num_classes (int) - number of classification classes (if 'classifier' mode)
+        num_classes (int) - number of classification classes
+            (if 'classifier' mode)
         in_channels (int) - number of input channels (1 for sMRI)
-        mode (str) - specify in which mode DenseNet is trained on -- must be "encoder" or "classifier"
-        memory_efficient (bool) - If True, uses checkpointing. Much more memory efficient,
-          but slower. Default: *False*. See `"paper" <https://arxiv.org/pdf/1707.06990.pdf>`_
+        mode (str) - specify in which mode DenseNet is trained on,
+            must be "encoder" or "classifier"
+        memory_efficient (bool) - If True, uses checkpointing. Much more memory
+            efficient, but slower. Default: *False*.
+            See `"paper" <https://arxiv.org/pdf/1707.06990.pdf>`_
     """
 
     def __init__(self, growth_rate=32, block_config=(3, 12, 24, 16),
-                 num_init_features=64, bn_size=4, drop_rate=0, num_classes=1000, in_channels=1,
+                 num_init_features=64, bn_size=4, drop_rate=0,
+                 num_classes=1000, in_channels=1,
                  mode="encoder", memory_efficient=False):
 
         super(DenseNet, self).__init__()
 
-        assert mode in {'encoder', 'classifier'}, "Unknown mode selected: %s"%mode
+        assert mode in {'encoder', 'classifier'},\
+            "Unknown mode selected: %s" % mode
 
         # First convolution
         self.features = nn.Sequential(OrderedDict([
-            ('conv0', nn.Conv3d(in_channels, num_init_features, kernel_size=7, stride=2,
-                                padding=3, bias=False)),
+            ('conv0', nn.Conv3d(in_channels, num_init_features, kernel_size=7,
+                                stride=2, padding=3, bias=False)),
             ('norm0', nn.BatchNorm3d(num_init_features)),
             ('relu0', nn.ReLU(inplace=True)),
             ('pool0', nn.MaxPool3d(kernel_size=3, stride=2, padding=1)),
@@ -150,7 +163,7 @@ class DenseNet(nn.Module):
                 nn.init.constant_(m.bias, 0)
 
     def forward(self, x):
-        ## Eventually keep the input images for visualization
+        # Eventually keep the input images for visualization
         self.input_imgs = x.detach().cpu().numpy()
         features = self.features(x)
         if self.mode == "classifier":
@@ -173,7 +186,6 @@ class DenseNet(nn.Module):
         return self.input_imgs
 
 
-
 def _densenet(arch, growth_rate, block_config, num_init_features, **kwargs):
     model = DenseNet(growth_rate, block_config, num_init_features, **kwargs)
     return model
@@ -181,13 +193,14 @@ def _densenet(arch, growth_rate, block_config, num_init_features, **kwargs):
 
 def densenet121(**kwargs):
     r"""Densenet-121 model from
-    `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
+    `"Densely Connected Convolutional Networks"
+    <https://arxiv.org/pdf/1608.06993.pdf>`_
 
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
-        memory_efficient (bool) - If True, uses checkpointing. Much more memory efficient,
-          but slower. Default: *False*. See `"paper" <https://arxiv.org/pdf/1707.06990.pdf>`_
+        progress (bool): If True, displays a download progress bar to stderr
+        memory_efficient (bool) - If True, uses checkpointing:
+            much more memory efficient, but slower. Default: *False*.
+            See `"paper" <https://arxiv.org/pdf/1707.06990.pdf>`_
     """
     return _densenet('densenet121', 32, (6, 12, 24, 16), 64, **kwargs)
-

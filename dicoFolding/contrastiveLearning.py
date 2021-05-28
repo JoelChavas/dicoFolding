@@ -47,7 +47,7 @@ class ContrastiveLearningModel:
             nb_batch = len(self.loader)
             training_loss = 0
             pbar = tqdm(total=nb_batch, desc="Training")
-            for (inputs, filename) in self.loader:
+            for (inputs, filenames) in self.loader:
                 pbar.update()
                 inputs = inputs.to(self.device)
                 self.optimizer.zero_grad()
@@ -66,7 +66,7 @@ class ContrastiveLearningModel:
             val_values = {}
             with torch.no_grad():
                 self.model.eval()
-                for (inputs, filename) in self.loader_val:
+                for (inputs, filenames) in self.loader_val:
                     pbar.update()
                     inputs = inputs.to(self.device)
                     z_i = self.model(inputs[:, 0, :])
