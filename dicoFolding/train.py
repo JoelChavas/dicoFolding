@@ -147,11 +147,11 @@ def train(config):
                                      loader_train, loader_val,
                                      config)
         
-    X_tsne_before = compute_tsne(loader=loader_train, model=model)
+ #   X_tsne_before = compute_tsne(loader=loader_train, model=model)
     model.training()
-    X_tsne_after = compute_tsne(loader=loader_train, model=model)
+ #   X_tsne_after = compute_tsne(loader=loader_train, model=model)
         
-    plot_tsne(X_tsne_before, X_tsne_after)
+ #   plot_tsne(X_tsne_before, X_tsne_after)
 
 
 if __name__ == "__main__":
