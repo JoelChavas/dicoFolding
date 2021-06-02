@@ -97,7 +97,7 @@ def compute_tsne(loader, model):
         all_inputs = torch.cat((all_inputs, inputs[:, 1, :]), dim=0)
     X = model.model(all_inputs)
     tsne = TSNE(n_components=2, perplexity=5, init='pca', random_state=50)
-    X_tsne = tsne.fit_transform(X.detach().numpy())
+    X_tsne = tsne.fit_transform(X.cpu().detach().numpy())
 
     return X_tsne
 
@@ -147,11 +147,11 @@ def train(config):
                                      loader_train, loader_val,
                                      config)
         
- #   X_tsne_before = compute_tsne(loader=loader_train, model=model)
+    X_tsne_before = compute_tsne(loader=loader_train, model=model)
     model.training()
- #   X_tsne_after = compute_tsne(loader=loader_train, model=model)
+    X_tsne_after = compute_tsne(loader=loader_train, model=model)
         
- #   plot_tsne(X_tsne_before, X_tsne_after)
+    plot_tsne(X_tsne_before, X_tsne_after)
 
 
 if __name__ == "__main__":
