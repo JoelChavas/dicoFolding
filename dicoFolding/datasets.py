@@ -51,6 +51,8 @@ from dicoFolding.augmentations import Noise, Normalize, Blur, Flip
 
 from deep_folding.preprocessing.pynet_transforms import PaddingTensor, Padding
 
+_ALL_SUBJECTS = -1
+
 
 class TensorDataset():
     """Custom dataset that includes image file paths.
@@ -103,23 +105,31 @@ class TensorDataset():
 def create_sets(config):
 
     pickle_file_path = config.pickle_file
-    tmp = pd.read_pickle(pickle_file_path)
+    all_data = pd.read_pickle(pickle_file_path)
 
-    len_tmp = len(tmp.columns)
-    filenames = list(tmp.columns)  # files names = subject IDs
-    print("length of dataframe", len_tmp)
+    len_data = (
+        len(all_data.columns)
+        if config.nb_subjects == _ALL_SUBJECTS
+        else min(config.nb_subjects, len(all_data.columns)))
+    
+    filenames = (
+        list(all_data.columns)
+        if config.nb_subjects == _ALL_SUBJECTS
+        else list(all_data.columns)[:len_data]) # files names = subject IDs
+    
+    print("length of dataframe", len_data)
     print("column names : ", filenames)
 
     # Creates a tensor object from the DataFrame
     # (through a conversion into a numpy array)
-    tmp = torch.from_numpy(np.array([tmp.loc[0].values[k]
-                                     for k in range(len_tmp)]))
-    print(tmp.shape)
+    tensor_data = torch.from_numpy(np.array([all_data.loc[0].values[k]
+                                     for k in range(len_data)]))
+    print(tensor_data.shape)
 
     # Creates the dataset from this tensor by doing some preprocessing:
     # - padding to 80x80x80 by default, see config file
     hcp_dataset = TensorDataset(filenames=filenames,
-                                data_tensor=tmp,
+                                data_tensor=tensor_data,
                                 config=config)
     print(len(hcp_dataset))
 

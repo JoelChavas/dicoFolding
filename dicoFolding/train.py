@@ -72,6 +72,10 @@ from omegaconf import DictConfig, OmegaConf
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 
+from torch.nn import DataParallel
+
+import copy
+
 def mscatter(x,y,ax=None, m=None, **kw):
     import matplotlib.markers as mmarkers
     if not ax: ax=plt.gca()
@@ -90,25 +94,28 @@ def mscatter(x,y,ax=None, m=None, **kw):
     return sc
 
 def compute_tsne(loader, model):
-    all_inputs = torch.zeros([0, 1, 80, 80, 80])
-    for (inputs, filenames) in loader:
-        all_inputs = torch.cat((all_inputs, inputs[:, 0, :]), dim=0)
-    for (inputs, filenames) in loader:
-        all_inputs = torch.cat((all_inputs, inputs[:, 1, :]), dim=0)
-    X = model.model(all_inputs)
+    X = torch.zeros([0, 128]).cpu()
+    with torch.no_grad():
+        model.model.eval()
+        for (inputs, filenames) in loader:
+            X_i = model.model(inputs[:, 0, :])
+            X_j = model.model(inputs[:, 1, :])
+            X = torch.cat((X, X_i.cpu(), X_j.cpu()), dim=0)
+            del inputs
     tsne = TSNE(n_components=2, perplexity=5, init='pca', random_state=50)
-    X_tsne = tsne.fit_transform(X.cpu().detach().numpy())
+    X_tsne = tsne.fit_transform(X.detach().numpy())
 
     return X_tsne
 
 
-def plot_tsne(X_tsne_before, X_tsne_after):
+def plot_tsne(X_tsne_before, X_tsne_after, config):
     fig, ax = plt.subplots(2)
-    m = np.repeat(["o", "s", "D", "*", "<", "P", "h", "v"], 1)
-    mscatter(X_tsne_before[:8, 0], X_tsne_before[:8, 1], c='b', m=m, ax=ax[0])
-    mscatter(X_tsne_before[8:, 0], X_tsne_before[8:, 1], c='r', m=m, ax=ax[0])
-    mscatter(X_tsne_after[:8, 0], X_tsne_after[:8, 1], c='b', m=m, ax=ax[1])
-    mscatter(X_tsne_after[8:, 0], X_tsne_after[8:, 1], c='r', m=m, ax=ax[1])
+    print(X_tsne_before.shape)
+    print(X_tsne_after.shape)
+    m = np.repeat(["o", "o", "s", "s", "D", "D", "*", "*", "<", "<", 
+                   "P", "P", "h", "h", "v", "v"], 10)
+    mscatter(X_tsne_before[:, 0], X_tsne_before[:, 1], c='b', m=m, ax=ax[0])
+    mscatter(X_tsne_after[:, 0], X_tsne_after[:, 1], c='b', m=m, ax=ax[1])
     plt.show()
 
 
@@ -151,7 +158,7 @@ def train(config):
     model.training()
     X_tsne_after = compute_tsne(loader=loader_train, model=model)
         
-    plot_tsne(X_tsne_before, X_tsne_after)
+    plot_tsne(X_tsne_before, X_tsne_after, config)
 
 
 if __name__ == "__main__":
