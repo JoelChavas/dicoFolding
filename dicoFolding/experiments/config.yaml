@@ -1,7 +1,7 @@
 # @package _group_
 defaults:
-  - hydra: run_local
-  - dataset: run_local
+  - hydra: vscode
+  - dataset: vscode
   - model: SimCLR
   - preprocessing: default
   - platform: cuda

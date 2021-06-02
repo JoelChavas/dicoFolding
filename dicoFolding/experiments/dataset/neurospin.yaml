@@ -1,0 +1,3 @@
+# @package _global_
+crop_dir: ../../../Input/crops
+pickle_file: /neurospin/dico/deep_folding_data/data/crops/STS_branches/nearest/original/Lskeleton.pkl
