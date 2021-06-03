@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
@@ -30,10 +32,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -190,7 +192,9 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="dicoFolding.html#dicoFolding.datasets.MRIDataset.collate_fn">collate_fn() (dicoFolding.datasets.MRIDataset method)</a>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.eval_tools.compute_loss">compute_loss() (in module dicoFolding.postprocessing.eval_tools)</a>
+</li>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.visualization.compute_tsne">compute_tsne() (in module dicoFolding.postprocessing.visualization)</a>
 </li>
       <li><a href="dicoFolding.html#dicoFolding.contrastiveLearning.ContrastiveLearningModel">ContrastiveLearningModel (class in dicoFolding.contrastiveLearning)</a>
 </li>
@@ -201,6 +205,8 @@
       <li><a href="dicoFolding.html#dicoFolding.augmentations.Crop">Crop (class in dicoFolding.augmentations)</a>
 </li>
       <li><a href="dicoFolding.html#dicoFolding.augmentations.Cutout">Cutout (class in dicoFolding.augmentations)</a>
+</li>
+      <li><a href="dicoFolding.html#dicoFolding.augmentations.CutoutTensor">CutoutTensor (class in dicoFolding.augmentations)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -243,13 +249,6 @@
 </li>
       </ul></li>
       <li>
-    dicoFolding.evaluate
-
-      <ul>
-        <li><a href="dicoFolding.html#module-dicoFolding.evaluate">module</a>
-</li>
-      </ul></li>
-      <li>
     dicoFolding.losses
 
       <ul>
@@ -273,13 +272,6 @@
 </li>
       </ul></li>
       <li>
-    dicoFolding.models.simclr
-
-      <ul>
-        <li><a href="dicoFolding.models.html#module-dicoFolding.models.simclr">module</a>
-</li>
-      </ul></li>
-      <li>
     dicoFolding.models.vae_unit
 
       <ul>
@@ -287,17 +279,24 @@
 </li>
       </ul></li>
       <li>
-    dicoFolding.search_hyperparameters
+    dicoFolding.postprocessing
 
       <ul>
-        <li><a href="dicoFolding.html#module-dicoFolding.search_hyperparameters">module</a>
+        <li><a href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing">module</a>
 </li>
       </ul></li>
       <li>
-    dicoFolding.synthesize_results
+    dicoFolding.postprocessing.eval_tools
 
       <ul>
-        <li><a href="dicoFolding.html#module-dicoFolding.synthesize_results">module</a>
+        <li><a href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing.eval_tools">module</a>
+</li>
+      </ul></li>
+      <li>
+    dicoFolding.postprocessing.visualization
+
+      <ul>
+        <li><a href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing.visualization">module</a>
 </li>
       </ul></li>
       <li>
@@ -305,13 +304,6 @@
 
       <ul>
         <li><a href="dicoFolding.html#module-dicoFolding.train">module</a>
-</li>
-      </ul></li>
-      <li>
-    dicoFolding.utils
-
-      <ul>
-        <li><a href="dicoFolding.html#module-dicoFolding.utils">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -330,11 +322,9 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="dicoFolding.html#dicoFolding.augmentations.Flip">Flip (class in dicoFolding.augmentations)</a>
 </li>
-      <li><a href="dicoFolding.html#dicoFolding.losses.GeneralizedSupervisedNTXenLoss.forward">forward() (dicoFolding.losses.GeneralizedSupervisedNTXenLoss method)</a>
+      <li><a href="dicoFolding.html#dicoFolding.losses.NTXenLoss.forward">forward() (dicoFolding.losses.NTXenLoss method)</a>
 
       <ul>
-        <li><a href="dicoFolding.html#dicoFolding.losses.NTXenLoss.forward">(dicoFolding.losses.NTXenLoss method)</a>
-</li>
         <li><a href="dicoFolding.models.html#dicoFolding.models.densenet.DenseNet.forward">(dicoFolding.models.densenet.DenseNet method)</a>
 </li>
         <li><a href="dicoFolding.models.html#dicoFolding.models.vae_unit.VAE.forward">(dicoFolding.models.vae_unit.VAE method)</a>
@@ -346,11 +336,11 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="dicoFolding.html#dicoFolding.losses.GeneralizedSupervisedNTXenLoss">GeneralizedSupervisedNTXenLoss (class in dicoFolding.losses)</a>
+      <li><a href="dicoFolding.models.html#dicoFolding.models.densenet.DenseNet.get_current_visuals">get_current_visuals() (dicoFolding.models.densenet.DenseNet method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="dicoFolding.models.html#dicoFolding.models.densenet.DenseNet.get_current_visuals">get_current_visuals() (dicoFolding.models.densenet.DenseNet method)</a>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.eval_tools.get_outliers">get_outliers() (in module dicoFolding.postprocessing.eval_tools)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -365,6 +355,10 @@
 
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.visualization.load">load() (in module dicoFolding.postprocessing.visualization)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="dicoFolding.html#dicoFolding.contrastiveLearning.ContrastiveLearningModel.load_model">load_model() (dicoFolding.contrastiveLearning.ContrastiveLearningModel method)</a>
 </li>
@@ -390,30 +384,26 @@
 </li>
         <li><a href="dicoFolding.html#module-dicoFolding.datasets">dicoFolding.datasets</a>
 </li>
-        <li><a href="dicoFolding.html#module-dicoFolding.evaluate">dicoFolding.evaluate</a>
-</li>
         <li><a href="dicoFolding.html#module-dicoFolding.losses">dicoFolding.losses</a>
 </li>
         <li><a href="dicoFolding.models.html#module-dicoFolding.models">dicoFolding.models</a>
 </li>
         <li><a href="dicoFolding.models.html#module-dicoFolding.models.densenet">dicoFolding.models.densenet</a>
 </li>
-        <li><a href="dicoFolding.models.html#module-dicoFolding.models.simclr">dicoFolding.models.simclr</a>
-</li>
         <li><a href="dicoFolding.models.html#module-dicoFolding.models.vae_unit">dicoFolding.models.vae_unit</a>
 </li>
-        <li><a href="dicoFolding.html#module-dicoFolding.search_hyperparameters">dicoFolding.search_hyperparameters</a>
+        <li><a href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing">dicoFolding.postprocessing</a>
 </li>
-        <li><a href="dicoFolding.html#module-dicoFolding.synthesize_results">dicoFolding.synthesize_results</a>
+        <li><a href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing.eval_tools">dicoFolding.postprocessing.eval_tools</a>
+</li>
+        <li><a href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing.visualization">dicoFolding.postprocessing.visualization</a>
 </li>
         <li><a href="dicoFolding.html#module-dicoFolding.train">dicoFolding.train</a>
-</li>
-        <li><a href="dicoFolding.html#module-dicoFolding.utils">dicoFolding.utils</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="dicoFolding.html#dicoFolding.datasets.MRIDataset">MRIDataset (class in dicoFolding.datasets)</a>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.visualization.mscatter">mscatter() (in module dicoFolding.postprocessing.visualization)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -435,7 +425,19 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="dicoFolding.html#dicoFolding.augmentations.Transformer.Transform.probability">probability (dicoFolding.augmentations.Transformer.Transform attribute)</a>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.eval_tools.plot_auc">plot_auc() (in module dicoFolding.postprocessing.eval_tools)</a>
+</li>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.eval_tools.plot_distrib">plot_distrib() (in module dicoFolding.postprocessing.eval_tools)</a>
+</li>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.eval_tools.plot_loss">plot_loss() (in module dicoFolding.postprocessing.eval_tools)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.eval_tools.plot_trajectories">plot_trajectories() (in module dicoFolding.postprocessing.eval_tools)</a>
+</li>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.visualization.plot_tsne">plot_tsne() (in module dicoFolding.postprocessing.visualization)</a>
+</li>
+      <li><a href="dicoFolding.html#dicoFolding.augmentations.Transformer.Transform.probability">probability (dicoFolding.augmentations.Transformer.Transform property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -454,10 +456,6 @@
       <li><a href="dicoFolding.models.html#dicoFolding.models.vae_unit.VAE.sample_z">sample_z() (dicoFolding.models.vae_unit.VAE method)</a>
 </li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="dicoFolding.html#dicoFolding.datasets.SkeletonDataset">SkeletonDataset (class in dicoFolding.datasets)</a>
-</li>
-  </ul></td>
 </tr></table>
 
 <h2 id="T">T</h2>
@@ -467,17 +465,17 @@
 </li>
       <li><a href="dicoFolding.models.html#dicoFolding.models.vae_unit.ModelTester.test">test() (dicoFolding.models.vae_unit.ModelTester method)</a>
 </li>
+      <li><a href="dicoFolding.postprocessing.html#dicoFolding.postprocessing.eval_tools.test_model">test_model() (in module dicoFolding.postprocessing.eval_tools)</a>
+</li>
       <li><a href="dicoFolding.models.html#dicoFolding.models.vae_unit.ModelTrainer.train">train() (dicoFolding.models.vae_unit.ModelTrainer method)</a>
 
       <ul>
         <li><a href="dicoFolding.html#dicoFolding.train.train">(in module dicoFolding.train)</a>
 </li>
       </ul></li>
-      <li><a href="dicoFolding.html#dicoFolding.losses.GeneralizedSupervisedNTXenLoss.training">training (dicoFolding.losses.GeneralizedSupervisedNTXenLoss attribute)</a>
+      <li><a href="dicoFolding.html#dicoFolding.losses.NTXenLoss.training">training (dicoFolding.losses.NTXenLoss attribute)</a>
 
       <ul>
-        <li><a href="dicoFolding.html#dicoFolding.losses.NTXenLoss.training">(dicoFolding.losses.NTXenLoss attribute)</a>
-</li>
         <li><a href="dicoFolding.models.html#dicoFolding.models.densenet.DenseNet.training">(dicoFolding.models.densenet.DenseNet attribute)</a>
 </li>
         <li><a href="dicoFolding.models.html#dicoFolding.models.vae_unit.VAE.training">(dicoFolding.models.vae_unit.VAE attribute)</a>
@@ -487,7 +485,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="dicoFolding.html#dicoFolding.contrastiveLearning.ContrastiveLearningModel.training">training() (dicoFolding.contrastiveLearning.ContrastiveLearningModel method)</a>
 </li>
-      <li><a href="dicoFolding.html#dicoFolding.augmentations.Transformer.Transform.transform">transform (dicoFolding.augmentations.Transformer.Transform attribute)</a>
+      <li><a href="dicoFolding.html#dicoFolding.augmentations.Transformer.Transform.transform">transform (dicoFolding.augmentations.Transformer.Transform property)</a>
 </li>
       <li><a href="dicoFolding.html#dicoFolding.augmentations.Transformer">Transformer (class in dicoFolding.augmentations)</a>
 </li>

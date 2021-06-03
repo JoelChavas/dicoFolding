@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>dicoFolding.postprocessing package &mdash; dicoFolding 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="dicoFolding.models package" href="dicoFolding.models.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> dicoFolding
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">README:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#development">Development</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="dicoFolding.html">dicoFolding package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dicoFolding.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="dicoFolding.models.html">dicoFolding.models package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">dicoFolding.postprocessing package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.postprocessing.eval_tools">dicoFolding.postprocessing.eval_tools module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.postprocessing.visualization">dicoFolding.postprocessing.visualization module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.postprocessing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.augmentations">dicoFolding.augmentations module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.contrastiveLearning">dicoFolding.contrastiveLearning module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.datasets">dicoFolding.datasets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.losses">dicoFolding.losses module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.train">dicoFolding.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dicoFolding</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="dicoFolding.html">dicoFolding package</a> &raquo;</li>
+        
+      <li>dicoFolding.postprocessing package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/dicoFolding.postprocessing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dicofolding-postprocessing-package">
+<h1>dicoFolding.postprocessing package<a class="headerlink" href="#dicofolding-postprocessing-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dicoFolding.postprocessing.eval_tools">
+<span id="dicofolding-postprocessing-eval-tools-module"></span><h2>dicoFolding.postprocessing.eval_tools module<a class="headerlink" href="#module-dicoFolding.postprocessing.eval_tools" title="Permalink to this headline">¶</a></h2>
+<p>Diverse tools to analyse training results</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.eval_tools.compute_loss">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.eval_tools.</span></span><span class="sig-name descname"><span class="pre">compute_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dico_set_loaders</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.eval_tools.compute_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns list of loss values for each dataset_loader batch
+dataset_loader: dataset on which compute loss
+model: trained model used to compute loss
+loss_type: loss function to use to compute loss (L1, L2, SSIM)
+path_mode: if True (possible to track loss to samples)
+show: if True, display output images in Anatomist</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.eval_tools.get_outliers">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.eval_tools.</span></span><span class="sig-name descname"><span class="pre">get_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skeleton</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dico_set_loaders</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.eval_tools.get_outliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print outliers of a given model for each dataset of dico_set_loaders
+IN:</p>
+<blockquote>
+<div><p>skeleton: True/False, whether input are skeleton
+dico_set_loaders: dictionary with keys corresponding to name of different</p>
+<blockquote>
+<div><p>populations to compare and values, associated dataloader
+model: model trained</p>
+</div></blockquote>
+<p>loss_type: ‘L2’/’CrossEnt’</p>
+</div></blockquote>
+<p>OUT:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.eval_tools.plot_auc">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.eval_tools.</span></span><span class="sig-name descname"><span class="pre">plot_auc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auc_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.eval_tools.plot_auc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.eval_tools.plot_distrib">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.eval_tools.</span></span><span class="sig-name descname"><span class="pre">plot_distrib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loss_nor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">loss_abnor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.eval_tools.plot_distrib" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots distribution of “normal subjects” loss list and “abnormal
+subjects” loss list
+loss_nor, loss_abnor : 2 lists to plot distribution</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.eval_tools.plot_loss">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.eval_tools.</span></span><span class="sig-name descname"><span class="pre">plot_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_loss_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_loss_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.eval_tools.plot_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot training loss given two lists of loss
+list_loss_train: list of loss values of training set
+list_loss_val: list of validation set loss values</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.eval_tools.plot_trajectories">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.eval_tools.</span></span><span class="sig-name descname"><span class="pre">plot_trajectories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loss_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.eval_tools.plot_trajectories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot error trajectories for all subjects
+loss_dict : dictionary containing loss values for each subject at each
+epoch
+root_dir : folder directory in which saving figure</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.eval_tools.test_model">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.eval_tools.</span></span><span class="sig-name descname"><span class="pre">test_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skeleton</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dico_set_loaders</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.eval_tools.test_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-dicoFolding.postprocessing.visualization">
+<span id="dicofolding-postprocessing-visualization-module"></span><h2>dicoFolding.postprocessing.visualization module<a class="headerlink" href="#module-dicoFolding.postprocessing.visualization" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.visualization.compute_tsne">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.visualization.</span></span><span class="sig-name descname"><span class="pre">compute_tsne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.visualization.compute_tsne" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.visualization.load">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.visualization.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/jc225751/Runs/09_CUDA_hcp/Output/Contrastive_MRI_epoch_3.pth'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.visualization.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.visualization.mscatter">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.visualization.</span></span><span class="sig-name descname"><span class="pre">mscatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.visualization.mscatter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.visualization.plot_tsne">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.visualization.</span></span><span class="sig-name descname"><span class="pre">plot_tsne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_tsne_before</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_tsne_after</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.visualization.plot_tsne" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-dicoFolding.postprocessing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dicoFolding.postprocessing" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="dicoFolding.models.html" class="btn btn-neutral float-left" title="dicoFolding.models package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Joel Chavas.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

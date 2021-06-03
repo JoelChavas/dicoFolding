@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
@@ -30,16 +32,17 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dicoFolding.postprocessing package" href="dicoFolding.postprocessing.html" />
     <link rel="prev" title="dicoFolding package" href="dicoFolding.html" /> 
 </head>
 
@@ -97,23 +100,19 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">dicoFolding.models package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models.densenet">dicoFolding.models.densenet module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models.simclr">dicoFolding.models.simclr module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models.vae_unit">dicoFolding.models.vae_unit module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="dicoFolding.postprocessing.html">dicoFolding.postprocessing package</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.augmentations">dicoFolding.augmentations module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.contrastiveLearning">dicoFolding.contrastiveLearning module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.datasets">dicoFolding.datasets module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.evaluate">dicoFolding.evaluate module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.losses">dicoFolding.losses module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.search_hyperparameters">dicoFolding.search_hyperparameters module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.synthesize_results">dicoFolding.synthesize_results module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#dicofolding-train-module">dicoFolding.train module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.utils">dicoFolding.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.train">dicoFolding.train module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding">Module contents</a></li>
 </ul>
 </li>
@@ -194,8 +193,8 @@
 <div class="section" id="module-dicoFolding.models.densenet">
 <span id="dicofolding-models-densenet-module"></span><h2>dicoFolding.models.densenet module<a class="headerlink" href="#module-dicoFolding.models.densenet" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="dicoFolding.models.densenet.DenseNet">
-<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.models.densenet.</code><code class="sig-name descname">DenseNet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">growth_rate</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">block_config</span><span class="o">=</span><span class="default_value">3, 12, 24, 16</span></em>, <em class="sig-param"><span class="n">num_init_features</span><span class="o">=</span><span class="default_value">64</span></em>, <em class="sig-param"><span class="n">bn_size</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">drop_rate</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">num_classes</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">in_channels</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'encoder'</span></em>, <em class="sig-param"><span class="n">memory_efficient</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.models.densenet.</span></span><span class="sig-name descname"><span class="pre">DenseNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">growth_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(3,</span> <span class="pre">12,</span> <span class="pre">24,</span> <span class="pre">16)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_init_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'encoder'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_efficient</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>3D-DenseNet model class, based on
 <a class="reference external" href="https://arxiv.org/pdf/1608.06993.pdf">“Densely Connected Convolutional Networks”</a></p>
@@ -204,19 +203,20 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>growth_rate</strong> (int) - how many filters to add each layer (<cite>k</cite> in paper) – </p></li>
 <li><p><strong>block_config</strong> (<em>list of 4 ints</em>) – </p></li>
-<li><p><strong>num_init_features</strong> (<em>int</em>) – </p></li>
+<li><p><strong>num_init_features</strong> (<em>int</em>) – convolution layer</p></li>
 <li><p><strong>bn_size</strong> (<em>int</em>) – (i.e. bn_size * k features in the bottleneck layer)</p></li>
 <li><p><strong>drop_rate</strong> (<em>float</em>) – </p></li>
-<li><p><strong>num_classes</strong> (<em>int</em><em>) </em><em>- number of classification classes</em><em> (</em><em>if 'classifier' mode</em>) – </p></li>
+<li><p><strong>num_classes</strong> (<em>int</em>) – (if ‘classifier’ mode)</p></li>
 <li><p><strong>in_channels</strong> (<em>int</em><em>) </em><em>- number of input channels</em><em> (</em><em>1 for sMRI</em>) – </p></li>
-<li><p><strong>mode</strong> (<em>str</em>) – </p></li>
-<li><p><strong>memory_efficient</strong> (<em>bool</em>) – but slower. Default: <em>False</em>. See <a class="reference external" href="https://arxiv.org/pdf/1707.06990.pdf">“paper”</a></p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – must be “encoder” or “classifier”</p></li>
+<li><p><strong>memory_efficient</strong> (<em>bool</em>) – efficient, but slower. Default: <em>False</em>.
+See <a class="reference external" href="https://arxiv.org/pdf/1707.06990.pdf">“paper”</a></p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="dicoFolding.models.densenet.DenseNet.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines the computation performed at every call.</p>
 <p>Should be overridden by all subclasses.</p>
 <div class="admonition note">
@@ -229,28 +229,29 @@ registered hooks while the latter silently ignores them.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="dicoFolding.models.densenet.DenseNet.get_current_visuals">
-<code class="sig-name descname">get_current_visuals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.get_current_visuals" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.get_current_visuals">
+<span class="sig-name descname"><span class="pre">get_current_visuals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.get_current_visuals" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dicoFolding.models.densenet.DenseNet.training">
-<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="dicoFolding.models.densenet.densenet121">
-<code class="sig-prename descclassname">dicoFolding.models.densenet.</code><code class="sig-name descname">densenet121</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.densenet121" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.densenet121">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.models.densenet.</span></span><span class="sig-name descname"><span class="pre">densenet121</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.densenet121" title="Permalink to this definition">¶</a></dt>
 <dd><p>Densenet-121 model from
 <a class="reference external" href="https://arxiv.org/pdf/1608.06993.pdf">“Densely Connected Convolutional Networks”</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>pretrained</strong> (<em>bool</em>) – If True, returns a model pre-trained on ImageNet</p></li>
-<li><p><strong>progress</strong> (<em>bool</em>) – If True, displays a progress bar of the download to stderr</p></li>
-<li><p><strong>memory_efficient</strong> (<em>bool</em>) – <p>but slower. Default: <em>False</em>. See <a class="reference external" href="https://arxiv.org/pdf/1707.06990.pdf">“paper”</a></p>
+<li><p><strong>progress</strong> (<em>bool</em>) – If True, displays a download progress bar to stderr</p></li>
+<li><p><strong>memory_efficient</strong> (<em>bool</em>) – <p>much more memory efficient, but slower. Default: <em>False</em>.
+See <a class="reference external" href="https://arxiv.org/pdf/1707.06990.pdf">“paper”</a></p>
 </p></li>
 </ul>
 </dd>
@@ -258,51 +259,48 @@ registered hooks while the latter silently ignores them.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-dicoFolding.models.simclr">
-<span id="dicofolding-models-simclr-module"></span><h2>dicoFolding.models.simclr module<a class="headerlink" href="#module-dicoFolding.models.simclr" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="module-dicoFolding.models.vae_unit">
 <span id="dicofolding-models-vae-unit-module"></span><h2>dicoFolding.models.vae_unit module<a class="headerlink" href="#module-dicoFolding.models.vae_unit" title="Permalink to this headline">¶</a></h2>
 <p>beta-VAE</p>
 <dl class="py class">
-<dt id="dicoFolding.models.vae_unit.ModelTester">
-<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.models.vae_unit.</code><code class="sig-name descname">ModelTester</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">dico_set_loaders</span></em>, <em class="sig-param"><span class="n">loss_func</span></em>, <em class="sig-param"><span class="n">kl_weight</span></em>, <em class="sig-param"><span class="n">n_latent</span></em>, <em class="sig-param"><span class="n">depth</span></em>, <em class="sig-param"><span class="n">norm</span></em>, <em class="sig-param"><span class="n">skeleton</span></em>, <em class="sig-param"><span class="n">root_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTester" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.ModelTester">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.models.vae_unit.</span></span><span class="sig-name descname"><span class="pre">ModelTester</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dico_set_loaders</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kl_weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skeleton</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTester" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt id="dicoFolding.models.vae_unit.ModelTester.test">
-<code class="sig-name descname">test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTester.test" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.ModelTester.test">
+<span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTester.test" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="dicoFolding.models.vae_unit.ModelTrainer">
-<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.models.vae_unit.</code><code class="sig-name descname">ModelTrainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">train_loader</span></em>, <em class="sig-param"><span class="n">val_loader</span></em>, <em class="sig-param"><span class="n">loss_func</span></em>, <em class="sig-param"><span class="n">nb_epoch</span></em>, <em class="sig-param"><span class="n">optimizer</span></em>, <em class="sig-param"><span class="n">kl_weight</span></em>, <em class="sig-param"><span class="n">n_latent</span></em>, <em class="sig-param"><span class="n">depth</span></em>, <em class="sig-param"><span class="n">norm</span></em>, <em class="sig-param"><span class="n">skeleton</span></em>, <em class="sig-param"><span class="n">root_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTrainer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.ModelTrainer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.models.vae_unit.</span></span><span class="sig-name descname"><span class="pre">ModelTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kl_weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skeleton</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTrainer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt id="dicoFolding.models.vae_unit.ModelTrainer.train">
-<code class="sig-name descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTrainer.train" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.ModelTrainer.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTrainer.train" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="dicoFolding.models.vae_unit.VAE">
-<em class="property">class </em><code class="sig-prename descclassname">dicoFolding.models.vae_unit.</code><code class="sig-name descname">VAE</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_shape</span></em>, <em class="sig-param"><span class="n">n_latent</span></em>, <em class="sig-param"><span class="n">depth</span></em>, <em class="sig-param"><span class="n">norm</span></em>, <em class="sig-param"><span class="n">skeleton</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.models.vae_unit.</span></span><span class="sig-name descname"><span class="pre">VAE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skeleton</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <dl class="py method">
-<dt id="dicoFolding.models.vae_unit.VAE.decode">
-<code class="sig-name descname">decode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.decode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.decode">
+<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.decode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="dicoFolding.models.vae_unit.VAE.encode">
-<code class="sig-name descname">encode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.encode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.encode">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.encode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="dicoFolding.models.vae_unit.VAE.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines the computation performed at every call.</p>
 <p>Should be overridden by all subclasses.</p>
 <div class="admonition note">
@@ -315,26 +313,26 @@ registered hooks while the latter silently ignores them.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="dicoFolding.models.vae_unit.VAE.sample_z">
-<code class="sig-name descname">sample_z</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">logvar</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.sample_z" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.sample_z">
+<span class="sig-name descname"><span class="pre">sample_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logvar</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.sample_z" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dicoFolding.models.vae_unit.VAE.training">
-<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="dicoFolding.models.vae_unit.VAE.weight_initialization">
-<code class="sig-name descname">weight_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.weight_initialization" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.weight_initialization">
+<span class="sig-name descname"><span class="pre">weight_initialization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.weight_initialization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes model parameters according to Gaussian Glorot initialization</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="dicoFolding.models.vae_unit.vae_loss">
-<code class="sig-prename descclassname">dicoFolding.models.vae_unit.</code><code class="sig-name descname">vae_loss</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">logvar</span></em>, <em class="sig-param"><span class="n">loss_func</span></em>, <em class="sig-param"><span class="n">kl_weight</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.vae_loss" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.vae_loss">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.models.vae_unit.</span></span><span class="sig-name descname"><span class="pre">vae_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logvar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kl_weight</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.vae_loss" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -349,6 +347,7 @@ registered hooks while the latter silently ignores them.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="dicoFolding.postprocessing.html" class="btn btn-neutral float-right" title="dicoFolding.postprocessing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="dicoFolding.html" class="btn btn-neutral float-left" title="dicoFolding package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
