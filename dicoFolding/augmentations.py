@@ -12,6 +12,7 @@ class CutoutTensor(object):
     arXiv, 2017
     We assume that the square to be cut is inside the image.
     """
+
     def __init__(self, patch_size=None, value=0, random_size=False,
                  inplace=False, localization=None):
         self.patch_size = patch_size
@@ -23,7 +24,7 @@ class CutoutTensor(object):
     def __call__(self, arr):
 
         img_shape = np.array(arr.shape)
-        if type(self.patch_size) == int:
+        if isinstance(self.patch_size, int):
             size = [self.patch_size for _ in range(len(img_shape))]
         else:
             size = np.copy(self.patch_size)
@@ -35,10 +36,11 @@ class CutoutTensor(object):
             if self.random_size:
                 size[ndim] = np.random.randint(0, size[ndim])
             if self.localization is not None:
-                delta_before = max(self.localization[ndim] - size[ndim]//2, 0)
+                delta_before = max(
+                    self.localization[ndim] - size[ndim] // 2, 0)
             else:
-                delta_before = np.random.randint(0,
-                                                 img_shape[ndim]-size[ndim]+1)
+                delta_before = np.random.randint(
+                    0, img_shape[ndim] - size[ndim] + 1)
             indexes.append(slice(int(delta_before),
                                  int(delta_before + size[ndim])))
         if self.inplace:
@@ -116,7 +118,7 @@ class Transformer(object):
             return '(Empty Transformer)'
         s = 'Composition of:'
         for trf in self.transforms:
-            s += '\n\t- '+trf.__str__()
+            s += '\n\t- ' + trf.__str__()
         return s
 
 
@@ -127,12 +129,13 @@ class Normalize(object):
         self.eps = eps
 
     def __call__(self, arr):
-        return self.std * (arr - np.mean(arr))/(np.std(arr) + self.eps)\
+        return self.std * (arr - np.mean(arr)) / (np.std(arr) + self.eps)\
             + self.mean
 
 
 class Crop(object):
     """Crop the given n-dim array either at a random location or centered"""
+
     def __init__(self, shape, type="center", resize=False, keep_dim=False):
         """:param
         shape: tuple or list of int
@@ -154,11 +157,14 @@ class Crop(object):
 
     def __call__(self, arr):
         assert isinstance(arr, np.ndarray)
-        assert type(self.shape) == int or len(self.shape) == len(arr.shape),\
-            "Shape of array {} does not match {}".format(arr.shape, self.shape)
+        assert isinstance(
+            self.shape, int) or len(
+            self.shape) == len(
+            arr.shape), "Shape of array {} does not match {}".format(
+                arr.shape, self.shape)
 
         img_shape = np.array(arr.shape)
-        if type(self.shape) == int:
+        if isinstance(self.shape, int):
             size = [self.shape for _ in range(len(self.shape))]
         else:
             size = np.copy(self.shape)
@@ -169,8 +175,8 @@ class Crop(object):
             if self.copping_type == "center":
                 delta_before = (img_shape[ndim] - size[ndim]) / 2.0
             elif self.copping_type == "random":
-                delta_before = np.random.randint(0,
-                                                 img_shape[ndim]-size[ndim]+1)
+                delta_before = np.random.randint(
+                    0, img_shape[ndim] - size[ndim] + 1)
             indexes.append(slice(int(delta_before),
                                  int(delta_before + size[ndim])))
         if self.resize:
@@ -195,6 +201,7 @@ class Cutout(object):
     arXiv, 2017
     We assume that the square to be cut is inside the image.
     """
+
     def __init__(self, patch_size=None, value=0, random_size=False,
                  inplace=False, localization=None):
         self.patch_size = patch_size
@@ -206,7 +213,7 @@ class Cutout(object):
     def __call__(self, arr):
 
         img_shape = np.array(arr.shape)
-        if type(self.patch_size) == int:
+        if isinstance(self.patch_size, int):
             size = [self.patch_size for _ in range(len(img_shape))]
         else:
             size = np.copy(self.patch_size)
@@ -218,10 +225,11 @@ class Cutout(object):
             if self.random_size:
                 size[ndim] = np.random.randint(0, size[ndim])
             if self.localization is not None:
-                delta_before = max(self.localization[ndim] - size[ndim]//2, 0)
+                delta_before = max(
+                    self.localization[ndim] - size[ndim] // 2, 0)
             else:
-                delta_before = np.random.randint(0,
-                                                 img_shape[ndim]-size[ndim]+1)
+                delta_before = np.random.randint(
+                    0, img_shape[ndim] - size[ndim] + 1)
             indexes.append(slice(int(delta_before),
                                  int(delta_before + size[ndim])))
         if self.inplace:
@@ -235,6 +243,7 @@ class Cutout(object):
 
 class Flip(object):
     """ Apply a random mirror flip."""
+
     def __init__(self, axis=None):
         '''
         :param axis: int, default None

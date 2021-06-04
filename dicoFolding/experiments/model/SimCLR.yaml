@@ -9,6 +9,8 @@ temperature: 0.1
 sigma: 5
 lr: 1e-4
 weight_decay: 5e-5
-nb_epochs: 4
+max_epochs: 4
 nb_epochs_per_saving: 1
 seed: 42
+name: Contrastive_MRI
+start_epoch: 0

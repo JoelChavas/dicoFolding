@@ -64,6 +64,7 @@ class TensorDataset():
     Returns:
         tensor of [batch, sample, subject ID]
     """
+
     def __init__(self, data_tensor, filenames, config):
         self.data_tensor = data_tensor.type(torch.float32)
         self.transform = True
@@ -82,11 +83,11 @@ class TensorDataset():
         filename = self.filenames[idx]
 
         self.transform1 = transforms.Compose([
-                    PaddingTensor(self.config.input_size,
-                                  fill_value=self.config.fill_value)
+            PaddingTensor(self.config.input_size,
+                          fill_value=self.config.fill_value)
         ])
 
-        patch_size = np.ceil(np.array(self.config.input_size)/4)
+        patch_size = np.ceil(np.array(self.config.input_size) / 4)
         self.transform2 = transforms.Compose([
             PaddingTensor(self.config.input_size,
                           fill_value=self.config.fill_value),
@@ -111,19 +112,19 @@ def create_sets(config):
         len(all_data.columns)
         if config.nb_subjects == _ALL_SUBJECTS
         else min(config.nb_subjects, len(all_data.columns)))
-    
+
     filenames = (
         list(all_data.columns)
         if config.nb_subjects == _ALL_SUBJECTS
-        else list(all_data.columns)[:len_data]) # files names = subject IDs
-    
+        else list(all_data.columns)[:len_data])  # files names = subject IDs
+
     print("length of dataframe", len_data)
     print("column names : ", filenames)
 
     # Creates a tensor object from the DataFrame
     # (through a conversion into a numpy array)
     tensor_data = torch.from_numpy(np.array([all_data.loc[0].values[k]
-                                     for k in range(len_data)]))
+                                             for k in range(len_data)]))
     print(tensor_data.shape)
 
     # Creates the dataset from this tensor by doing some preprocessing:
@@ -139,9 +140,9 @@ def create_sets(config):
     random_seed = config.seed
     torch.manual_seed(random_seed)
 
-    print([round(i*(len(hcp_dataset))) for i in partition])
+    print([round(i * (len(hcp_dataset))) for i in partition])
     train_set, val_set = torch.utils.data.random_split(
         hcp_dataset,
-        [round(i*(len(hcp_dataset))) for i in partition])
+        [round(i * (len(hcp_dataset))) for i in partition])
 
     return train_set, val_set

@@ -29,55 +29,41 @@
 # The fact that you are presently reading this means that you have had
 # knowledge of the CeCILL license version 2 and that you accept its terms.
 
-""" Training SimCLR on skeleton images
+""" Data module
 
 """
 
-######################################################################
-# Imports and global variables definitions
-######################################################################
-
-import os
-import matplotlib.pyplot as plt
-
-import numpy as np
-from torch.utils import data
-
-from torchsummary import summary
-
-from dicoFolding.models.densenet import densenet121
-from dicoFolding.datasets import create_sets
-
-from dicoFolding.postprocessing.visualization import compute_tsne, plot_tsne
-from dicoFolding.contrastive_learner import ContrastiveLearner
-from dicoFolding.datamodule import DataModule
-
-from dataclasses import dataclass
-import hydra
-from omegaconf import OmegaConf
-
-import matplotlib.pyplot as plt
-
+from torch.utils.data import DataLoader, RandomSampler
 import pytorch_lightning as pl
 
-import logging
-log = logging.getLogger(__name__)
+from dicoFolding.datasets import create_sets
 
 
-@hydra.main(config_name='config', config_path="experiments")
-def train(config):
+class DataModule(pl.LightningDataModule):
+    """Data module class
+    """
 
-    log.info(OmegaConf.to_yaml(config))
-    log.info("Working directory : {}".format(os.getcwd()))
-    config.input_size = eval(config.input_size)
+    def __init__(self, config):
+        super(DataModule, self).__init__()
+        self.config = config
 
-    data_module = DataModule(config)
-    model = ContrastiveLearner(config,
-                               mode="encoder",
-                               drop_rate=0.0)
-    trainer = pl.Trainer(gpus=1, max_epochs=config.max_epochs)
-    trainer.fit(model, data_module)
+    def setup(self, stage):
+        self.dataset_train, self.dataset_val = create_sets(self.config)
 
+    def train_dataloader(self):
+        loader_train = DataLoader(self.dataset_train,
+                                  batch_size=self.config.batch_size,
+                                  sampler=RandomSampler(self.dataset_train),
+                                  pin_memory=self.config.pin_mem,
+                                  num_workers=self.config.num_cpu_workers
+                                  )
+        return loader_train
 
-if __name__ == "__main__":
-    train()
+    def val_dataloader(self):
+        loader_val = DataLoader(self.dataset_val,
+                                batch_size=self.config.batch_size,
+                                pin_memory=self.config.pin_mem,
+                                num_workers=self.config.num_cpu_workers,
+                                shuffle=False
+                                )
+        return loader_val

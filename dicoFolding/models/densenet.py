@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.checkpoint as cp
 from collections import OrderedDict
+import pytorch_lightning as pl
 
 
 def _bn_function_factory(norm, relu, conv):
@@ -80,7 +81,7 @@ class _Transition(nn.Sequential):
         self.add_module('pool', nn.AvgPool3d(kernel_size=2, stride=2))
 
 
-class DenseNet(nn.Module):
+class DenseNet(pl.LightningModule):
     r"""3D-DenseNet model class, based on
     `"Densely Connected Convolutional Networks"
     <https://arxiv.org/pdf/1608.06993.pdf>`_
