@@ -13,7 +13,7 @@ setup(
                     'torchvision', 'torch-summary', 'hydra', 'hydra.core',
                     'dataclasses', 'hydra', 'OmegaConf',
                     'sklearn', 'scikit-image',
-                    'pytorch-lightning'],
+                    'pytorch-lightning', 'lightly'],
     url='https://github.com/JoelChavas/dicoFolding',
     author='Joël Chavas',
     author_email='joel.chavas@cea.fr'

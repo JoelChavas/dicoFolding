@@ -38,25 +38,12 @@
 ######################################################################
 
 import os
-import matplotlib.pyplot as plt
 
-import numpy as np
-from torch.utils import data
-
-from torchsummary import summary
-
-from dicoFolding.models.densenet import densenet121
-from dicoFolding.datasets import create_sets
-
-from dicoFolding.postprocessing.visualization import compute_tsne, plot_tsne
 from dicoFolding.contrastive_learner import ContrastiveLearner
 from dicoFolding.datamodule import DataModule
 
-from dataclasses import dataclass
 import hydra
 from omegaconf import OmegaConf
-
-import matplotlib.pyplot as plt
 
 import pytorch_lightning as pl
 
@@ -64,12 +51,20 @@ import logging
 log = logging.getLogger(__name__)
 
 
-@hydra.main(config_name='config', config_path="experiments")
-def train(config):
+def process_config(config):
+    """Does whatever operations on the config file
+    """
 
     log.info(OmegaConf.to_yaml(config))
     log.info("Working directory : {}".format(os.getcwd()))
     config.input_size = eval(config.input_size)
+    log.info("config type: {}".format(type(config)))
+    return config
+
+
+@hydra.main(config_name='config', config_path="experiments")
+def train(config):
+    config = process_config(config)
 
     data_module = DataModule(config)
     model = ContrastiveLearner(config,
