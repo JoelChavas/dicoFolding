@@ -1,10 +1,11 @@
 # @package _global_
 model: DenseNet
 tf: crop
-batch_size: 5
+batch_size: 16
 pin_mem: True
 input_size: (1, 80, 80, 80)
-num_cpu_workers: 8
+partition: [0.8, 0.2, 0.0]
+num_cpu_workers: 48
 temperature: 0.1
 sigma: 5
 lr: 1e-4

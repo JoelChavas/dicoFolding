@@ -1,7 +1,7 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# /usr/bin/env python3
 #
-# This software and supporting documentation are distributed by
+#  This software and supporting documentation are distributed by
 #      Institut Federatif de Recherche 49
 #      CEA/NeuroSpin, Batiment 145,
 #      91191 Gif-sur-Yvette cedex
@@ -37,39 +37,43 @@
 Tools in order to create pytorch dataloaders
 """
 
+import logging
+from os.path import join
+
+import numpy as np
 import pandas as pd
 import torch
 import torchvision.transforms as transforms
 from scipy.ndimage import rotate
-import numpy as np
 
-from os.path import join
+log = logging.getLogger(__name__)
 
+from deep_folding.preprocessing.pynet_transforms import Padding, PaddingTensor
 from torch.utils.data import Dataset
-from dicoFolding.augmentations import Transformer, Crop, CutoutTensor, Cutout
-from dicoFolding.augmentations import Noise, Normalize, Blur, Flip
 
-from deep_folding.preprocessing.pynet_transforms import PaddingTensor, Padding
+from dicoFolding.augmentations import (Blur, Crop, Cutout, CutoutTensor, Flip,
+                                       Noise, Normalize, Transformer)
 
 _ALL_SUBJECTS = -1
 
 
-class TensorDataset():
+class ContrastiveDataset():
     """Custom dataset that includes image file paths.
 
     Applies different transformations to data depending on the type of input.
-    Args:
-        data_tensor: tensor containing MRIs as numpy arrays
-        filenames: list of subjects' IDs
-    Returns:
-        tensor of [batch, sample, subject ID]
     """
 
     def __init__(self, data_tensor, filenames, config):
+        """
+        Args:
+            data_tensor (tensor): contains MRIs as numpy arrays
+            filenames (list of strings): list of subjects' IDs
+            config (Omegaconf dict): contains configuration information
+        """
         self.data_tensor = data_tensor.type(torch.float32)
         self.transform = True
         self.nb_train = len(filenames)
-        print(self.nb_train)
+        log.info(self.nb_train)
         self.filenames = filenames
         self.config = config
 
@@ -77,11 +81,20 @@ class TensorDataset():
         return (self.nb_train)
 
     def __getitem__(self, idx):
+        """Returns the two views corresponding to index idx
+        
+        The two views are generated on the fly. 
+        The first view is the reference view (only padding is applied)
+        
+        Returns:
+            tuple of (views, subject ID)
+        """
         if torch.is_tensor(idx):
             idx = idx.tolist()
         sample = self.data_tensor[idx]
         filename = self.filenames[idx]
 
+        # - padding to 80x80x80 by default, see config file
         self.transform1 = transforms.Compose([
             PaddingTensor(self.config.input_size,
                           fill_value=self.config.fill_value)
@@ -97,13 +110,20 @@ class TensorDataset():
         view1 = self.transform1(sample)
         view2 = self.transform2(sample)
 
-        views = torch.stack((view1, view2, view2), dim=0)
+        views = torch.stack((view1, view2), dim=0)
 
         tuple_with_path = (views, filename)
         return tuple_with_path
 
 
 def create_sets(config):
+    """Creates train, validation and test sets
+    
+    Args:
+        config (Omegaconf dict): contains configuration parameters
+    Returns:
+        train_set, val_set, test_set (tuple)
+    """
 
     pickle_file_path = config.pickle_file
     all_data = pd.read_pickle(pickle_file_path)
@@ -118,31 +138,27 @@ def create_sets(config):
         if config.nb_subjects == _ALL_SUBJECTS
         else list(all_data.columns)[:len_data])  # files names = subject IDs
 
-    print("length of dataframe", len_data)
-    print("column names : ", filenames)
+    log.info("length of dataframe: {}".format(len_data))
+    log.info("column names : {}".format(filenames))
 
     # Creates a tensor object from the DataFrame
     # (through a conversion into a numpy array)
     tensor_data = torch.from_numpy(np.array([all_data.loc[0].values[k]
                                              for k in range(len_data)]))
-    print(tensor_data.shape)
+    log.info("Tensor data shape: {}".format(tensor_data.shape))
 
-    # Creates the dataset from this tensor by doing some preprocessing:
-    # - padding to 80x80x80 by default, see config file
-    hcp_dataset = TensorDataset(filenames=filenames,
-                                data_tensor=tensor_data,
-                                config=config)
-    print(len(hcp_dataset))
+    # Creates the dataset from this tensor by doing some preprocessing
+    hcp_dataset = ContrastiveDataset(filenames=filenames,
+                                     data_tensor=tensor_data,
+                                     config=config)
+    log.info("Length of complete data set: {}".format(len(hcp_dataset)))
 
-    # Split training set into train and val
-    partition = [0.8, 0.2]
+    # Split training set into train, val and test set
+    partition = config.partition
 
-    random_seed = config.seed
-    torch.manual_seed(random_seed)
-
-    print([round(i * (len(hcp_dataset))) for i in partition])
-    train_set, val_set = torch.utils.data.random_split(
+    log.info([round(i * (len(hcp_dataset))) for i in partition])
+    train_set, val_set, test_set = torch.utils.data.random_split(
         hcp_dataset,
         [round(i * (len(hcp_dataset))) for i in partition])
 
-    return train_set, val_set
+    return train_set, val_set, test_set

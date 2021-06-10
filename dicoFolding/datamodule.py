@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+#  This software and supporting documentation are distributed by
 #      Institut Federatif de Recherche 49
 #      CEA/NeuroSpin, Batiment 145,
 #      91191 Gif-sur-Yvette cedex
@@ -33,8 +37,8 @@
 
 """
 
-from torch.utils.data import DataLoader, RandomSampler
 import pytorch_lightning as pl
+from torch.utils.data import DataLoader, RandomSampler
 
 from dicoFolding.datasets import create_sets
 
@@ -48,7 +52,7 @@ class DataModule(pl.LightningDataModule):
         self.config = config
 
     def setup(self, stage):
-        self.dataset_train, self.dataset_val = create_sets(self.config)
+        self.dataset_train, self.dataset_val, self.dataset_test = create_sets(self.config)
 
     def train_dataloader(self):
         loader_train = DataLoader(self.dataset_train,

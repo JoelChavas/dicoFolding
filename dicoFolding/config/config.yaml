@@ -1,6 +1,7 @@
 # @package _group_
 defaults:
   - hydra: local
+  - hydra/job_logging: custom
   - dataset: neurospin
   - model: SimCLR
   - preprocessing: default

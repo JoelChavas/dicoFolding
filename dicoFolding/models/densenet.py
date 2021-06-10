@@ -86,7 +86,7 @@ class DenseNet(pl.LightningModule):
     `"Densely Connected Convolutional Networks"
     <https://arxiv.org/pdf/1608.06993.pdf>`_
 
-    Args:
+    Attributes:
         growth_rate (int) - how many filters to add each layer (`k` in paper)
         block_config (list of 4 ints) - how many layers in each pooling block
         num_init_features (int) - the number of filters to learn in the first

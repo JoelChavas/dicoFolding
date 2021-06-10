@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+#  This software and supporting documentation are distributed by
 #      Institut Federatif de Recherche 49
 #      CEA/NeuroSpin, Batiment 145,
 #      91191 Gif-sur-Yvette cedex
@@ -37,34 +41,28 @@
 # Imports and global variables definitions
 ######################################################################
 
+import logging
 import os
+
+import hydra
+import pytorch_lightning as pl
+from lightly.loss import NTXentLoss
+from lightly.models import SimCLR
+from pytorch_lightning.utilities.seed import seed_everything
 
 from dicoFolding.contrastive_learner import ContrastiveLearner
 from dicoFolding.datamodule import DataModule
+from dicoFolding.utils import process_config
 
-import hydra
-from omegaconf import OmegaConf
-
-import pytorch_lightning as pl
-
-import logging
 log = logging.getLogger(__name__)
 
 
-def process_config(config):
-    """Does whatever operations on the config file
-    """
-
-    log.info(OmegaConf.to_yaml(config))
-    log.info("Working directory : {}".format(os.getcwd()))
-    config.input_size = eval(config.input_size)
-    log.info("config type: {}".format(type(config)))
-    return config
-
-
-@hydra.main(config_name='config', config_path="experiments")
+@hydra.main(config_name='config', config_path="config")
 def train(config):
     config = process_config(config)
+    
+    # Sets seed for pseudo-random number generators in: pytorch, numpy, python.random
+    seed_everything(config.seed)
 
     data_module = DataModule(config)
     model = ContrastiveLearner(config,
