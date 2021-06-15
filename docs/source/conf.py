@@ -13,6 +13,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath('../../venv/lib/python3.6/site-packages'))
 print("sys.path = \n", sys.path)
 
 # -- Project information -----------------------------------------------------

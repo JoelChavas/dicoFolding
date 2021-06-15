@@ -4,12 +4,12 @@
 # You can set these variables from the command line, and also
 # from the environment for the first two.
 SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = $(CASA_HOST_HOME)/.local/bin/sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = ../../../dicoFolding_docs
 
 # Variables to generate .rst files through apidoc
-SPHINXAPIDOC  = sphinx-apidoc 
+SPHINXAPIDOC  = $(CASA_HOST_HOME)/.local/bin/sphinx-apidoc 
 MODULEDIR     = ../../dicoFolding
 
 # Put it first so that "make" without argument is like "make help".
@@ -40,3 +40,4 @@ buildandcommit: html
 # It builds the documentation and pushes into the repo branch gh-pages
 buildandpush: buildandcommit
 	cd $(BUILDDIR)/html && git push origin gh-pages
+
