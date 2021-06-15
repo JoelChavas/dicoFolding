@@ -34,7 +34,6 @@
 # knowledge of the CeCILL license version 2 and that you accept its terms.
 
 """ Data module
-
 """
 
 import pytorch_lightning as pl

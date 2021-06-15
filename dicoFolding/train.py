@@ -42,35 +42,57 @@
 ######################################################################
 
 import logging
-import os
 
 import hydra
 import pytorch_lightning as pl
-from lightly.loss import NTXentLoss
-from lightly.models import SimCLR
 from pytorch_lightning.utilities.seed import seed_everything
+from pytorch_lightning import loggers as pl_loggers
+from torch.utils.tensorboard import SummaryWriter
+from torchsummary import summary
 
 from dicoFolding.contrastive_learner import ContrastiveLearner
 from dicoFolding.datamodule import DataModule
 from dicoFolding.utils import process_config
 
+from postprocessing.visualize_tsne import compute_tsne, plot_tsne
+
+tb_logger = pl_loggers.TensorBoardLogger('logs')
+writer = SummaryWriter()
 log = logging.getLogger(__name__)
+
+"""
+We call:
+- embedding, the space before the projection head. 
+  The elements of the space are features
+- output, the space after the projection head. 
+  The elements are called output vectors
+"""
 
 
 @hydra.main(config_name='config', config_path="config")
 def train(config):
     config = process_config(config)
     
-    # Sets seed for pseudo-random number generators in: pytorch, numpy, python.random
+    # Sets seed for pseudo-random number generators 
+    # in: pytorch, numpy, python.random
     seed_everything(config.seed)
 
     data_module = DataModule(config)
     model = ContrastiveLearner(config,
                                mode="encoder",
-                               drop_rate=0.0)
-    trainer = pl.Trainer(gpus=1, max_epochs=config.max_epochs)
+                               drop_rate=0.0,
+                               sample_data=data_module)
+    summary(model, tuple(config.input_size), device="cpu")
+
+    trainer = pl.Trainer(gpus=1,
+                         max_epochs=config.max_epochs,
+                         logger=tb_logger,
+                         flush_logs_every_n_steps=config.nb_steps_per_flush_logs)
     trainer.fit(model, data_module)
 
+    # X_tsne = compute_tsne(data_module.train_dataloader(), model)
+    # plot_tsne(X_tsne, buffer=False)
+    
 
 if __name__ == "__main__":
     train()
