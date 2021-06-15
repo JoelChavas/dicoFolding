@@ -39,14 +39,12 @@ https://learnopencv.com/tensorboard-with-pytorch-lightning
 """
 import PIL
 import torch
-import torchvision
 from dicoFolding.losses import NTXenLoss
 from dicoFolding.models.densenet import DenseNet
 from torchvision.transforms import ToTensor
+from sklearn.manifold import TSNE
 
-from dicoFolding.postprocessing.visualize_tsne import compute_tsne
 from dicoFolding.postprocessing.visualize_tsne import plot_tsne
-
 
 class ContrastiveLearner(DenseNet):
 
@@ -103,13 +101,36 @@ class ContrastiveLearner(DenseNet):
 
         return batch_dictionary
 
+    def compute_embeddings_skeletons(self, loader):
+        X = torch.zeros([0, 128]).cpu()
+        with torch.no_grad():
+            for (inputs, filenames) in loader:
+                # First views of the whole batch
+                inputs = inputs.cuda()
+                model = self.cuda()
+                X_i = model.forward(inputs[:, 0, :])
+                # Second views of the whole batch
+                X_j = model.forward(inputs[:, 1, :])
+                # First views and second views are put side by side
+                X_reordered = torch.cat([X_i, X_j], dim=-1)
+                X_reordered = X_reordered.view(-1, X_i.shape[-1])
+                X = torch.cat((X, X_reordered.cpu()), dim=0)
+                del inputs
+        return X
+
     # On n'a pas accès ici à toutes les données
     # def training-epoch_end(self, outputs):
     #     X_tsne = compute_tsne(data_module.train_dataloader(), model)
     #     plot_tsne(X_tsne)
+    def compute_tsne(self, loader):
+        X = self.compute_embeddings_skeletons(loader)
+        tsne = TSNE(n_components=2, perplexity=5, init='pca', random_state=50)
+        X_tsne = tsne.fit_transform(X.detach().numpy())
+
+        return X_tsne
 
     def training_epoch_end(self, outputs):
-        X_tsne = compute_tsne(self.sample_data.train_dataloader(), self)
+        X_tsne = self.compute_tsne(self.sample_data.train_dataloader())
         buf = plot_tsne(X_tsne, buffer=True)
         image = PIL.Image.open(buf)
         image = ToTensor()(image).unsqueeze(0)[0]
