@@ -80,6 +80,9 @@ class ContrastiveLearner(DenseNet):
 
     def training_step(self, train_batch, batch_idx):
         (inputs, filenames) = train_batch
+        z_i = self.forward(inputs[:, 0, :])
+        z_j = self.forward(inputs[:, 1, :])
+        batch_loss, _, _ = self.nt_xen_loss(z_i, z_j)
         self.log('train_loss', float(batch_loss))
 
         # Only computes graph on first step
