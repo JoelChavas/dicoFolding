@@ -95,7 +95,7 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">dicoFolding.postprocessing package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.postprocessing.eval_tools">dicoFolding.postprocessing.eval_tools module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dicofolding-postprocessing-visualize-nearest-neighhbours-module">dicoFolding.postprocessing.visualize_nearest_neighhbours module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.postprocessing.visualize_nearest_neighhbours">dicoFolding.postprocessing.visualize_nearest_neighhbours module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.postprocessing.visualize_tsne">dicoFolding.postprocessing.visualize_tsne module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.postprocessing">Module contents</a></li>
 </ul>
@@ -251,8 +251,26 @@ root_dir : folder directory in which saving figure</p>
 <dd></dd></dl>
 
 </div>
-<div class="section" id="dicofolding-postprocessing-visualize-nearest-neighhbours-module">
-<h2>dicoFolding.postprocessing.visualize_nearest_neighhbours module<a class="headerlink" href="#dicofolding-postprocessing-visualize-nearest-neighhbours-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-dicoFolding.postprocessing.visualize_nearest_neighhbours">
+<span id="dicofolding-postprocessing-visualize-nearest-neighhbours-module"></span><h2>dicoFolding.postprocessing.visualize_nearest_neighhbours module<a class="headerlink" href="#module-dicoFolding.postprocessing.visualize_nearest_neighhbours" title="Permalink to this headline">¶</a></h2>
+<p>Inspired from lightly <a class="reference external" href="https://docs.lightly.ai/tutorials/package/tutorial_simclr_clothing.html">https://docs.lightly.ai/tutorials/package/tutorial_simclr_clothing.html</a></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.visualize_nearest_neighhbours.get_image_as_np_array">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.visualize_nearest_neighhbours.</span></span><span class="sig-name descname"><span class="pre">get_image_as_np_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.visualize_nearest_neighhbours.get_image_as_np_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an image as an numpy array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dicoFolding.postprocessing.visualize_nearest_neighhbours.plot_knn_examples">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.postprocessing.visualize_nearest_neighhbours.</span></span><span class="sig-name descname"><span class="pre">plot_knn_examples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embeddings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.postprocessing.visualize_nearest_neighhbours.plot_knn_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots multiple rows of random images with their nearest neighbors</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-dicoFolding.postprocessing.visualize_tsne">
 <span id="dicofolding-postprocessing-visualize-tsne-module"></span><h2>dicoFolding.postprocessing.visualize_tsne module<a class="headerlink" href="#module-dicoFolding.postprocessing.visualize_tsne" title="Permalink to this headline">¶</a></h2>
