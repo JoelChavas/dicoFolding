@@ -20,10 +20,18 @@ dicoFolding\.augmentations module
     :undoc-members:
     :show-inheritance:
 
-dicoFolding\.contrastiveLearning module
----------------------------------------
+dicoFolding\.contrastive\_learner module
+----------------------------------------
 
-.. automodule:: dicoFolding.contrastiveLearning
+.. automodule:: dicoFolding.contrastive_learner
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+dicoFolding\.datamodule module
+------------------------------
+
+.. automodule:: dicoFolding.datamodule
     :members:
     :undoc-members:
     :show-inheritance:
@@ -48,6 +56,14 @@ dicoFolding\.train module
 -------------------------
 
 .. automodule:: dicoFolding.train
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+dicoFolding\.utils module
+-------------------------
+
+.. automodule:: dicoFolding.utils
     :members:
     :undoc-members:
     :show-inheritance:

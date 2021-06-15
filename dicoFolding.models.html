@@ -1,34 +1,23 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>dicoFolding.models package &mdash; dicoFolding 0.0.1 documentation</title>
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-
+  
   
   
 
   
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -40,6 +29,13 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="dicoFolding.postprocessing package" href="dicoFolding.postprocessing.html" />
@@ -80,7 +76,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -100,7 +95,6 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">dicoFolding.models package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models.densenet">dicoFolding.models.densenet module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models.vae_unit">dicoFolding.models.vae_unit module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-dicoFolding.models">Module contents</a></li>
 </ul>
 </li>
@@ -109,10 +103,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.augmentations">dicoFolding.augmentations module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.contrastiveLearning">dicoFolding.contrastiveLearning module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#dicofolding-contrastive-learner-module">dicoFolding.contrastive_learner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.datamodule">dicoFolding.datamodule module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.datasets">dicoFolding.datasets module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.losses">dicoFolding.losses module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.train">dicoFolding.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#dicofolding-train-module">dicoFolding.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding.utils">dicoFolding.utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.html#module-dicoFolding">Module contents</a></li>
 </ul>
 </li>
@@ -121,7 +117,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -156,13 +151,11 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
           <li><a href="dicoFolding.html">dicoFolding package</a> &raquo;</li>
         
@@ -171,7 +164,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/dicoFolding.models.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -195,37 +188,120 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.models.densenet.</span></span><span class="sig-name descname"><span class="pre">DenseNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">growth_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(3,</span> <span class="pre">12,</span> <span class="pre">24,</span> <span class="pre">16)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_init_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bn_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'encoder'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_efficient</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.core.lightning.LightningModule</span></code></p>
 <p>3D-DenseNet model class, based on
 <a class="reference external" href="https://arxiv.org/pdf/1608.06993.pdf">“Densely Connected Convolutional Networks”</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>growth_rate</strong> (int) - how many filters to add each layer (<cite>k</cite> in paper) – </p></li>
-<li><p><strong>block_config</strong> (<em>list of 4 ints</em>) – </p></li>
-<li><p><strong>num_init_features</strong> (<em>int</em>) – convolution layer</p></li>
-<li><p><strong>bn_size</strong> (<em>int</em>) – (i.e. bn_size * k features in the bottleneck layer)</p></li>
-<li><p><strong>drop_rate</strong> (<em>float</em>) – </p></li>
-<li><p><strong>num_classes</strong> (<em>int</em>) – (if ‘classifier’ mode)</p></li>
-<li><p><strong>in_channels</strong> (<em>int</em><em>) </em><em>- number of input channels</em><em> (</em><em>1 for sMRI</em>) – </p></li>
-<li><p><strong>mode</strong> (<em>str</em>) – must be “encoder” or “classifier”</p></li>
-<li><p><strong>memory_efficient</strong> (<em>bool</em>) – efficient, but slower. Default: <em>False</em>.
-See <a class="reference external" href="https://arxiv.org/pdf/1707.06990.pdf">“paper”</a></p></li>
-</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.growth_rate">
+<span class="sig-name descname"><span class="pre">growth_rate</span></span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.growth_rate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int) - how many filters to add each layer (<cite>k</cite> in paper</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.block_config">
+<span class="sig-name descname"><span class="pre">block_config</span></span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.block_config" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of 4 ints</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.num_init_features">
+<span class="sig-name descname"><span class="pre">num_init_features</span></span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.num_init_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>convolution layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.bn_size">
+<span class="sig-name descname"><span class="pre">bn_size</span></span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.bn_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>(i.e. bn_size * k features in the bottleneck layer)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.drop_rate">
+<span class="sig-name descname"><span class="pre">drop_rate</span></span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.drop_rate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.num_classes">
+<span class="sig-name descname"><span class="pre">num_classes</span></span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.num_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>(if ‘classifier’ mode)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.in_channels">
+<span class="sig-name descname"><span class="pre">in_channels</span></span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.in_channels" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int) - number of input channels (1 for sMRI</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.mode">
+<span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>must be “encoder” or “classifier”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.memory_efficient">
+<span class="sig-name descname"><span class="pre">memory_efficient</span></span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.memory_efficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>efficient, but slower. Default: <em>False</em>.
+See <a class="reference external" href="https://arxiv.org/pdf/1707.06990.pdf">“paper”</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="dicoFolding.models.densenet.DenseNet.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.densenet.DenseNet.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defines the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
+<dd><p>Same as <code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.forward()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Whatever you decide to pass into the forward method.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments are also possible.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Your model’s output</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -259,83 +335,6 @@ See <a class="reference external" href="https://arxiv.org/pdf/1707.06990.pdf">�
 </dd></dl>
 
 </div>
-<div class="section" id="module-dicoFolding.models.vae_unit">
-<span id="dicofolding-models-vae-unit-module"></span><h2>dicoFolding.models.vae_unit module<a class="headerlink" href="#module-dicoFolding.models.vae_unit" title="Permalink to this headline">¶</a></h2>
-<p>beta-VAE</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.ModelTester">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.models.vae_unit.</span></span><span class="sig-name descname"><span class="pre">ModelTester</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dico_set_loaders</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kl_weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skeleton</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTester" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.ModelTester.test">
-<span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTester.test" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.ModelTrainer">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.models.vae_unit.</span></span><span class="sig-name descname"><span class="pre">ModelTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kl_weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skeleton</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTrainer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.ModelTrainer.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.ModelTrainer.train" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.models.vae_unit.</span></span><span class="sig-name descname"><span class="pre">VAE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_latent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skeleton</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.decode">
-<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.decode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.encode">
-<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.encode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defines the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.sample_z">
-<span class="sig-name descname"><span class="pre">sample_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logvar</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.sample_z" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.VAE.weight_initialization">
-<span class="sig-name descname"><span class="pre">weight_initialization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.VAE.weight_initialization" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes model parameters according to Gaussian Glorot initialization</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="dicoFolding.models.vae_unit.vae_loss">
-<span class="sig-prename descclassname"><span class="pre">dicoFolding.models.vae_unit.</span></span><span class="sig-name descname"><span class="pre">vae_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logvar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kl_weight</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.models.vae_unit.vae_loss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</div>
 <div class="section" id="module-dicoFolding.models">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dicoFolding.models" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -346,29 +345,29 @@ registered hooks while the latter silently ignores them.</p>
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="dicoFolding.postprocessing.html" class="btn btn-neutral float-right" title="dicoFolding.postprocessing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="dicoFolding.html" class="btn btn-neutral float-left" title="dicoFolding package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+        <a href="dicoFolding.postprocessing.html" class="btn btn-neutral float-right" title="dicoFolding.postprocessing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dicoFolding.html" class="btn btn-neutral float-left" title="dicoFolding package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2021, Joel Chavas.
+        &copy; Copyright 2021, Joel Chavas
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 
@@ -376,6 +375,7 @@ registered hooks while the latter silently ignores them.</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

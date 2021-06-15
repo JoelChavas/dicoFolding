@@ -1,34 +1,23 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>dicoFolding package &mdash; dicoFolding 0.0.1 documentation</title>
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-
+  
   
   
 
   
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -40,6 +29,13 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="dicoFolding.models package" href="dicoFolding.models.html" />
@@ -80,7 +76,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -103,10 +98,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.augmentations">dicoFolding.augmentations module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.contrastiveLearning">dicoFolding.contrastiveLearning module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dicofolding-contrastive-learner-module">dicoFolding.contrastive_learner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.datamodule">dicoFolding.datamodule module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.datasets">dicoFolding.datasets module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.losses">dicoFolding.losses module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.train">dicoFolding.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dicofolding-train-module">dicoFolding.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding.utils">dicoFolding.utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-dicoFolding">Module contents</a></li>
 </ul>
 </li>
@@ -115,7 +112,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -150,20 +146,18 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
       <li>dicoFolding package</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/dicoFolding.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -186,14 +180,14 @@
 <li class="toctree-l1"><a class="reference internal" href="dicoFolding.models.html">dicoFolding.models package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models.densenet">dicoFolding.models.densenet module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models.vae_unit">dicoFolding.models.vae_unit module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.models.html#module-dicoFolding.models">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="dicoFolding.postprocessing.html">dicoFolding.postprocessing package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.postprocessing.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing.eval_tools">dicoFolding.postprocessing.eval_tools module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing.visualization">dicoFolding.postprocessing.visualization module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.postprocessing.html#dicofolding-postprocessing-visualize-nearest-neighhbours-module">dicoFolding.postprocessing.visualize_nearest_neighhbours module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing.visualize_tsne">dicoFolding.postprocessing.visualize_tsne module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dicoFolding.postprocessing.html#module-dicoFolding.postprocessing">Module contents</a></li>
 </ul>
 </li>
@@ -235,7 +229,7 @@ We assume that the square to be cut is inside the image.</p>
 <p>Apply a cutout on the images
 cf. Improved Regularization of Convolutional Neural Networks with Cutout,
 arXiv, 2017
-We assume that the square to be cut is inside the image.</p>
+We assume that the cube to be cut is inside the image.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -314,47 +308,221 @@ interval is generated.</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-dicoFolding.contrastiveLearning">
-<span id="dicofolding-contrastivelearning-module"></span><h2>dicoFolding.contrastiveLearning module<a class="headerlink" href="#module-dicoFolding.contrastiveLearning" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dicofolding-contrastive-learner-module">
+<h2>dicoFolding.contrastive_learner module<a class="headerlink" href="#dicofolding-contrastive-learner-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dicoFolding.datamodule">
+<span id="dicofolding-datamodule-module"></span><h2>dicoFolding.datamodule module<a class="headerlink" href="#module-dicoFolding.datamodule" title="Permalink to this headline">¶</a></h2>
+<p>Data module</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="dicoFolding.contrastiveLearning.ContrastiveLearningModel">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.contrastiveLearning.</span></span><span class="sig-name descname"><span class="pre">ContrastiveLearningModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">net</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.contrastiveLearning.ContrastiveLearningModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dt class="sig sig-object py" id="dicoFolding.datamodule.DataModule">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.datamodule.</span></span><span class="sig-name descname"><span class="pre">DataModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datamodule.DataModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.core.datamodule.LightningDataModule</span></code></p>
+<p>Data module class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>LightningDataModule</p>
+</dd>
+</dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dicoFolding.contrastiveLearning.ContrastiveLearningModel.load_model">
-<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.contrastiveLearning.ContrastiveLearningModel.load_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="dicoFolding.datamodule.DataModule.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datamodule.DataModule.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of fit (train + validate), validate, test, and predict.
+This is a good hook when you need to build models dynamically or adjust something about them.
+This hook is called on every process when using DDP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stage</strong> – either <code class="docutils literal notranslate"><span class="pre">'fit'</span></code>, <code class="docutils literal notranslate"><span class="pre">'validate'</span></code>, <code class="docutils literal notranslate"><span class="pre">'test'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'predict'</span></code></p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LitModel</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l1</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">download_data</span><span class="p">()</span>
+        <span class="n">tokenize</span><span class="p">()</span>
+
+        <span class="c1"># don&#39;t do this</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">something</span> <span class="o">=</span> <span class="k">else</span>
+
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">stage</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">Load_data</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">num_classes</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dicoFolding.contrastiveLearning.ContrastiveLearningModel.training">
-<span class="sig-name descname"><span class="pre">training</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.contrastiveLearning.ContrastiveLearningModel.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="dicoFolding.datamodule.DataModule.train_dataloader">
+<span class="sig-name descname"><span class="pre">train_dataloader</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datamodule.DataModule.train_dataloader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement one or more PyTorch DataLoaders for training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Either a single PyTorch <code class="xref py py-class docutils literal notranslate"><span class="pre">DataLoader</span></code> or a collection of these
+(list, dict, nested lists and dicts). In the case of multiple dataloaders, please see
+this <span class="xref std std-ref">page</span></p>
+</dd>
+</dl>
+<p>The dataloader you return will not be called every epoch unless you set
+<a href="#id1"><span class="problematic" id="id2">:paramref:`~pytorch_lightning.trainer.Trainer.reload_dataloaders_every_epoch`</span></a> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>For data processing use the following pattern:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>download in <code class="xref py py-meth docutils literal notranslate"><span class="pre">prepare_data()</span></code></p></li>
+<li><p>process and split in <a class="reference internal" href="#dicoFolding.datamodule.DataModule.setup" title="dicoFolding.datamodule.DataModule.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>However, the above are only necessary for distributed processing.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>do not assign state in prepare_data</p>
+</div>
+<ul class="simple">
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></p></li>
+<li><p>…</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">prepare_data()</span></code></p></li>
+<li><p><a class="reference internal" href="#dicoFolding.datamodule.DataModule.setup" title="dicoFolding.datamodule.DataModule.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#dicoFolding.datamodule.DataModule.train_dataloader" title="dicoFolding.datamodule.DataModule.train_dataloader"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_dataloader()</span></code></a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Lightning adds the correct sampler for distributed and arbitrary hardware.
+There is no need to set it yourself.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># single dataloader</span>
+<span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                                    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,),</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,))])</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;/path/to/mnist/&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+                    <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">loader</span>
+
+<span class="c1"># multiple dataloaders, return as list</span>
+<span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">mnist</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">cifar</span> <span class="o">=</span> <span class="n">CIFAR</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">mnist_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">mnist</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">cifar_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">cifar</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="c1"># each batch will be a list of tensors: [batch_mnist, batch_cifar]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">mnist_loader</span><span class="p">,</span> <span class="n">cifar_loader</span><span class="p">]</span>
+
+<span class="c1"># multiple dataloader, return as dict</span>
+<span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">mnist</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">cifar</span> <span class="o">=</span> <span class="n">CIFAR</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">mnist_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">mnist</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">cifar_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">cifar</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="c1"># each batch will be a dict of tensors: {&#39;mnist&#39;: batch_mnist, &#39;cifar&#39;: batch_cifar}</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;mnist&#39;</span><span class="p">:</span> <span class="n">mnist_loader</span><span class="p">,</span> <span class="s1">&#39;cifar&#39;</span><span class="p">:</span> <span class="n">cifar_loader</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dicoFolding.datamodule.DataModule.val_dataloader">
+<span class="sig-name descname"><span class="pre">val_dataloader</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datamodule.DataModule.val_dataloader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement one or multiple PyTorch DataLoaders for validation.</p>
+<p>The dataloader you return will not be called every epoch unless you set
+<a href="#id3"><span class="problematic" id="id4">:paramref:`~pytorch_lightning.trainer.Trainer.reload_dataloaders_every_epoch`</span></a> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>It’s recommended that all data downloads and preparation happen in <code class="xref py py-meth docutils literal notranslate"><span class="pre">prepare_data()</span></code>.</p>
+<ul class="simple">
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></p></li>
+<li><p>…</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">prepare_data()</span></code></p></li>
+<li><p><a class="reference internal" href="#dicoFolding.datamodule.DataModule.train_dataloader" title="dicoFolding.datamodule.DataModule.train_dataloader"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_dataloader()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#dicoFolding.datamodule.DataModule.val_dataloader" title="dicoFolding.datamodule.DataModule.val_dataloader"><code class="xref py py-meth docutils literal notranslate"><span class="pre">val_dataloader()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">test_dataloader()</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Lightning adds the correct sampler for distributed and arbitrary hardware
+There is no need to set it yourself.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Single or multiple PyTorch DataLoaders.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                                    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,),</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,))])</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;/path/to/mnist/&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loader</span>
+
+<span class="c1"># can also return multiple dataloaders</span>
+<span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">loader_a</span><span class="p">,</span> <span class="n">loader_b</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">loader_n</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you don’t need a validation dataset and a <code class="xref py py-meth docutils literal notranslate"><span class="pre">validation_step()</span></code>, you don’t need to
+implement this method.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the case where you return multiple validation dataloaders, the <code class="xref py py-meth docutils literal notranslate"><span class="pre">validation_step()</span></code>
+will have an argument <code class="docutils literal notranslate"><span class="pre">dataloader_idx</span></code> which matches the order here.</p>
+</div>
+</dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="module-dicoFolding.datasets">
 <span id="dicofolding-datasets-module"></span><h2>dicoFolding.datasets module<a class="headerlink" href="#module-dicoFolding.datasets" title="Permalink to this headline">¶</a></h2>
-<p>Tools in order to create pytorch dataloaders</p>
+<p>Tools to create pytorch dataloaders</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="dicoFolding.datasets.TensorDataset">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.datasets.</span></span><span class="sig-name descname"><span class="pre">TensorDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filenames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datasets.TensorDataset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dicoFolding.datasets.ContrastiveDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dicoFolding.datasets.</span></span><span class="sig-name descname"><span class="pre">ContrastiveDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filenames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datasets.ContrastiveDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Custom dataset that includes image file paths.</p>
-<p>Applies different transformations to data depending on the type of input.
-:param data_tensor: tensor containing MRIs as numpy arrays
-:param filenames: list of subjects’ IDs</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>tensor of [batch, sample, subject ID]</p>
-</dd>
-</dl>
+<p>Applies different transformations to data depending on the type of input.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dicoFolding.datasets.create_sets">
 <span class="sig-prename descclassname"><span class="pre">dicoFolding.datasets.</span></span><span class="sig-name descname"><span class="pre">create_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.datasets.create_sets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates train, validation and test sets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Omegaconf dict</em>) – contains configuration parameters</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>train_set, val_set, test_set (tuple)</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="section" id="module-dicoFolding.losses">
@@ -390,13 +558,21 @@ registered hooks while the latter silently ignores them.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-dicoFolding.train">
-<span id="dicofolding-train-module"></span><h2>dicoFolding.train module<a class="headerlink" href="#module-dicoFolding.train" title="Permalink to this headline">¶</a></h2>
-<p>Training SimCLR on skeleton images</p>
+<div class="section" id="dicofolding-train-module">
+<h2>dicoFolding.train module<a class="headerlink" href="#dicofolding-train-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dicoFolding.utils">
+<span id="dicofolding-utils-module"></span><h2>dicoFolding.utils module<a class="headerlink" href="#module-dicoFolding.utils" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="dicoFolding.train.train">
-<span class="sig-prename descclassname"><span class="pre">dicoFolding.train.</span></span><span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.train.train" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="dicoFolding.utils.process_config">
+<span class="sig-prename descclassname"><span class="pre">dicoFolding.utils.</span></span><span class="sig-name descname"><span class="pre">process_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dicoFolding.utils.process_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does whatever operations on the config file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>omegaconf.dictconfig.DictConfig</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="section" id="module-dicoFolding">
@@ -409,29 +585,29 @@ registered hooks while the latter silently ignores them.</p>
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="dicoFolding.models.html" class="btn btn-neutral float-right" title="dicoFolding.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="readme.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+        <a href="dicoFolding.models.html" class="btn btn-neutral float-right" title="dicoFolding.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="readme.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2021, Joel Chavas.
+        &copy; Copyright 2021, Joel Chavas
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 
@@ -439,6 +615,7 @@ registered hooks while the latter silently ignores them.</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

@@ -12,14 +12,6 @@ dicoFolding\.models\.densenet module
     :undoc-members:
     :show-inheritance:
 
-dicoFolding\.models\.vae\_unit module
--------------------------------------
-
-.. automodule:: dicoFolding.models.vae_unit
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------
