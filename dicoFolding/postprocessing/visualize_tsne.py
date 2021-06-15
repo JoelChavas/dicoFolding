@@ -40,6 +40,8 @@ import numpy as np
 import torch
 import matplotlib.markers as mmarkers
 from sklearn.manifold import TSNE
+import io
+import tensorflow as tf
 
 logger = logging.getLogger(__name__)
 
@@ -62,11 +64,13 @@ def mscatter(x, y, ax=None, m=None, **kw):
     return sc
 
 
-def compute_tsne(loader, model):
+def compute_embeddings_skeletons(loader, model):
     X = torch.zeros([0, 128]).cpu()
     with torch.no_grad():
         for (inputs, filenames) in loader:
             # First views of the whole batch
+            inputs = inputs.cuda()
+            model = model.cuda()
             X_i = model.forward(inputs[:, 0, :])
             # Second views of the whole batch
             X_j = model.forward(inputs[:, 1, :])
@@ -74,49 +78,40 @@ def compute_tsne(loader, model):
             X_reordered = torch.cat([X_i, X_j], dim=-1)
             X_reordered = X_reordered.view(-1, X_i.shape[-1])
             X = torch.cat((X, X_reordered.cpu()), dim=0)
-            del inputs
+            del inputs  
+    return X
+
+def compute_tsne(loader, model):
+    X = compute_embeddings_skeletons(loader, model)
     tsne = TSNE(n_components=2, perplexity=5, init='pca', random_state=50)
     X_tsne = tsne.fit_transform(X.detach().numpy())
 
     return X_tsne
 
 
-def plot_tsne(X_tsne):
+def plot_tsne(X_tsne, buffer):
+    """Generates TSNE plot either in a PNG image buffer or as a plot
+
+    Args:
+        X_tsne: TSNE N_features rows x 2 columns
+        buffer (boolean): True -> returns image buffer
+                          False -> plots the figure
+    """
     fig, ax = plt.subplots(1)
     logger.info(X_tsne.shape)
     nb_points = X_tsne.shape[0]
     m = np.repeat(["o"], nb_points)
     c = np.tile(np.array(["b", "r"]), nb_points // 2)
     mscatter(X_tsne[:, 0], X_tsne[:, 1], c=c, m=m, s=2, ax=ax)
-    plt.show()
-
-
-def load(path='/home/jc225751/Runs/09_CUDA_hcp/Output/Contrastive_MRI_epoch_3.pth'):
-    checkpoint = None
-    try:
-        checkpoint = torch.load(
-            path, map_location=lambda storage, loc: storage)
-    except BaseException as e:
-        logger.error('Impossible to load the checkpoint: %s' % str(e))
-
-    model = densenet121(mode="encoder", drop_rate=0.0)
-    if checkpoint is not None:
-        try:
-            if hasattr(checkpoint, "state_dict"):
-                unexpected = model.load_state_dict(checkpoint.state_dict())
-                logger.info('Model loading info: {}'.format(unexpected))
-            elif isinstance(checkpoint, dict):
-                if "model" in checkpoint:
-                    unexpected = model.load_state_dict(
-                        checkpoint["model"], strict=False)
-                    logger.info('Model loading info: {}'.format(unexpected))
-            else:
-                unexpected = model.load_state_dict(checkpoint)
-                logger.info('Model loading info: {}'.format(unexpected))
-        except BaseException as e:
-            raise ValueError(
-                'Error while loading the model\'s weights: %s' %
-                str(e))
+    
+    if buffer:
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        plt.close('all')
+        return buf
+    else:
+        plt.show()
 
 
 if __name__ == "__main__":
