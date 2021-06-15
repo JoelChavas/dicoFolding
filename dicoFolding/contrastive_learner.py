@@ -32,23 +32,20 @@
 #
 # The fact that you are presently reading this means that you have had
 # knowledge of the CeCILL license version 2 and that you accept its terms.
-
 """
 Some helper functions are taken from:
 https://learnopencv.com/tensorboard-with-pytorch-lightning
 
 """
-    
+import PIL
 import torch
 import torchvision
-
 from dicoFolding.losses import NTXenLoss
 from dicoFolding.models.densenet import DenseNet
-
-import PIL
 from torchvision.transforms import ToTensor
 
-from postprocessing.visualize_tsne import compute_tsne, plot_tsne
+from dicoFolding.postprocessing.visualize_tsne import compute_tsne
+from dicoFolding.postprocessing.visualize_tsne import plot_tsne
 
 
 class ContrastiveLearner(DenseNet):
@@ -61,13 +58,14 @@ class ContrastiveLearner(DenseNet):
                                                  drop_rate=drop_rate)
         self.config = config
         self.sample_data = sample_data
-        
+
     def custom_histogram_adder(self):
-           
+
         # iterating through all parameters
-        for name,params in self.named_parameters():
-          
-            self.logger.experiment.add_histogram(name,params,self.current_epoch)
+        for name, params in self.named_parameters():
+
+            self.logger.experiment.add_histogram(
+                name, params, self.current_epoch)
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(),
@@ -82,52 +80,49 @@ class ContrastiveLearner(DenseNet):
 
     def training_step(self, train_batch, batch_idx):
         (inputs, filenames) = train_batch
-        z_i = self.forward(inputs[:, 0, :])
-        z_j = self.forward(inputs[:, 1, :])
-        batch_loss, _, _ = self.nt_xen_loss(z_i, z_j)
         self.log('train_loss', float(batch_loss))
-        
+
         # Only computes graph on first step
         if self.global_step == 1:
             self.logger.experiment.add_graph(self, inputs[:, 0, :])
-            
-        # logs- a dictionary 
-        logs={"train_loss": float(batch_loss)}
 
-        batch_dictionary={
-            #REQUIRED: It ie required for us to return "loss"
+        # logs- a dictionary
+        logs = {"train_loss": float(batch_loss)}
+
+        batch_dictionary = {
+            # REQUIRED: It ie required for us to return "loss"
             "loss": batch_loss,
-            
-            #optional for batch logging purposes
+
+            # optional for batch logging purposes
             "log": logs,
 
         }
 
         return batch_dictionary
-    
+
     # On n'a pas accès ici à toutes les données
     # def training-epoch_end(self, outputs):
     #     X_tsne = compute_tsne(data_module.train_dataloader(), model)
     #     plot_tsne(X_tsne)
-    
+
     def training_epoch_end(self, outputs):
         X_tsne = compute_tsne(self.sample_data.train_dataloader(), self)
         buf = plot_tsne(X_tsne, buffer=True)
         image = PIL.Image.open(buf)
         image = ToTensor()(image).unsqueeze(0)[0]
-        self.logger.experiment.add_image('TSNE image', image, self.current_epoch)
-        
-        # calculating average loss  
+        self.logger.experiment.add_image(
+            'TSNE image', image, self.current_epoch)
+
+        # calculating average loss
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
-        
+
         # logging histograms
         self.custom_histogram_adder()
-        
+
         # logging using tensorboard logger
         self.logger.experiment.add_scalar("Loss/Train",
-                                            avg_loss,
-                                            self.current_epoch)
-
+                                          avg_loss,
+                                          self.current_epoch)
 
     def validation_step(self, val_batch, batch_idx):
         (inputs, filenames) = val_batch
@@ -135,27 +130,26 @@ class ContrastiveLearner(DenseNet):
         z_j = self.forward(inputs[:, 1, :])
         batch_loss, logits, target = self.nt_xen_loss(z_i, z_j)
         self.log('val_loss', float(batch_loss))
-        
-        # logs- a dictionary 
-        logs={"val_loss": float(batch_loss)}
 
-        batch_dictionary={
-            #REQUIRED: It ie required for us to return "loss"
+        # logs- a dictionary
+        logs = {"val_loss": float(batch_loss)}
+
+        batch_dictionary = {
+            # REQUIRED: It ie required for us to return "loss"
             "loss": batch_loss,
-            
-            #optional for batch logging purposes
+
+            # optional for batch logging purposes
             "log": logs,
         }
-        
+
         return batch_dictionary
-    
+
     def validation_epoch_end(self, outputs):
-        
-        # calculating average loss  
+
+        # calculating average loss
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
-        
+
         # logging using tensorboard logger
         self.logger.experiment.add_scalar("Loss/Validation",
-                                            avg_loss,
-                                            self.current_epoch)
-
+                                          avg_loss,
+                                          self.current_epoch)

@@ -32,29 +32,21 @@
 #
 # The fact that you are presently reading this means that you have had
 # knowledge of the CeCILL license version 2 and that you accept its terms.
-
 """
-Tools in order to create pytorch dataloaders
+Tools to create pytorch dataloaders
 """
-
 import logging
-from os.path import join
 
 import numpy as np
 import pandas as pd
 import torch
 import torchvision.transforms as transforms
-from scipy.ndimage import rotate
-
-log = logging.getLogger(__name__)
-
-from deep_folding.preprocessing.pynet_transforms import Padding, PaddingTensor
-from torch.utils.data import Dataset
-
-from dicoFolding.augmentations import (Blur, Crop, Cutout, CutoutTensor, Flip,
-                                       Noise, Normalize, Transformer)
+from deep_folding.preprocessing.pynet_transforms import PaddingTensor
+from dicoFolding.augmentations import CutoutTensor
 
 _ALL_SUBJECTS = -1
+
+log = logging.getLogger(__name__)
 
 
 class ContrastiveDataset():
@@ -82,10 +74,10 @@ class ContrastiveDataset():
 
     def __getitem__(self, idx):
         """Returns the two views corresponding to index idx
-        
-        The two views are generated on the fly. 
+
+        The two views are generated on the fly.
         The first view is the reference view (only padding is applied)
-        
+
         Returns:
             tuple of (views, subject ID)
         """
@@ -118,7 +110,7 @@ class ContrastiveDataset():
 
 def create_sets(config):
     """Creates train, validation and test sets
-    
+
     Args:
         config (Omegaconf dict): contains configuration parameters
     Returns:

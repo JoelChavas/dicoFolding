@@ -34,14 +34,12 @@
 # knowledge of the CeCILL license version 2 and that you accept its terms.
 
 import logging
-from dicoFolding.models.densenet import densenet121
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import matplotlib.markers as mmarkers
 from sklearn.manifold import TSNE
 import io
-import tensorflow as tf
 
 logger = logging.getLogger(__name__)
 
@@ -78,8 +76,9 @@ def compute_embeddings_skeletons(loader, model):
             X_reordered = torch.cat([X_i, X_j], dim=-1)
             X_reordered = X_reordered.view(-1, X_i.shape[-1])
             X = torch.cat((X, X_reordered.cpu()), dim=0)
-            del inputs  
+            del inputs
     return X
+
 
 def compute_tsne(loader, model):
     X = compute_embeddings_skeletons(loader, model)
@@ -94,7 +93,7 @@ def plot_tsne(X_tsne, buffer):
 
     Args:
         X_tsne: TSNE N_features rows x 2 columns
-        buffer (boolean): True -> returns image buffer
+        buffer (boolean): True -> returns PNG image buffer
                           False -> plots the figure
     """
     fig, ax = plt.subplots(1)
@@ -103,7 +102,7 @@ def plot_tsne(X_tsne, buffer):
     m = np.repeat(["o"], nb_points)
     c = np.tile(np.array(["b", "r"]), nb_points // 2)
     mscatter(X_tsne[:, 0], X_tsne[:, 1], c=c, m=m, s=2, ax=ax)
-    
+
     if buffer:
         buf = io.BytesIO()
         plt.savefig(buf, format='png')
@@ -112,7 +111,3 @@ def plot_tsne(X_tsne, buffer):
         return buf
     else:
         plt.show()
-
-
-if __name__ == "__main__":
-    load()

@@ -32,29 +32,23 @@
 #
 # The fact that you are presently reading this means that you have had
 # knowledge of the CeCILL license version 2 and that you accept its terms.
-
 """ Training SimCLR on skeleton images
 
 """
-
 ######################################################################
 # Imports and global variables definitions
 ######################################################################
-
 import logging
 
 import hydra
 import pytorch_lightning as pl
-from pytorch_lightning.utilities.seed import seed_everything
-from pytorch_lightning import loggers as pl_loggers
-from torch.utils.tensorboard import SummaryWriter
-from torchsummary import summary
-
 from dicoFolding.contrastive_learner import ContrastiveLearner
 from dicoFolding.datamodule import DataModule
 from dicoFolding.utils import process_config
-
-from postprocessing.visualize_tsne import compute_tsne, plot_tsne
+from pytorch_lightning import loggers as pl_loggers
+from pytorch_lightning.utilities.seed import seed_everything
+from torch.utils.tensorboard import SummaryWriter
+from torchsummary import summary
 
 tb_logger = pl_loggers.TensorBoardLogger('logs')
 writer = SummaryWriter()
@@ -62,9 +56,9 @@ log = logging.getLogger(__name__)
 
 """
 We call:
-- embedding, the space before the projection head. 
+- embedding, the space before the projection head.
   The elements of the space are features
-- output, the space after the projection head. 
+- output, the space after the projection head.
   The elements are called output vectors
 """
 
@@ -72,8 +66,8 @@ We call:
 @hydra.main(config_name='config', config_path="config")
 def train(config):
     config = process_config(config)
-    
-    # Sets seed for pseudo-random number generators 
+
+    # Sets seed for pseudo-random number generators
     # in: pytorch, numpy, python.random
     seed_everything(config.seed)
 
@@ -84,15 +78,13 @@ def train(config):
                                sample_data=data_module)
     summary(model, tuple(config.input_size), device="cpu")
 
-    trainer = pl.Trainer(gpus=1,
-                         max_epochs=config.max_epochs,
-                         logger=tb_logger,
-                         flush_logs_every_n_steps=config.nb_steps_per_flush_logs)
+    trainer = pl.Trainer(
+        gpus=1,
+        max_epochs=config.max_epochs,
+        logger=tb_logger,
+        flush_logs_every_n_steps=config.nb_steps_per_flush_logs)
     trainer.fit(model, data_module)
 
-    # X_tsne = compute_tsne(data_module.train_dataloader(), model)
-    # plot_tsne(X_tsne, buffer=False)
-    
 
 if __name__ == "__main__":
     train()

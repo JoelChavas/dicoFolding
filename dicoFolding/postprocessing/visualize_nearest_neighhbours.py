@@ -1,11 +1,14 @@
 
-    """Inspired from lightly https://docs.lightly.ai/tutorials/package/tutorial_simclr_clothing.html
-    """
+"""Inspired from lightly https://docs.lightly.ai/tutorials/package/tutorial_simclr_clothing.html
+"""
+
+
 def get_image_as_np_array(filename: str):
     """Returns an image as an numpy array
     """
     img = Image.open(filename)
     return np.asarray(img)
+
 
 def plot_knn_examples(embeddings, n_neighbors=3, num_examples=6):
     """Plots multiple rows of random images with their nearest neighbors
@@ -16,7 +19,8 @@ def plot_knn_examples(embeddings, n_neighbors=3, num_examples=6):
     distances, indices = nbrs.kneighbors(embeddings)
 
     # get 5 random samples
-    samples_idx = np.random.choice(len(indices), size=num_examples, replace=False)
+    samples_idx = np.random.choice(
+        len(indices), size=num_examples, replace=False)
 
     # loop through our randomly picked samples
     for idx in samples_idx:

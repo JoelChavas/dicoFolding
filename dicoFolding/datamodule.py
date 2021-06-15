@@ -32,14 +32,12 @@
 #
 # The fact that you are presently reading this means that you have had
 # knowledge of the CeCILL license version 2 and that you accept its terms.
-
 """ Data module
 """
-
 import pytorch_lightning as pl
-from torch.utils.data import DataLoader, RandomSampler
-
 from dicoFolding.datasets import create_sets
+from torch.utils.data import DataLoader
+from torch.utils.data import RandomSampler
 
 
 class DataModule(pl.LightningDataModule):
@@ -51,7 +49,8 @@ class DataModule(pl.LightningDataModule):
         self.config = config
 
     def setup(self, stage):
-        self.dataset_train, self.dataset_val, self.dataset_test = create_sets(self.config)
+        self.dataset_train, self.dataset_val, self.dataset_test = create_sets(
+            self.config)
 
     def train_dataloader(self):
         loader_train = DataLoader(self.dataset_train,

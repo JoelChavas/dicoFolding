@@ -46,7 +46,7 @@ class CutoutTensor(object):
     """Apply a cutout on the images
     cf. Improved Regularization of Convolutional Neural Networks with Cutout,
     arXiv, 2017
-    We assume that the square to be cut is inside the image.
+    We assume that the cube to be cut is inside the image.
     """
 
     def __init__(self, patch_size=None, value=0, random_size=False,
