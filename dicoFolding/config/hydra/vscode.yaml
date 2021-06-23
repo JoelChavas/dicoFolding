@@ -2,5 +2,3 @@
 hydra:
   run:
     dir: ../../Output/${now:%Y-%m-%d}/${now:%H-%M-%S}
-
-checkpoint_dir: ../../../Output
