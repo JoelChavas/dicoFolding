@@ -54,7 +54,7 @@ class DataModule(pl.LightningDataModule):
     def train_dataloader(self):
         loader_train = DataLoader(self.dataset_train,
                                   batch_size=self.config.batch_size,
-                                  sampler=RandomSampler(self.dataset_train),
+                                  # sampler=RandomSampler(self.dataset_train),
                                   pin_memory=self.config.pin_mem,
                                   num_workers=self.config.num_cpu_workers
                                   )

@@ -33,6 +33,7 @@
 # The fact that you are presently reading this means that you have had
 # knowledge of the CeCILL license version 2 and that you accept its terms.
 
+import PIL
 import logging
 import matplotlib.pyplot as plt
 import numpy as np
@@ -40,6 +41,8 @@ import torch
 import matplotlib.markers as mmarkers
 from sklearn.manifold import TSNE
 import io
+from torchvision.transforms import ToTensor
+from torchvision.transforms import Resize
 
 logger = logging.getLogger(__name__)
 
@@ -108,6 +111,48 @@ def plot_tsne(X_tsne, buffer):
         plt.savefig(buf, format='png')
         buf.seek(0)
         plt.close('all')
-        return buf
+        image = PIL.Image.open(buf)
+        image = ToTensor()(image).unsqueeze(0)[0] 
+        return image
+    else:
+        plt.show()
+        
+def plot_img(img, buffer):
+    """Plots one 2D slice of one of the 3D images of the batch
+
+    Args:
+        img: batch of images of size [N_batch, 1, size_X, size_Y, size_Z]
+        buffer (boolean): True -> returns PNG image buffer
+                          False -> plots the figure
+    """
+    plt.imshow(img[0, 0, img.shape[2]//2, :, :])
+
+    if buffer:
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        plt.close('all')
+        image = PIL.Image.open(buf)
+        image = ToTensor()(image).unsqueeze(0)[0] 
+        return image
+    else:
+        plt.show()
+
+
+def plot_output(img, buffer):
+    
+    arr = (img[0,:]).numpy()
+    arr = arr.reshape(8, 16)
+    
+    plt.imshow(arr)
+    
+    if buffer:
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        plt.close('all')
+        image = PIL.Image.open(buf)
+        image = ToTensor()(image).unsqueeze(0)[0] 
+        return image
     else:
         plt.show()

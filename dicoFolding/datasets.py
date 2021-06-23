@@ -43,6 +43,8 @@ import torch
 import torchvision.transforms as transforms
 from deep_folding.preprocessing.pynet_transforms import PaddingTensor
 from dicoFolding.augmentations import CutoutTensor
+from dicoFolding.augmentations import RotateTensor
+from dicoFolding.augmentations import SimplifyTensor
 
 _ALL_SUBJECTS = -1
 
@@ -86,17 +88,21 @@ class ContrastiveDataset():
         sample = self.data_tensor[idx]
         filename = self.filenames[idx]
 
-        # - padding to 80x80x80 by default, see config file
-        self.transform1 = transforms.Compose([
-            PaddingTensor(self.config.input_size,
-                          fill_value=self.config.fill_value)
-        ])
-
         patch_size = np.ceil(np.array(self.config.input_size) / 4)
-        self.transform2 = transforms.Compose([
+        self.transform1 = transforms.Compose([
+            SimplifyTensor(),
             PaddingTensor(self.config.input_size,
                           fill_value=self.config.fill_value),
             CutoutTensor(patch_size=patch_size)
+        ])
+        
+        # - padding to 80x80x80 by default, see config file
+        # - + random rotation
+        self.transform2 = transforms.Compose([
+            SimplifyTensor(),
+            PaddingTensor(self.config.input_size,
+                          fill_value=self.config.fill_value),
+            RotateTensor(max_angle=self.config.max_angle)
         ])
 
         view1 = self.transform1(sample)

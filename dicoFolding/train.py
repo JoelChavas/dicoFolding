@@ -41,14 +41,21 @@
 import logging
 
 import hydra
+import torch
 import pytorch_lightning as pl
 from dicoFolding.contrastive_learner import ContrastiveLearner
 from dicoFolding.datamodule import DataModule
 from dicoFolding.utils import process_config
+from dicoFolding.postprocessing.visualize_tsne import plot_output
 from pytorch_lightning import loggers as pl_loggers
 from pytorch_lightning.utilities.seed import seed_everything
 from torch.utils.tensorboard import SummaryWriter
 from torchsummary import summary
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.axes_grid1 import ImageGrid
+
+from soma import aims
 
 tb_logger = pl_loggers.TensorBoardLogger('logs')
 writer = SummaryWriter()
@@ -62,7 +69,7 @@ We call:
   The elements are called output vectors
 """
 
-
+      
 @hydra.main(config_name='config', config_path="config")
 def train(config):
     config = process_config(config)
@@ -78,12 +85,45 @@ def train(config):
                                sample_data=data_module)
     summary(model, tuple(config.input_size), device="cpu")
 
-    trainer = pl.Trainer(
-        gpus=1,
-        max_epochs=config.max_epochs,
-        logger=tb_logger,
-        flush_logs_every_n_steps=config.nb_steps_per_flush_logs)
-    trainer.fit(model, data_module)
+    if config.test == True:
+          data_module.setup(stage='fit')
+          fig = plt.figure(figsize=(4., 8.), dpi=400)
+          grid = ImageGrid(fig, 111,
+                           nrows_ncols = (config.batch_size//4, 8),
+                           axes_pad=0.2,)
+          (inputs, filenames) = next(iter(data_module.train_dataloader()))
+          input_i = inputs[:, 0, :]
+          input_j = inputs[:, 1, :]
+          print("input_i : {}".format(np.unique(input_i)))
+          print("input_j : {}".format(np.unique(input_j)))
+          images = []
+          np.save("input_i.npy", input_i[0, 0, :, :, :])
+          np.save("input_j.npy", input_j[0, 0, :, :, :])
+          vol_i = aims.Volume(1, 80, 80, 80, dtype=np.int32)
+          np.asarray(vol_i)[:] = input_i[0, :, :, :, :]
+          aims.write(vol_i, 'input_i.nii')
+          print(np.unique(input_i[0, :, :, :, :]))
+          for i in range(config.batch_size):
+                images.append(input_i[i, 0, input_i.shape[2]//2, :, :])
+                images.append(input_j[i, 0, input_i.shape[2]//2, :, :])
+          for ax, im in zip(grid, images):
+                ax.imshow(im)
+                ax.axis('off')
+                ax.set_title(np.unique(im)[2], fontsize=4)
+          plt.show()
+          fig = plt.figure(figsize=(4., 8.), dpi=400)
+          plot_output(model.save_output.outputs[-1], buffer=False)
+          plt.show()
+    else:
+          trainer = pl.Trainer(
+              gpus=1,
+              max_epochs=config.max_epochs,
+              logger=tb_logger,
+              flush_logs_every_n_steps=config.nb_steps_per_flush_logs,
+              resume_from_checkpoint='/host/home/jc225751/Runs/12_more_augmentations/Output/2021-06-22/16-40-38/logs/default/version_0/checkpoints/epoch=15-step=895.ckpt')
+          trainer.fit(model, data_module)
+          
+    print("Number of hooks: ", len(model.save_output.outputs))
 
 
 if __name__ == "__main__":

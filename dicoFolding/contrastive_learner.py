@@ -37,14 +37,27 @@ Some helper functions are taken from:
 https://learnopencv.com/tensorboard-with-pytorch-lightning
 
 """
-import PIL
+
 import torch
+import numpy as np
 from dicoFolding.losses import NTXenLoss
 from dicoFolding.models.densenet import DenseNet
-from torchvision.transforms import ToTensor
 from sklearn.manifold import TSNE
 
 from dicoFolding.postprocessing.visualize_tsne import plot_tsne
+from dicoFolding.postprocessing.visualize_tsne import plot_img
+from dicoFolding.postprocessing.visualize_tsne import plot_output
+
+class SaveOutput:
+    def __init__(self):
+        self.outputs = []
+        
+    def __call__(self, module, module_in, module_out):
+        self.outputs.append(module_out.cpu())
+        
+    def clear(self):
+        self.outputs = []
+
 
 class ContrastiveLearner(DenseNet):
 
@@ -56,7 +69,20 @@ class ContrastiveLearner(DenseNet):
                                                  drop_rate=drop_rate)
         self.config = config
         self.sample_data = sample_data
+        self.sample_i = np.array([])
+        self.sample_j = np.array([])
+        self.save_output = SaveOutput()
+        self.hook_handles = []
+        self.get_layers()
 
+    def get_layers(self):
+        for layer in self.modules():
+            if type(layer) == torch.nn.Linear:
+                handle = layer.register_forward_hook(self.save_output)
+                self.hook_handles.append(handle)
+
+
+         
     def custom_histogram_adder(self):
 
         # iterating through all parameters
@@ -86,6 +112,10 @@ class ContrastiveLearner(DenseNet):
         # Only computes graph on first step
         if self.global_step == 1:
             self.logger.experiment.add_graph(self, inputs[:, 0, :])
+        
+        if batch_idx == 0:
+            self.sample_i = inputs[:, 0, :].cpu()
+            self.sample_j = inputs[:, 1, :].cpu()
 
         # logs- a dictionary
         logs = {"train_loss": float(batch_loss)}
@@ -111,7 +141,8 @@ class ContrastiveLearner(DenseNet):
                 X_i = model.forward(inputs[:, 0, :])
                 # Second views of the whole batch
                 X_j = model.forward(inputs[:, 1, :])
-                # First views and second views are put side by side
+                # First views anddeep_folding
+                # second views are put side by side
                 X_reordered = torch.cat([X_i, X_j], dim=-1)
                 X_reordered = X_reordered.view(-1, X_i.shape[-1])
                 X = torch.cat((X, X_reordered.cpu()), dim=0)
@@ -129,14 +160,24 @@ class ContrastiveLearner(DenseNet):
 
         return X_tsne
 
+
+
     def training_epoch_end(self, outputs):
         X_tsne = self.compute_tsne(self.sample_data.train_dataloader())
-        buf = plot_tsne(X_tsne, buffer=True)
-        image = PIL.Image.open(buf)
-        image = ToTensor()(image).unsqueeze(0)[0]
+        image_TSNE = plot_tsne(X_tsne, buffer=True)
         self.logger.experiment.add_image(
-            'TSNE image', image, self.current_epoch)
-
+            'TSNE image', image_TSNE, self.current_epoch)
+        image_input_i = plot_img(self.sample_i, buffer=True)
+        self.logger.experiment.add_image(
+            'input_i', image_input_i, self.current_epoch)
+        image_input_j = plot_img(self.sample_j, buffer=True)
+        self.logger.experiment.add_image(
+            'input_j', image_input_j, self.current_epoch)
+        image_output = plot_output(self.save_output.outputs[-1], buffer=True)
+        self.logger.experiment.add_image(
+            'output', image_output, self.current_epoch)
+        print("Length of outputs: ", len(self.save_output.outputs))
+        
         # calculating average loss
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
 
@@ -169,7 +210,14 @@ class ContrastiveLearner(DenseNet):
         return batch_dictionary
 
     def validation_epoch_end(self, outputs):
+        X_tsne = self.compute_tsne(self.sample_data.val_dataloader())
+        image_TSNE = plot_tsne(X_tsne, buffer=True)
+        self.logger.experiment.add_image(
+            'TSNE validation image', image_TSNE, self.current_epoch)
 
+        image_output = plot_output(self.save_output.outputs[-1], buffer=True)
+        self.logger.experiment.add_image(
+            'output val', image_output, self.current_epoch)
         # calculating average loss
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
 
