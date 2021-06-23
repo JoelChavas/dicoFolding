@@ -10,6 +10,8 @@ dist
 notebooks/.ipynb_checkpoints
 outputs
 dicoFolding/outputs
+runs
+essais
 
 # Files #
 ################
