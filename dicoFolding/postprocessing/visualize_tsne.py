@@ -138,11 +138,26 @@ def plot_img(img, buffer):
     else:
         plt.show()
 
+def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
 
 def plot_output(img, buffer):
     
     arr = (img[0,:]).numpy()
-    arr = arr.reshape(8, 16)
+    # Reshapes the array into a 2D array
+    primes = prime_factors(arr.size)
+    row_size = np.prod(primes[:len(primes)//2])
+    arr = arr.reshape(row_size, -1)
     
     plt.imshow(arr)
     

@@ -48,15 +48,17 @@ from dicoFolding.postprocessing.visualize_tsne import plot_tsne
 from dicoFolding.postprocessing.visualize_tsne import plot_img
 from dicoFolding.postprocessing.visualize_tsne import plot_output
 
+from toolz.itertoolz import last, first
+
 class SaveOutput:
     def __init__(self):
-        self.outputs = []
+        self.outputs = {}
         
     def __call__(self, module, module_in, module_out):
-        self.outputs.append(module_out.cpu())
+        self.outputs[module] = module_out.cpu()
         
     def clear(self):
-        self.outputs = []
+        self.outputs = {}
 
 
 class ContrastiveLearner(DenseNet):
@@ -141,7 +143,27 @@ class ContrastiveLearner(DenseNet):
                 X_i = model.forward(inputs[:, 0, :])
                 # Second views of the whole batch
                 X_j = model.forward(inputs[:, 1, :])
-                # First views anddeep_folding
+                # First views and deep_folding
+                # second views are put side by side
+                X_reordered = torch.cat([X_i, X_j], dim=-1)
+                X_reordered = X_reordered.view(-1, X_i.shape[-1])
+                X = torch.cat((X, X_reordered.cpu()), dim=0)
+                del inputs
+        return X
+    
+    def compute_representations(self, loader):
+        X = torch.zeros([0, 512]).cpu()
+        with torch.no_grad():
+            for (inputs, filenames) in loader:
+                # First views of the whole batch
+                inputs = inputs.cuda()
+                model = self.cuda()
+                model.forward(inputs[:, 0, :])
+                X_i = first(self.save_output.outputs.values())
+                # Second views of the whole batch
+                model.forward(inputs[:, 1, :])
+                X_j = first(self.save_output.outputs.values())
+                # First views and deep_folding
                 # second views are put side by side
                 X_reordered = torch.cat([X_i, X_j], dim=-1)
                 X_reordered = X_reordered.view(-1, X_i.shape[-1])
@@ -149,12 +171,14 @@ class ContrastiveLearner(DenseNet):
                 del inputs
         return X
 
-    # On n'a pas accès ici à toutes les données
-    # def training-epoch_end(self, outputs):
-    #     X_tsne = compute_tsne(data_module.train_dataloader(), model)
-    #     plot_tsne(X_tsne)
-    def compute_tsne(self, loader):
-        X = self.compute_embeddings_skeletons(loader)
+    def compute_tsne(self, loader, register):
+        if register == "output":
+            X = self.compute_embeddings_skeletons(loader)
+        elif register == "representation":
+            X = self.compute_representations(loader)
+        else:
+            raise ValueError("Argument register must be either output or representation")
+    
         tsne = TSNE(n_components=2, perplexity=5, init='pca', random_state=50)
         X_tsne = tsne.fit_transform(X.detach().numpy())
 
@@ -163,17 +187,28 @@ class ContrastiveLearner(DenseNet):
 
 
     def training_epoch_end(self, outputs):
-        X_tsne = self.compute_tsne(self.sample_data.train_dataloader())
+        X_tsne = self.compute_tsne(self.sample_data.train_dataloader(), "output")
         image_TSNE = plot_tsne(X_tsne, buffer=True)
         self.logger.experiment.add_image(
-            'TSNE image', image_TSNE, self.current_epoch)
+            'TSNE output image', image_TSNE, self.current_epoch)
+        X_tsne = self.compute_tsne(self.sample_data.train_dataloader(), "representation")
+        image_TSNE = plot_tsne(X_tsne, buffer=True)
+        self.logger.experiment.add_image(
+            'TSNE representation image', image_TSNE, self.current_epoch)
+        
         image_input_i = plot_img(self.sample_i, buffer=True)
         self.logger.experiment.add_image(
             'input_i', image_input_i, self.current_epoch)
         image_input_j = plot_img(self.sample_j, buffer=True)
         self.logger.experiment.add_image(
             'input_j', image_input_j, self.current_epoch)
-        image_output = plot_output(self.save_output.outputs[-1], buffer=True)
+
+        # Plots one representation and one output image
+        image_output = plot_output(first(self.save_output.outputs.values()), buffer=True)
+        self.logger.experiment.add_image(
+            'representation', image_output, self.current_epoch)
+        
+        image_output = plot_output(last(self.save_output.outputs.values()), buffer=True)
         self.logger.experiment.add_image(
             'output', image_output, self.current_epoch)
         print("Length of outputs: ", len(self.save_output.outputs))
@@ -210,14 +245,24 @@ class ContrastiveLearner(DenseNet):
         return batch_dictionary
 
     def validation_epoch_end(self, outputs):
-        X_tsne = self.compute_tsne(self.sample_data.val_dataloader())
+        X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "output")
         image_TSNE = plot_tsne(X_tsne, buffer=True)
         self.logger.experiment.add_image(
-            'TSNE validation image', image_TSNE, self.current_epoch)
-
-        image_output = plot_output(self.save_output.outputs[-1], buffer=True)
+            'TSNE output validation image', image_TSNE, self.current_epoch)
+        X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "representation")
+        image_TSNE = plot_tsne(X_tsne, buffer=True)
+        self.logger.experiment.add_image(
+            'TSNE representation validation image', image_TSNE, self.current_epoch)
+        
+        # Plots one representation and one output image
+        image_output = plot_output(first(self.save_output.outputs.values()), buffer=True)
+        self.logger.experiment.add_image(
+            'representation val', image_output, self.current_epoch)
+        
+        image_output = plot_output(last(self.save_output.outputs.values()), buffer=True)
         self.logger.experiment.add_image(
             'output val', image_output, self.current_epoch)
+        
         # calculating average loss
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
 

@@ -16,3 +16,4 @@ nb_steps_per_flush_logs: 8
 seed: 42
 start_epoch: 0
 max_angle: 10
+checkpoint_path: 

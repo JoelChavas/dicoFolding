@@ -120,7 +120,7 @@ def train(config):
               max_epochs=config.max_epochs,
               logger=tb_logger,
               flush_logs_every_n_steps=config.nb_steps_per_flush_logs,
-              resume_from_checkpoint='/host/home/jc225751/Runs/12_more_augmentations/Output/2021-06-22/16-40-38/logs/default/version_0/checkpoints/epoch=15-step=895.ckpt')
+              resume_from_checkpoint=config.checkpoint_path)
           trainer.fit(model, data_module)
           
     print("Number of hooks: ", len(model.save_output.outputs))
