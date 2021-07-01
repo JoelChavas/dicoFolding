@@ -54,6 +54,18 @@ class SimplifyTensor(object):
         arr[arr == 11] = 0    
         return torch.from_numpy(arr)  
     
+class OnlyBottomTensor(object):
+    """Keeps only bottom '30' values, puts everything else to '0'
+    """
+
+    def __init__(self):
+        None
+        
+    def __call__(self, tensor):
+        arr = tensor.numpy()
+        arr = arr * (arr==30)   
+        return torch.from_numpy(arr)  
+    
 
 class RotateTensor(object):
     """Apply a random rotation on the images
@@ -73,6 +85,7 @@ class RotateTensor(object):
         onehot_im_rot = np.empty_like(onehot_im)
         n_cat = onehot_im.shape[-1]
         for axes in (0,1), (0,2), (1,2):
+            np.random.seed()
             angle = np.random.uniform(-self.max_angle, self.max_angle)
             onehot_im_rot = rotate(onehot_im,
                                 angle=angle,

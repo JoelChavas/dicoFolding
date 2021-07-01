@@ -44,6 +44,7 @@ import hydra
 import torch
 import pytorch_lightning as pl
 from dicoFolding.contrastive_learner import ContrastiveLearner
+from dicoFolding.contrastive_learner_test import ContrastiveLearnerTest
 from dicoFolding.datamodule import DataModule
 from dicoFolding.utils import process_config
 from dicoFolding.postprocessing.visualize_tsne import plot_output
@@ -76,16 +77,12 @@ def train(config):
 
     # Sets seed for pseudo-random number generators
     # in: pytorch, numpy, python.random
-    seed_everything(config.seed)
+    # seed_everything(config.seed)
 
     data_module = DataModule(config)
-    model = ContrastiveLearner(config,
-                               mode="encoder",
-                               drop_rate=0.0,
-                               sample_data=data_module)
-    summary(model, tuple(config.input_size), device="cpu")
 
     if config.test == True:
+          # Show the views of the first batch
           data_module.setup(stage='fit')
           fig = plt.figure(figsize=(4., 8.), dpi=400)
           grid = ImageGrid(fig, 111,
@@ -109,12 +106,52 @@ def train(config):
           for ax, im in zip(grid, images):
                 ax.imshow(im)
                 ax.axis('off')
-                ax.set_title(np.unique(im)[2], fontsize=4)
+                ax.set_title(np.unique(im)[1], fontsize=4)
           plt.show()
+          
+          # Show the views of the first skeleton after each epoch
+          model = ContrastiveLearnerTest(config,
+                                    mode="encoder",
+                                    drop_rate=0.0,
+                                    sample_data=data_module)
+          summary(model, tuple(config.input_size), device="cpu")
+          trainer = pl.Trainer(
+              gpus=1,
+              max_epochs=config.max_epochs,
+              logger=tb_logger,
+              flush_logs_every_n_steps=config.nb_steps_per_flush_logs,
+              resume_from_checkpoint=config.checkpoint_path)
+          trainer.fit(model, data_module)
+          
+          nb_elements = len(model.sample_i)
+          # Plots the views of the first element
           fig = plt.figure(figsize=(4., 8.), dpi=400)
-          plot_output(model.save_output.outputs[-1], buffer=False)
+          grid = ImageGrid(fig, 111,
+                           nrows_ncols = (nb_elements//4, 8),
+                           axes_pad=0.2,)
+          images = []
+          for i in range(nb_elements):
+                first_view = model.sample_i[i]
+                second_view = model.sample_j[i]
+                images.append(first_view[0, 0, first_view.shape[2]//2, :, :])
+                images.append(second_view[0, 0, second_view.shape[2]//2, :, :])
+          for ax, im in zip(grid, images):
+                ax.imshow(im)
+                ax.axis('off')
           plt.show()
+          
+          # Plots one representation image
+          fig = plt.figure(figsize=(4., 8.), dpi=400)
+          plot_output(first(self.save_output.outputs.values()), buffer=False)
+          plt.show()
+          
     else:
+          
+          model = ContrastiveLearner(config,
+                                    mode="encoder",
+                                    drop_rate=0.0,
+                                    sample_data=data_module)
+          summary(model, tuple(config.input_size), device="cpu")
           trainer = pl.Trainer(
               gpus=1,
               max_epochs=config.max_epochs,

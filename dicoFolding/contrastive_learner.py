@@ -254,7 +254,7 @@ class ContrastiveLearner(DenseNet):
         self.logger.experiment.add_image(
             'TSNE representation validation image', image_TSNE, self.current_epoch)
         
-        # Plots one representation and one output image
+        # Plots one representation image and and one output image
         image_output = plot_output(first(self.save_output.outputs.values()), buffer=True)
         self.logger.experiment.add_image(
             'representation val', image_output, self.current_epoch)
