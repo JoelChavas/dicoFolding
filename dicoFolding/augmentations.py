@@ -101,6 +101,72 @@ class RotateTensor(object):
         return torch.from_numpy(arr_rot)
 
 
+class MixTensor(object):
+    """Apply a cutout on the images and puts only bottom value inside the cutout
+    cf. Improved Regularization of Convolutional Neural Networks with Cutout,
+    arXiv, 2017
+    We assume that the cube to be cut is inside the image.
+    """
+
+    def __init__(self, from_skeleton=True, patch_size=None, random_size=False,
+                 inplace=False, localization=None):
+        """[summary]
+
+        If from_skeleton==True, takes skeleton image, cuts it out and fills with bottom_only image
+        If from_skeleton==False, takes bottom_only image, cuts it out and fills with skeleton image
+
+        Args:
+            from_skeleton (bool, optional): [description]. Defaults to True.
+            patch_size (either int or list of int): [description]. Defaults to None.
+            random_size (bool, optional): [description]. Defaults to False.
+            inplace (bool, optional): [description]. Defaults to False.
+            localization ([type], optional): [description]. Defaults to None.
+        """
+        self.patch_size = patch_size
+        self.random_size = random_size
+        self.inplace = inplace
+        self.localization = localization
+        self.from_skeleton = from_skeleton
+
+    def __call__(self, arr):
+
+        img_shape = np.array(arr.shape)
+        if isinstance(self.patch_size, int):
+            size = [self.patch_size for _ in range(len(img_shape))]
+        else:
+            size = np.copy(self.patch_size)
+        assert len(size) == len(img_shape), "Incorrect patch dimension."
+        indexes = []
+        for ndim in range(len(img_shape)):
+            if size[ndim] > img_shape[ndim] or size[ndim] < 0:
+                size[ndim] = img_shape[ndim]
+            if self.random_size:
+                size[ndim] = np.random.randint(0, size[ndim])
+            if self.localization is not None:
+                delta_before = max(
+                    self.localization[ndim] - size[ndim] // 2, 0)
+            else:
+                np.random.seed()
+                delta_before = np.random.randint(
+                    0, img_shape[ndim] - size[ndim] + 1)
+            indexes.append(slice(int(delta_before),
+                                 int(delta_before + size[ndim])))
+        if self.from_skeleton:
+            if self.inplace:
+                arr_cut = arr[tuple(indexes)]
+                arr[tuple(indexes)] = arr_cut * (arr_cut==30)
+                return torch.from_numpy(arr)
+            else:
+                arr_copy = np.copy(arr)
+                arr_cut = arr_copy[tuple(indexes)]
+                arr_copy[tuple(indexes)] = arr_cut * (arr_cut==30)
+                return torch.from_numpy(arr_copy)
+        else:
+            arr_bottom = arr * (arr==30)
+            arr_cut = arr[tuple(indexes)]
+            arr_bottom[tuple(indexes)] = np.copy(arr_cut)
+            return torch.from_numpy(arr_bottom)
+
 class CutoutTensor(object):
     """Apply a cutout on the images
     cf. Improved Regularization of Convolutional Neural Networks with Cutout,
@@ -138,6 +204,7 @@ class CutoutTensor(object):
                     0, img_shape[ndim] - size[ndim] + 1)
             indexes.append(slice(int(delta_before),
                                  int(delta_before + size[ndim])))
+            
         if self.inplace:
             arr[tuple(indexes)] = self.value
             return torch.from_numpy(arr)

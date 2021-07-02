@@ -45,6 +45,7 @@ from deep_folding.preprocessing.pynet_transforms import PaddingTensor
 from dicoFolding.augmentations import OnlyBottomTensor
 from dicoFolding.augmentations import RotateTensor
 from dicoFolding.augmentations import SimplifyTensor
+from dicoFolding.augmentations import MixTensor
 
 _ALL_SUBJECTS = -1
 
@@ -93,15 +94,17 @@ class ContrastiveDataset():
             SimplifyTensor(),
             PaddingTensor(self.config.input_size,
                           fill_value=self.config.fill_value),
+            MixTensor(from_skeleton=True, patch_size=self.config.patch_size),
             RotateTensor(max_angle=self.config.max_angle)
         ])
         
         # - padding to 80x80x80 by default, see config file
         # - + random rotation
         self.transform2 = transforms.Compose([
-            OnlyBottomTensor(),
+            SimplifyTensor(),
             PaddingTensor(self.config.input_size,
                           fill_value=self.config.fill_value),
+            MixTensor(from_skeleton=True, patch_size=self.config.patch_size),
             RotateTensor(max_angle=self.config.max_angle)
         ])
 
