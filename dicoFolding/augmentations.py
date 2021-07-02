@@ -128,8 +128,9 @@ class MixTensor(object):
         self.localization = localization
         self.from_skeleton = from_skeleton
 
-    def __call__(self, arr):
+    def __call__(self, tensor):
 
+        arr = tensor.numpy()
         img_shape = np.array(arr.shape)
         if isinstance(self.patch_size, int):
             size = [self.patch_size for _ in range(len(img_shape))]

@@ -104,7 +104,7 @@ class ContrastiveDataset():
             SimplifyTensor(),
             PaddingTensor(self.config.input_size,
                           fill_value=self.config.fill_value),
-            MixTensor(from_skeleton=True, patch_size=self.config.patch_size),
+            MixTensor(from_skeleton=False, patch_size=self.config.patch_size),
             RotateTensor(max_angle=self.config.max_angle)
         ])
 
