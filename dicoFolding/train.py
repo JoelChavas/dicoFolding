@@ -149,7 +149,6 @@ def train(config):
           
           model = ContrastiveLearner(config,
                                     mode="encoder",
-                                    drop_rate=0.0,
                                     sample_data=data_module)
           summary(model, tuple(config.input_size), device="cpu")
           trainer = pl.Trainer(

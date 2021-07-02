@@ -63,12 +63,14 @@ class SaveOutput:
 
 class ContrastiveLearner(DenseNet):
 
-    def __init__(self, config, mode, drop_rate, sample_data):
-        super(ContrastiveLearner, self).__init__(growth_rate=32,
-                                                 block_config=(6, 12, 24, 16),
-                                                 num_init_features=64,
+    def __init__(self, config, mode, sample_data):
+        super(ContrastiveLearner, self).__init__(growth_rate=config.growth_rate,
+                                                 block_config=config.block_config,
+                                                 num_init_features=config.num_init_features,
+                                                 num_representation_features=config.num_representation_features,
+                                                 num_outputs=config.num_outputs,
                                                  mode=mode,
-                                                 drop_rate=drop_rate)
+                                                 drop_rate=config.drop_rate)
         self.config = config
         self.sample_data = sample_data
         self.sample_i = np.array([])
@@ -119,11 +121,11 @@ class ContrastiveLearner(DenseNet):
             self.sample_i = inputs[:, 0, :].cpu()
             self.sample_j = inputs[:, 1, :].cpu()
 
-        # logs- a dictionary
+        # logs - a dictionary
         logs = {"train_loss": float(batch_loss)}
 
         batch_dictionary = {
-            # REQUIRED: It ie required for us to return "loss"
+            # REQUIRED: It is required for us to return "loss"
             "loss": batch_loss,
 
             # optional for batch logging purposes
@@ -134,7 +136,7 @@ class ContrastiveLearner(DenseNet):
         return batch_dictionary
 
     def compute_embeddings_skeletons(self, loader):
-        X = torch.zeros([0, 128]).cpu()
+        X = torch.zeros([0, self.config.num_outputs]).cpu()
         with torch.no_grad():
             for (inputs, filenames) in loader:
                 # First views of the whole batch
@@ -152,7 +154,7 @@ class ContrastiveLearner(DenseNet):
         return X
     
     def compute_representations(self, loader):
-        X = torch.zeros([0, 512]).cpu()
+        X = torch.zeros([0, self.config.num_representation_features]).cpu()
         with torch.no_grad():
             for (inputs, filenames) in loader:
                 # First views of the whole batch

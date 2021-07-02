@@ -65,8 +65,8 @@ def mscatter(x, y, ax=None, m=None, **kw):
     return sc
 
 
-def compute_embeddings_skeletons(loader, model):
-    X = torch.zeros([0, 128]).cpu()
+def compute_embeddings_skeletons(loader, model, num_outputs):
+    X = torch.zeros([0, num_outputs]).cpu()
     with torch.no_grad():
         for (inputs, filenames) in loader:
             # First views of the whole batch
@@ -83,8 +83,8 @@ def compute_embeddings_skeletons(loader, model):
     return X
 
 
-def compute_tsne(loader, model):
-    X = compute_embeddings_skeletons(loader, model)
+def compute_tsne(loader, model, num_outputs):
+    X = compute_embeddings_skeletons(loader, model, num_outputs)
     tsne = TSNE(n_components=2, perplexity=5, init='pca', random_state=50)
     X_tsne = tsne.fit_transform(X.detach().numpy())
 

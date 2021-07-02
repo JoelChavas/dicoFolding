@@ -1,6 +1,4 @@
 # @package _global_
-model: DenseNet
-tf: crop
 batch_size: 16
 pin_mem: True
 input_size: (1, 80, 80, 80)
@@ -11,6 +9,7 @@ sigma: 5
 lr: 1e-4
 weight_decay: 5e-5
 max_epochs: 100
+drop_rate: 0.0
 nb_epochs_per_saving: 1
 nb_steps_per_flush_logs: 8
 seed: 42
