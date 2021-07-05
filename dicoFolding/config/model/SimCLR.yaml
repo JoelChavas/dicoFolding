@@ -9,11 +9,11 @@ temperature: 0.1
 sigma: 5
 lr: 1e-4
 weight_decay: 5e-5
-max_epochs: 100
+max_epochs: 300
 drop_rate: 0.0
 nb_epochs_per_saving: 1
 nb_steps_per_flush_logs: 8
 seed: 42
 start_epoch: 0
 max_angle: 10
-checkpoint_path: 
+checkpoint_path: /volatile/jc225751/Runs/14_regularize_training/Output/mixtensor_block_6_12_24_16_output_64/logs/default/version_0/checkpoints/epoch=96-step=5431.ckpt

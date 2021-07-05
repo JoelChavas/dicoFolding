@@ -153,7 +153,7 @@ def prime_factors(n):
 
 def plot_output(img, buffer):
     
-    arr = (img[0,:]).numpy()
+    arr = (img[0,:]).detach().numpy()
     # Reshapes the array into a 2D array
     primes = prime_factors(arr.size)
     row_size = np.prod(primes[:len(primes)//2])
