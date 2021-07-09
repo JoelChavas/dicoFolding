@@ -171,7 +171,7 @@ class DenseNet(pl.LightningModule):
 
     def forward(self, x):
         # Eventually keep the input images for visualization
-        self.input_imgs = x.detach().cpu().numpy()
+        # self.input_imgs = x.detach().cpu().numpy()
         features = self.features(x)
         if self.mode == "classifier":
             out = F.relu(features, inplace=True)

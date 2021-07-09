@@ -137,6 +137,7 @@ class ContrastiveLearner(DenseNet):
 
     def compute_embeddings_skeletons(self, loader):
         X = torch.zeros([0, self.config.num_outputs]).cpu()
+        filenames_list = []
         with torch.no_grad():
             for (inputs, filenames) in loader:
                 # First views of the whole batch
@@ -150,11 +151,14 @@ class ContrastiveLearner(DenseNet):
                 X_reordered = torch.cat([X_i, X_j], dim=-1)
                 X_reordered = X_reordered.view(-1, X_i.shape[-1])
                 X = torch.cat((X, X_reordered.cpu()), dim=0)
+                filenames_duplicate = [ item for item in filenames for repetitions in range(2) ]
+                filenames_list = filenames_list + filenames_duplicate
                 del inputs
-        return X
+        return X, filenames_list
     
     def compute_representations(self, loader):
         X = torch.zeros([0, self.config.num_representation_features]).cpu()
+        filenames_list = []
         with torch.no_grad():
             for (inputs, filenames) in loader:
                 # First views of the whole batch
@@ -165,19 +169,20 @@ class ContrastiveLearner(DenseNet):
                 # Second views of the whole batch
                 model.forward(inputs[:, 1, :])
                 X_j = first(self.save_output.outputs.values())
-                # First views and deep_folding
-                # second views are put side by side
+                # First views and second views are put side by side
                 X_reordered = torch.cat([X_i, X_j], dim=-1)
                 X_reordered = X_reordered.view(-1, X_i.shape[-1])
                 X = torch.cat((X, X_reordered.cpu()), dim=0)
+                filenames_duplicate = [ item for item in filenames for repetitions in range(2) ]
+                filenames_list = filenames_list + filenames_duplicate
                 del inputs
-        return X
+        return X, filenames_list
 
     def compute_tsne(self, loader, register):
         if register == "output":
-            X = self.compute_embeddings_skeletons(loader)
+            X, _ = self.compute_embeddings_skeletons(loader)
         elif register == "representation":
-            X = self.compute_representations(loader)
+            X, _ = self.compute_representations(loader)
         else:
             raise ValueError("Argument register must be either output or representation")
     
@@ -248,17 +253,17 @@ class ContrastiveLearner(DenseNet):
         return batch_dictionary
 
     def validation_epoch_end(self, outputs):
-        if self.current_epoch % 10 == 0:
-            X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "output")
-            image_TSNE = plot_tsne(X_tsne, buffer=True)
-            self.logger.experiment.add_image(
-                'TSNE output validation image', image_TSNE, self.current_epoch)
-            X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "representation")
-            image_TSNE = plot_tsne(X_tsne, buffer=True)
-            self.logger.experiment.add_image(
-                'TSNE representation validation image', image_TSNE, self.current_epoch)
+        # if self.current_epoch % 10 == 0 or self.current_epoch == self.config.max_epochs:
+        #     X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "output")
+        #     image_TSNE = plot_tsne(X_tsne, buffer=True)
+        #     self.logger.experiment.add_image(
+        #         'TSNE output validation image', image_TSNE, self.current_epoch)
+        #     X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "representation")
+        #     image_TSNE = plot_tsne(X_tsne, buffer=True)
+        #     self.logger.experiment.add_image(
+        #         'TSNE representation validation image', image_TSNE, self.current_epoch)
         
-        # Plots one representation image and and one output image
+        # Plots one representation image and one output image
         image_output = plot_output(first(self.save_output.outputs.values()), buffer=True)
         self.logger.experiment.add_image(
             'representation val', image_output, self.current_epoch)

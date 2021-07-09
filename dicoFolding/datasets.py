@@ -89,7 +89,6 @@ class ContrastiveDataset():
         sample = self.data_tensor[idx]
         filename = self.filenames[idx]
 
-        patch_size = np.ceil(np.array(self.config.input_size) / 4)
         self.transform1 = transforms.Compose([
             SimplifyTensor(),
             PaddingTensor(self.config.input_size,
@@ -117,11 +116,70 @@ class ContrastiveDataset():
         return tuple_with_path
 
 
-def create_sets(config):
+class ContrastiveDataset_Visualization():
+    """Custom dataset that includes image file paths.
+
+    Applies different transformations to data depending on the type of input.
+    """
+
+    def __init__(self, data_tensor, filenames, config):
+        """
+        Args:
+            data_tensor (tensor): contains MRIs as numpy arrays
+            filenames (list of strings): list of subjects' IDs
+            config (Omegaconf dict): contains configuration information
+        """
+        self.data_tensor = data_tensor.type(torch.float32)
+        self.transform = True
+        self.nb_train = len(filenames)
+        log.info(self.nb_train)
+        self.filenames = filenames
+        self.config = config
+
+    def __len__(self):
+        return (self.nb_train)
+
+    def __getitem__(self, idx):
+        """Returns the two views corresponding to index idx
+
+        The two views are generated on the fly.
+        The first view is the reference view (only padding is applied)
+
+        Returns:
+            tuple of (views, subject ID)
+        """
+        if torch.is_tensor(idx):
+            idx = idx.tolist()
+        sample = self.data_tensor[idx]
+        filename = self.filenames[idx]
+
+        self.transform1 = transforms.Compose([
+            PaddingTensor(self.config.input_size,
+                          fill_value=self.config.fill_value),
+            MixTensor(from_skeleton=True, patch_size=self.config.patch_size),
+            RotateTensor(max_angle=self.config.max_angle)
+        ])
+        
+        self.transform2 = transforms.Compose([
+            PaddingTensor(self.config.input_size,
+                          fill_value=self.config.fill_value)
+        ])
+
+        view1 = self.transform1(sample)
+        view2 = self.transform2(sample)
+
+        views = torch.stack((view1, view2), dim=0)
+
+        tuple_with_path = (views, filename)
+        return tuple_with_path
+    
+    
+def create_sets(config, mode='training'):
     """Creates train, validation and test sets
 
     Args:
         config (Omegaconf dict): contains configuration parameters
+        mode (str): either 'training' or 'visualization'
     Returns:
         train_set, val_set, test_set (tuple)
     """
@@ -149,7 +207,12 @@ def create_sets(config):
     log.info("Tensor data shape: {}".format(tensor_data.shape))
 
     # Creates the dataset from this tensor by doing some preprocessing
-    hcp_dataset = ContrastiveDataset(filenames=filenames,
+    if mode == 'visualization':
+        hcp_dataset = ContrastiveDataset_Visualization(filenames=filenames,
+                                     data_tensor=tensor_data,
+                                     config=config)
+    else:
+        hcp_dataset = ContrastiveDataset(filenames=filenames,
                                      data_tensor=tensor_data,
                                      config=config)
     log.info("Length of complete data set: {}".format(len(hcp_dataset)))
@@ -158,6 +221,7 @@ def create_sets(config):
     partition = config.partition
 
     log.info([round(i * (len(hcp_dataset))) for i in partition])
+    np.random.seed(1)
     train_set, val_set, test_set = torch.utils.data.random_split(
         hcp_dataset,
         [round(i * (len(hcp_dataset))) for i in partition])

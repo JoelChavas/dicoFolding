@@ -143,10 +143,9 @@ def train(config):
           # Plots one representation image
           fig = plt.figure(figsize=(4., 8.), dpi=400)
           plot_output(first(self.save_output.outputs.values()), buffer=False)
-          plt.show()
+          plt.show()   
           
     else:
-          
           model = ContrastiveLearner(config,
                                     mode="encoder",
                                     sample_data=data_module)

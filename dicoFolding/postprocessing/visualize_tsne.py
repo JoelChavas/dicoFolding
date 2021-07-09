@@ -91,7 +91,7 @@ def compute_tsne(loader, model, num_outputs):
     return X_tsne
 
 
-def plot_tsne(X_tsne, buffer):
+def plot_tsne(X_tsne, buffer, labels=None):
     """Generates TSNE plot either in a PNG image buffer or as a plot
 
     Args:
@@ -103,8 +103,12 @@ def plot_tsne(X_tsne, buffer):
     logger.info(X_tsne.shape)
     nb_points = X_tsne.shape[0]
     m = np.repeat(["o"], nb_points)
-    c = np.tile(np.array(["b", "r"]), nb_points // 2)
-    mscatter(X_tsne[:, 0], X_tsne[:, 1], c=c, m=m, s=2, ax=ax)
+    if labels is None:
+        c = np.tile(np.array(["b", "r"]), nb_points // 2)
+    else:
+        c = labels
+        
+    mscatter(X_tsne[:, 0], X_tsne[:, 1], c=c, m=m, s=8, ax=ax)
 
     if buffer:
         buf = io.BytesIO()

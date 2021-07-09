@@ -62,6 +62,7 @@ class ContrastiveLearnerTest(DenseNet):
         self.sample_j = []
         self.val_sample_i = []
         self.val_sample_j = []
+        self.recording_done = False
          
     def custom_histogram_adder(self):
 
@@ -98,7 +99,8 @@ class ContrastiveLearnerTest(DenseNet):
 
     def validation_step(self, val_batch, batch_idx):
         (inputs, filenames) = val_batch
-        if batch_idx == 0:
+        if self.recording_done == False:
+            self.recording_done = True
             self.val_sample_i.append(inputs[:, 0, :].cpu())
             self.val_sample_j.append(inputs[:, 1, :].cpu())
 
