@@ -87,6 +87,7 @@ def postprocessing_results(config):
     data_module = DataModule(config)
     data_module.setup(stage='validate')
 
+
     # Show the views of the first batch
     # fig = plt.figure(figsize=(4., 8.), dpi=400)
     # grid = ImageGrid(fig, 111,
