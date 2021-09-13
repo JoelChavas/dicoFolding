@@ -63,12 +63,14 @@ class SaveOutput:
 
 class ContrastiveLearner(DenseNet):
 
-    def __init__(self, config, mode, drop_rate, sample_data):
-        super(ContrastiveLearner, self).__init__(growth_rate=32,
-                                                 block_config=(6, 12, 24, 16),
-                                                 num_init_features=64,
+    def __init__(self, config, mode, sample_data):
+        super(ContrastiveLearner, self).__init__(growth_rate=config.growth_rate,
+                                                 block_config=config.block_config,
+                                                 num_init_features=config.num_init_features,
+                                                 num_representation_features=config.num_representation_features,
+                                                 num_outputs=config.num_outputs,
                                                  mode=mode,
-                                                 drop_rate=drop_rate)
+                                                 drop_rate=config.drop_rate)
         self.config = config
         self.sample_data = sample_data
         self.sample_i = np.array([])
@@ -119,11 +121,11 @@ class ContrastiveLearner(DenseNet):
             self.sample_i = inputs[:, 0, :].cpu()
             self.sample_j = inputs[:, 1, :].cpu()
 
-        # logs- a dictionary
+        # logs - a dictionary
         logs = {"train_loss": float(batch_loss)}
 
         batch_dictionary = {
-            # REQUIRED: It ie required for us to return "loss"
+            # REQUIRED: It is required for us to return "loss"
             "loss": batch_loss,
 
             # optional for batch logging purposes
@@ -134,7 +136,8 @@ class ContrastiveLearner(DenseNet):
         return batch_dictionary
 
     def compute_embeddings_skeletons(self, loader):
-        X = torch.zeros([0, 128]).cpu()
+        X = torch.zeros([0, self.config.num_outputs]).cpu()
+        filenames_list = []
         with torch.no_grad():
             for (inputs, filenames) in loader:
                 # First views of the whole batch
@@ -148,11 +151,14 @@ class ContrastiveLearner(DenseNet):
                 X_reordered = torch.cat([X_i, X_j], dim=-1)
                 X_reordered = X_reordered.view(-1, X_i.shape[-1])
                 X = torch.cat((X, X_reordered.cpu()), dim=0)
+                filenames_duplicate = [ item for item in filenames for repetitions in range(2) ]
+                filenames_list = filenames_list + filenames_duplicate
                 del inputs
-        return X
+        return X, filenames_list
     
     def compute_representations(self, loader):
-        X = torch.zeros([0, 512]).cpu()
+        X = torch.zeros([0, self.config.num_representation_features]).cpu()
+        filenames_list = []
         with torch.no_grad():
             for (inputs, filenames) in loader:
                 # First views of the whole batch
@@ -163,19 +169,20 @@ class ContrastiveLearner(DenseNet):
                 # Second views of the whole batch
                 model.forward(inputs[:, 1, :])
                 X_j = first(self.save_output.outputs.values())
-                # First views and deep_folding
-                # second views are put side by side
+                # First views and second views are put side by side
                 X_reordered = torch.cat([X_i, X_j], dim=-1)
                 X_reordered = X_reordered.view(-1, X_i.shape[-1])
                 X = torch.cat((X, X_reordered.cpu()), dim=0)
+                filenames_duplicate = [ item for item in filenames for repetitions in range(2) ]
+                filenames_list = filenames_list + filenames_duplicate
                 del inputs
-        return X
+        return X, filenames_list
 
     def compute_tsne(self, loader, register):
         if register == "output":
-            X = self.compute_embeddings_skeletons(loader)
+            X, _ = self.compute_embeddings_skeletons(loader)
         elif register == "representation":
-            X = self.compute_representations(loader)
+            X, _ = self.compute_representations(loader)
         else:
             raise ValueError("Argument register must be either output or representation")
     
@@ -187,14 +194,15 @@ class ContrastiveLearner(DenseNet):
 
 
     def training_epoch_end(self, outputs):
-        X_tsne = self.compute_tsne(self.sample_data.train_dataloader(), "output")
-        image_TSNE = plot_tsne(X_tsne, buffer=True)
-        self.logger.experiment.add_image(
-            'TSNE output image', image_TSNE, self.current_epoch)
-        X_tsne = self.compute_tsne(self.sample_data.train_dataloader(), "representation")
-        image_TSNE = plot_tsne(X_tsne, buffer=True)
-        self.logger.experiment.add_image(
-            'TSNE representation image', image_TSNE, self.current_epoch)
+        if self.current_epoch % 10 == 0:
+            X_tsne = self.compute_tsne(self.sample_data.train_dataloader(), "output")
+            image_TSNE = plot_tsne(X_tsne, buffer=True)
+            self.logger.experiment.add_image(
+                'TSNE output image', image_TSNE, self.current_epoch)
+            X_tsne = self.compute_tsne(self.sample_data.train_dataloader(), "representation")
+            image_TSNE = plot_tsne(X_tsne, buffer=True)
+            self.logger.experiment.add_image(
+                'TSNE representation image', image_TSNE, self.current_epoch)
         
         image_input_i = plot_img(self.sample_i, buffer=True)
         self.logger.experiment.add_image(
@@ -217,7 +225,7 @@ class ContrastiveLearner(DenseNet):
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
 
         # logging histograms
-        self.custom_histogram_adder()
+        # self.custom_histogram_adder()
 
         # logging using tensorboard logger
         self.logger.experiment.add_scalar("Loss/Train",
@@ -245,16 +253,17 @@ class ContrastiveLearner(DenseNet):
         return batch_dictionary
 
     def validation_epoch_end(self, outputs):
-        X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "output")
-        image_TSNE = plot_tsne(X_tsne, buffer=True)
-        self.logger.experiment.add_image(
-            'TSNE output validation image', image_TSNE, self.current_epoch)
-        X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "representation")
-        image_TSNE = plot_tsne(X_tsne, buffer=True)
-        self.logger.experiment.add_image(
-            'TSNE representation validation image', image_TSNE, self.current_epoch)
+        # if self.current_epoch % 10 == 0 or self.current_epoch == self.config.max_epochs:
+        #     X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "output")
+        #     image_TSNE = plot_tsne(X_tsne, buffer=True)
+        #     self.logger.experiment.add_image(
+        #         'TSNE output validation image', image_TSNE, self.current_epoch)
+        #     X_tsne = self.compute_tsne(self.sample_data.val_dataloader(), "representation")
+        #     image_TSNE = plot_tsne(X_tsne, buffer=True)
+        #     self.logger.experiment.add_image(
+        #         'TSNE representation validation image', image_TSNE, self.current_epoch)
         
-        # Plots one representation and one output image
+        # Plots one representation image and one output image
         image_output = plot_output(first(self.save_output.outputs.values()), buffer=True)
         self.logger.experiment.add_image(
             'representation val', image_output, self.current_epoch)

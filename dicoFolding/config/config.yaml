@@ -4,6 +4,7 @@ defaults:
   - hydra/job_logging: custom
   - dataset: neurospin
   - model: SimCLR
+  - backbone: DenseNet
   - preprocessing: default
   - platform: cuda
 

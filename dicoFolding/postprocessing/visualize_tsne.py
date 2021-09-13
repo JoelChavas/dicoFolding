@@ -65,8 +65,8 @@ def mscatter(x, y, ax=None, m=None, **kw):
     return sc
 
 
-def compute_embeddings_skeletons(loader, model):
-    X = torch.zeros([0, 128]).cpu()
+def compute_embeddings_skeletons(loader, model, num_outputs):
+    X = torch.zeros([0, num_outputs]).cpu()
     with torch.no_grad():
         for (inputs, filenames) in loader:
             # First views of the whole batch
@@ -83,15 +83,15 @@ def compute_embeddings_skeletons(loader, model):
     return X
 
 
-def compute_tsne(loader, model):
-    X = compute_embeddings_skeletons(loader, model)
+def compute_tsne(loader, model, num_outputs):
+    X = compute_embeddings_skeletons(loader, model, num_outputs)
     tsne = TSNE(n_components=2, perplexity=5, init='pca', random_state=50)
     X_tsne = tsne.fit_transform(X.detach().numpy())
 
     return X_tsne
 
 
-def plot_tsne(X_tsne, buffer):
+def plot_tsne(X_tsne, buffer, labels=None):
     """Generates TSNE plot either in a PNG image buffer or as a plot
 
     Args:
@@ -103,8 +103,12 @@ def plot_tsne(X_tsne, buffer):
     logger.info(X_tsne.shape)
     nb_points = X_tsne.shape[0]
     m = np.repeat(["o"], nb_points)
-    c = np.tile(np.array(["b", "r"]), nb_points // 2)
-    mscatter(X_tsne[:, 0], X_tsne[:, 1], c=c, m=m, s=2, ax=ax)
+    if labels is None:
+        c = np.tile(np.array(["b", "r"]), nb_points // 2)
+    else:
+        c = labels
+        
+    mscatter(X_tsne[:, 0], X_tsne[:, 1], c=c, m=m, s=8, ax=ax)
 
     if buffer:
         buf = io.BytesIO()
@@ -153,7 +157,7 @@ def prime_factors(n):
 
 def plot_output(img, buffer):
     
-    arr = (img[0,:]).numpy()
+    arr = (img[0,:]).detach().numpy()
     # Reshapes the array into a 2D array
     primes = prime_factors(arr.size)
     row_size = np.prod(primes[:len(primes)//2])

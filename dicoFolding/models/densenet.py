@@ -107,6 +107,8 @@ class DenseNet(pl.LightningModule):
     def __init__(self, growth_rate=32, block_config=(3, 12, 24, 16),
                  num_init_features=64, bn_size=4, drop_rate=0,
                  num_classes=1000, in_channels=1,
+                 num_representation_features=256,
+                 num_outputs=64,
                  mode="encoder", memory_efficient=False):
 
         super(DenseNet, self).__init__()
@@ -123,6 +125,8 @@ class DenseNet(pl.LightningModule):
             ('pool0', nn.MaxPool3d(kernel_size=3, stride=2, padding=1)),
         ]))
         self.mode = mode
+        self.num_representation_features=num_representation_features
+        self.num_outputs=num_outputs
         # Each denseblock
         num_features = num_init_features
         for i, num_layers in enumerate(block_config):
@@ -150,8 +154,10 @@ class DenseNet(pl.LightningModule):
             # Linear layer
             self.classifier = nn.Linear(num_features, num_classes)
         elif self.mode == "encoder":
-            self.hidden_representation = nn.Linear(num_features, 512)
-            self.head_projection = nn.Linear(512, 128)
+            self.hidden_representation = nn.Linear(num_features,
+                                                   self.num_representation_features)
+            self.head_projection = nn.Linear(self.num_representation_features,
+                                             self.num_outputs)
 
         # Init. with kaiming
         for m in self.modules():
@@ -165,7 +171,7 @@ class DenseNet(pl.LightningModule):
 
     def forward(self, x):
         # Eventually keep the input images for visualization
-        self.input_imgs = x.detach().cpu().numpy()
+        # self.input_imgs = x.detach().cpu().numpy()
         features = self.features(x)
         if self.mode == "classifier":
             out = F.relu(features, inplace=True)
